@@ -15,7 +15,13 @@ android {
 
     }
 
-
+    flavorDimensions 'default'
+    productFlavors {
+        develop { }
+        beta { }
+        rc { }
+        production { }
+    }
 }
 
 dependencies {
