@@ -30,9 +30,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-dynamicFeatures = [":dynamicfeature1"]
+    dynamicFeatures = [":dynamicfeature1"]
 
-
+    flavorDimensions 'default'
+    productFlavors {
+        develop { }
+        beta { }
+        rc { }
+        production { }
+    }
 }
 
 dependencies {
