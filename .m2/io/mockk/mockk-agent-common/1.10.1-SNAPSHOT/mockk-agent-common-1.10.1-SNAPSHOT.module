@@ -1,0 +1,79 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.mockk",
+    "module": "mockk-agent-common",
+    "version": "1.10.1-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.3",
+      "buildId": "jkuj7gi2vnb3xdbfalx3zdgiam"
+    }
+  },
+  "variants": [
+    {
+      "name": "-api",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.mockk",
+          "module": "mockk-agent-api",
+          "version": {
+            "requires": "1.10.1-SNAPSHOT"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "mockk-agent-common-1.10.1-SNAPSHOT.jar",
+          "url": "mockk-agent-common-1.10.1-SNAPSHOT.jar",
+          "size": 39032,
+          "sha512": "000a3f4e6c89459dffb22c356549c540a30cb6932fb57e22b6bdf07ddc9c0f5d82314a0af7a0e2024e7020cb012866bc4c4e3bd78c8769ba6225f7a497958829",
+          "sha256": "c78686747b3756f6ecf99f9e43881a5a996fc8c2cac701930a6c3350285ffdd6",
+          "sha1": "ae4ba11d64309fa1f1078ae33fbac0c2e04fb590",
+          "md5": "dcbbc29f62d846b53de69b23a9c58526"
+        }
+      ]
+    },
+    {
+      "name": "-runtime",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "io.mockk",
+          "module": "mockk-agent-api",
+          "version": {
+            "requires": "1.10.1-SNAPSHOT"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "mockk-agent-common-1.10.1-SNAPSHOT.jar",
+          "url": "mockk-agent-common-1.10.1-SNAPSHOT.jar",
+          "size": 39032,
+          "sha512": "000a3f4e6c89459dffb22c356549c540a30cb6932fb57e22b6bdf07ddc9c0f5d82314a0af7a0e2024e7020cb012866bc4c4e3bd78c8769ba6225f7a497958829",
+          "sha256": "c78686747b3756f6ecf99f9e43881a5a996fc8c2cac701930a6c3350285ffdd6",
+          "sha1": "ae4ba11d64309fa1f1078ae33fbac0c2e04fb590",
+          "md5": "dcbbc29f62d846b53de69b23a9c58526"
+        }
+      ]
+    }
+  ]
+}

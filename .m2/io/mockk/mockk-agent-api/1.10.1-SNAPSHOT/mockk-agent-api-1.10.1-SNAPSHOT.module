@@ -1,0 +1,61 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.mockk",
+    "module": "mockk-agent-api",
+    "version": "1.10.1-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.3",
+      "buildId": "jkuj7gi2vnb3xdbfalx3zdgiam"
+    }
+  },
+  "variants": [
+    {
+      "name": "-api",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "mockk-agent-api-1.10.1-SNAPSHOT.jar",
+          "url": "mockk-agent-api-1.10.1-SNAPSHOT.jar",
+          "size": 11053,
+          "sha512": "ac39d735d145cbe2e2c3196f9561fab974f08a23f151c19a6e633cf1b590a0febffc2b0f6a8e2fa935d342bd9b8761fa3cd1028a1a67aff5065323015290821b",
+          "sha256": "7fd3129fd4cd2ac463e7f74a18a463dea9cbd7187676b64779ce83a26ff664c8",
+          "sha1": "8d6f462b730f1a79ca5b402fd9e0000808de56de",
+          "md5": "6def7e1d103c312c6bf20c503d14717d"
+        }
+      ]
+    },
+    {
+      "name": "-runtime",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "mockk-agent-api-1.10.1-SNAPSHOT.jar",
+          "url": "mockk-agent-api-1.10.1-SNAPSHOT.jar",
+          "size": 11053,
+          "sha512": "ac39d735d145cbe2e2c3196f9561fab974f08a23f151c19a6e633cf1b590a0febffc2b0f6a8e2fa935d342bd9b8761fa3cd1028a1a67aff5065323015290821b",
+          "sha256": "7fd3129fd4cd2ac463e7f74a18a463dea9cbd7187676b64779ce83a26ff664c8",
+          "sha1": "8d6f462b730f1a79ca5b402fd9e0000808de56de",
+          "md5": "6def7e1d103c312c6bf20c503d14717d"
+        }
+      ]
+    }
+  ]
+}

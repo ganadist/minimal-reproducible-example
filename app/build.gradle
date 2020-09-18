@@ -60,7 +60,8 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.5.10'
     testImplementation 'org.mockito:mockito-inline:3.5.10'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
-    testImplementation 'io.mockk:mockk:1.10.0'
+    //testImplementation 'io.mockk:mockk:1.10.0'
+    testImplementation 'io.mockk:mockk-jvm:1.10.1-SNAPSHOT'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

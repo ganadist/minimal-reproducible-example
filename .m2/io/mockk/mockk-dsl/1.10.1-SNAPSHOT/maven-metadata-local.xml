@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>io.mockk</groupId>
+  <artifactId>mockk-dsl</artifactId>
+  <version>1.10.1-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20200917065913</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <classifier>sources</classifier>
+        <extension>jar</extension>
+        <value>1.10.1-SNAPSHOT</value>
+        <updated>20200917065913</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.10.1-SNAPSHOT</value>
+        <updated>20200917065913</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.10.1-SNAPSHOT</value>
+        <updated>20200917065913</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>module</extension>
+        <value>1.10.1-SNAPSHOT</value>
+        <updated>20200917065913</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
