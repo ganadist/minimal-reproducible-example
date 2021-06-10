@@ -2,6 +2,7 @@
 
 buildscript {
     ext.kotlinVersion = '1.5.10'
+    ext.autoServiceVersion = '1.0'
     repositories {
         google()
         jcenter()
