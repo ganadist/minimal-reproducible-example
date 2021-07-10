@@ -1,2 +1,4 @@
+apply from: "gradle/version_catalogs.gradle"
+
 include ':app', ':dynamicfeature1'
 rootProject.name='My Application'
