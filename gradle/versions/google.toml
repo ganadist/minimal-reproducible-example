@@ -1,0 +1,80 @@
+[versions]
+
+# https://firebase.google.com/support/release-notes/android
+firebase = "28.1.0"
+
+# https://developer.android.com/reference/com/google/android/play/core/release-notes
+play-core = "1.10.0"
+
+# https://developers.google.com/android/guides/releases
+play-services-ads = "19.6.0"
+play-services-analytics = "17.0.0"
+play-services-auth = "19.0.0"
+play-services-location = "18.0.0"
+play-services-maps = "17.0.1"
+play-services-osslicenses = "17.0.0"
+play-services-vision = "20.1.3"
+
+# https://github.com/google/exoplayer/releases
+exoplayer = "2.11.8"
+
+# https://github.com/google/auto/releases
+auto-service = "1.0-rc6"
+
+# https://github.com/google/flexbox-layout/releases
+flexbox = "1.1.1"
+
+# https://github.com/material-components/material-components-android/releases
+material = "1.3.0"
+
+# https://github.com/google/gson/blob/master/CHANGELOG.md
+gson = "2.8.6"
+
+# https://github.com/google/guava/releases
+guava = "28.1-android"
+
+# https://github.com/google/truth/releases
+truth = "1.0.1"
+
+[libraries]
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version = "" }
+
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
+play-services-analytics = { module = "com.google.android.gms:play-services-analytics", version.ref = "play-services-analytics" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
+play-services-osslicenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "play-services-osslicenses" }
+play-services-vision = { module = "com.google.android.gms:play-services-vision", version.ref = "play-services-vision" }
+
+exoplayer-core = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoplayer" }
+exoplayer-dash = { module = "com.google.android.exoplayer:exoplayer-dash", version.ref = "exoplayer" }
+exoplayer-extractor = { module = "com.google.android.exoplayer:exoplayer-extractor", version.ref = "exoplayer" }
+exoplayer-hls = { module = "com.google.android.exoplayer:exoplayer-hls", version.ref = "exoplayer" }
+exoplayer-robolectricutils = { module = "com.google.android.exoplayer:exoplayer-robolectricutils", version.ref = "exoplayer" }
+exoplayer-rtsp = { module = "com.google.android.exoplayer:exoplayer-rtsp", version.ref = "exoplayer" }
+exoplayer-smoothstreaming = { module = "com.google.android.exoplayer:exoplayer-smoothstreaming", version.ref = "exoplayer" }
+exoplayer-testutils = { module = "com.google.android.exoplayer:exoplayer-testutils", version.ref = "exoplayer" }
+exoplayer-transformer = { module = "com.google.android.exoplayer:exoplayer-transformer", version.ref = "exoplayer" }
+exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayer" }
+exoplayer-ext-cronet = { module = "com.google.android.exoplayer:extension-cronet", version.ref = "exoplayer" }
+exoplayer-ext-jobdispatcher = { module = "com.google.android.exoplayer:extension-jobdispatcher", version.ref = "exoplayer" }
+exoplayer-ext-media2 = { module = "com.google.android.exoplayer:extension-media2", version.ref = "exoplayer" }
+exoplayer-ext-mediasession = { module = "com.google.android.exoplayer:extension-mediasession", version.ref = "exoplayer" }
+exoplayer-ext-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", version.ref = "exoplayer" }
+exoplayer-ext-workmanager = { module = "com.google.android.exoplayer:extension-workmanager", version.ref = "exoplayer" }
+
+auto-service-compiler = { module = "com.google.auto.service:auto-service", version.ref = "auto-service" }
+auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "auto-service" }
+
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+
+flexbox = { module = "com.google.android:flexbox", version.ref = "flexbox" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+play-core = { module = "com.google.android.play:core", version.ref = "play-core" }
+
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+

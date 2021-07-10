@@ -1,0 +1,69 @@
+def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
+def hasKotlinPlugin = pluginManager.hasPlugin("kotlin-android")                                      
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+	    compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8                                              
+            targetCompatibility JavaVersion.VERSION_1_8 
+    	}
+
+        if (hasKotlinPlugin) {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8.toString()                                       
+                allWarningsAsErrors = true
+            }
+        }
+
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments.putIfAbsent("clearPackageData", "true")
+    }
+
+    testOptions {
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+
+        unitTests {
+            includeAndroidResources = !hasDynamicFeatureModulePlugin
+
+            all {
+                testLogging {
+                    events "standardOut", "started", "passed", "failed", "skipped"
+                    showCauses = true
+                    showExceptions = true
+                    showStackTraces = true
+                    showStandardStreams = true
+
+                }
+                systemProperty "robolectric.logging", "stdout"
+            }
+        }
+    }
+}
+
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:all" << "-Werror"
+}
+
+configurations.all {
+    exclude group: "org.apache.httpcomponents"
+    exclude group: "org.json", module: "json"
+    exclude group: "xalan", module: "xalan"
+}
+
+dependencies {
+    testImplementation libs.junit4
+    testImplementation libs.robolectric.core
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.kotlin
+
+    androidTestImplementation androidx.test.ext.junit.ktx
+    androidTestImplementation androidx.test.espresso.core
+}
