@@ -30,7 +30,7 @@ android {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
 
         unitTests {
-            includeAndroidResources = !hasDynamicFeatureModulePlugin
+            includeAndroidResources = true
 
             all {
                 testLogging {
