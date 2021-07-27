@@ -2,12 +2,12 @@ def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic
 def hasKotlinPlugin = pluginManager.hasPlugin("kotlin-android")                                      
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion "android-30"
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion "30"
 	    compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8                                              
             targetCompatibility JavaVersion.VERSION_1_8 
@@ -30,6 +30,7 @@ android {
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
 
         unitTests {
+            // https://github.com/robolectric/robolectric/issues/5597#issuecomment-876564570
             includeAndroidResources = !hasDynamicFeatureModulePlugin
 
             all {
@@ -53,9 +54,15 @@ tasks.withType(JavaCompile) {
 }
 
 configurations.all {
+    // Conflicted with Android platform API such as org.apache.http
     exclude group: "org.apache.httpcomponents"
+    // Conflicted with Android platform API such as org.json
     exclude group: "org.json", module: "json"
+    // Conflicted with Android platform API such as javax.xml, org.xml, and org.w3c.dom
     exclude group: "xalan", module: "xalan"
+    // Conflicted with Android platform API such as org.xmlpull
+    exclude group: "org.ogce", module: "xpp3"
+    exclude group: "xpp3", module: "xpp3"
 }
 
 dependencies {
