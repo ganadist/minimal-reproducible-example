@@ -12,6 +12,10 @@ android {
     //versionProp['VERSION_CODE'] = (code + 1).toString()
     //versionProp.store(versionPropFile.newWriter(), null)
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "com.example.myapplication"
         versionCode code 
