@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <include
         layout="@layout/child_inside"
-        android:id="@+id/outside_child"
+        android:id="@+id/outside_inside"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

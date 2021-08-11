@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val outside: View = layoutInflater.inflate(R.layout.child_outside, child1)
         val inside: View = layoutInflater.inflate(R.layout.child_inside, child2)
 
-        val child1binding = ChildInsideBinding.bind(outside.findViewById(R.id.outside_child))
+        val child1binding = ChildInsideBinding.bind(outside.findViewById(R.id.inside_child))
         val child2binding = ChildInsideBinding.bind(inside.findViewById(R.id.inside_child))
 
         println(child1binding)
