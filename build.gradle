@@ -16,6 +16,9 @@ buildscript {
 
 subprojects {
     repositories {
+        maven {
+           url new File(rootDir, ".m2")
+        }
         google()
         mavenCentral()
     }

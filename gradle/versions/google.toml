@@ -28,7 +28,7 @@ flexbox = "1.1.1"
 material = "1.3.0"
 
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "2.8.6"
+gson = "2.8.8-SNAPSHOT"
 
 # https://github.com/google/guava/releases
 guava = "28.1-android"
