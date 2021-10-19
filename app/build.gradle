@@ -12,14 +12,30 @@ android {
     //versionProp['VERSION_CODE'] = (code + 1).toString()
     //versionProp.store(versionPropFile.newWriter(), null)
 
+    signingConfigs {
+        release {
+            storeFile rootProject.file("release.jks")
+            storePassword "Test!23\$56"
+            keyAlias "Key0"
+            keyPassword "Test!23\$56"
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.myapplication"
         versionCode code 
         versionName "1.0"
+        signingConfig signingConfigs.release
     }
+
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
