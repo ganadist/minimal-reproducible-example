@@ -41,4 +41,7 @@ dependencies {
     implementation androidx.constraintlayout
     implementation androidx.room.ktx
     implementation androidx.room.runtime
+
+    testImplementation libs.commons.io
+    testImplementation androidx.test.ktx
 }
