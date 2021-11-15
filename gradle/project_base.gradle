@@ -70,6 +70,7 @@ dependencies {
     testImplementation libs.robolectric.core
     testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin
+    testImplementation libs.mockito.inline
 
     androidTestImplementation androidx.test.ext.junit.ktx
     androidTestImplementation androidx.test.espresso.core
