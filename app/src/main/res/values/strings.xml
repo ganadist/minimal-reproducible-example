@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="title_dynamicfeature1">feature1</string>
+    <string name="json_value" translatable="false">{ \"shape\": \"circle\", \"area\": \"12\" }</string>
 </resources>

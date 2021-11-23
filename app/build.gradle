@@ -52,9 +52,14 @@ android {
 
 dependencies {
     implementation libs.kotlin.stdlib.jdk7
+    implementation libs.kotlin.reflect
     implementation androidx.appcompat
     implementation androidx.core.ktx
     implementation androidx.constraintlayout
     implementation androidx.room.ktx
     implementation androidx.room.runtime
+
+    implementation libs.moshi
+    implementation libs.moshi.adapters
+    implementation libs.moshi.kotlin
 }

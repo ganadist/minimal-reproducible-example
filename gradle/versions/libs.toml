@@ -1,7 +1,7 @@
 [versions]
 
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradle = "7.0.2"
+android-gradle = "7.0.3"
 
 # https://github.com/google/bundletool/releases
 bundletool = "1.8.0"
@@ -20,6 +20,9 @@ ksp = "1.5.20-1.0.0-beta04"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.41.0"
+
+# https://github.com/square/moshi/blob/master/CHANGELOG.md
+moshi = "1.12.0"
 
 # https://junit.org/junit4/
 junit4 = "4.13.2"
@@ -51,6 +54,11 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-rx2 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "kotlinx-coroutines" }
+
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-Core" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-Core" }
