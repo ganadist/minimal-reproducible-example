@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package echo;
+
+option java_package = "com.example.android";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+/**
+ * This is dummy message
+ *
+ * This message is not used on this protocol
+ */
+message Dummy {
+  /**
+   * This is not used field
+   *
+   * This field is not used on this protocol
+   */
+  string field1 = 1;
+}
+
+service EchoService {
+  /**
+   * Send ping with string value which provided
+   *
+   * @param string value which want to send to server
+   * @return string value which received from server
+   */
+  rpc ping(google.protobuf.StringValue) returns (google.protobuf.StringValue);
+}

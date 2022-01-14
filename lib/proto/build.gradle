@@ -1,0 +1,64 @@
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+    alias(google.plugins.protobuf.gradle)
+}
+
+android {
+    defaultConfig {
+        kotlinOptions {
+            freeCompilerArgs = ["-Xopt-in=kotlin.RequiresOptIn"]
+        }
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+protobuf {
+  protoc {
+    artifact = rootProject.ext.protocArtifact
+  }
+  plugins {
+    java {
+        artifact = rootProject.ext.protocGenGrpcJava
+    }
+    grpc {
+        artifact = rootProject.ext.protocGenGrpcJava
+    }
+    grpckt {
+        artifact = rootProject.ext.protocGenGrpcKotlin
+    }
+  }
+  generateProtoTasks {
+    all().each { task ->
+      task.plugins {
+        java {
+          option "lite"
+        }
+        grpc {
+          option "lite"
+        }
+        grpckt {
+          option "lite"
+        }
+      }
+      task.builtins {
+        kotlin {
+          option "lite"
+        }
+      }
+    }
+  }
+}
+
+dependencies {
+    implementation google.protobuf.kotlin.lite
+    implementation google.grpc.protobuf.lite
+    implementation google.grpc.stub
+    implementation google.grpc.kotlin.stub
+}
