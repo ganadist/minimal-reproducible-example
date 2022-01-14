@@ -30,3 +30,7 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext.protocArtifact = "com.google.protobuf:protoc:${google.versions.protobuf.get()}"
+ext.protocGenGrpcJava = "io.grpc:protoc-gen-grpc-java:${google.versions.grpc.get()}"
+ext.protocGenGrpcKotlin = "io.grpc:protoc-gen-grpc-kotlin:${google.versions.grpckotlin.get()}:jdk7@jar"

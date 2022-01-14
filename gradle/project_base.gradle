@@ -49,9 +49,9 @@ android {
 }
 
 
-tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:all" << "-Werror"
-}
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs << "-Xlint:all" << "-Werror"
+//}
 
 configurations.all {
     // Conflicted with Android platform API such as org.apache.http

@@ -1,4 +1,4 @@
 apply from: "gradle/version_catalogs.gradle"
 
-include ':app', ':dynamicfeature1'
+include ':app', ':dynamicfeature1', ":lib:proto"
 rootProject.name='My Application'
