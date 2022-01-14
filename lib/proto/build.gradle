@@ -1,7 +1,13 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+import com.android.build.gradle.tasks.JavaDocGenerationTask
+import com.android.build.gradle.tasks.JavaDocJarTask
+import com.android.build.gradle.tasks.SourceJarTask
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
     alias(google.plugins.protobuf.gradle)
+    id 'org.jetbrains.dokka'
 }
 
 android {
@@ -54,6 +60,50 @@ protobuf {
       }
     }
   }
+}
+
+tasks.withType(SourceJarTask).configureEach {
+    // add missing sources
+    from file("$buildDir/generated/source/proto/release/kotlin")
+    from file("$buildDir/generated/source/proto/release/grpckt")
+}
+
+/**
+ * JavaDocGenerationTask cannot perform dokka with generated code from protobuf.
+ * So added a custom task named `javadocJar` to generate javadoc, and replace it
+ */
+
+/*
+tasks.withType(JavaDocGenerationTask).configureEach {
+    sources.files.addAll(files("$buildDir/generated/source/proto/release/kotlin"))
+    sources.files.addAll(files("$buildDir/generated/source/proto/release/grpckt"))
+}
+*/
+
+tasks.withType(JavaDocJarTask).configureEach {
+    dependsOn javadocJar
+    enabled = false
+}
+
+dokkaJavadoc.configure {
+    dependsOn "generateReleaseProto"
+    dokkaSourceSets {
+        named("main") {
+            sourceRoots.from file("$buildDir/generated/source/proto/release/java")
+            sourceRoots.from file("$buildDir/generated/source/proto/release/kotlin")
+            sourceRoots.from file("$buildDir/generated/source/proto/release/grpc")
+            sourceRoots.from file("$buildDir/generated/source/proto/release/grpckt")
+            // include generated sources
+            suppressGeneratedFiles.set(false)
+        }
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: "dokkaJavadoc") {
+    archiveClassifier = "javadoc"
+    from file("$buildDir/dokka/javadoc")
+    archiveFileName = "out.jar"
+    destinationDirectory = file("$buildDir/intermediates/java_doc_jar/release")
 }
 
 dependencies {

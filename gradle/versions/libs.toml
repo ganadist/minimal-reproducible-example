@@ -39,6 +39,8 @@ android-gradle = { module = "com.android.tools.build:gradle", version.ref = "and
 
 junit4 = { module = "junit:junit", version.ref = "junit4" }
 
+dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin" }
+
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
 
@@ -59,3 +61,6 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 robolectric-Core = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
 robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
+
+[plugins]
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
