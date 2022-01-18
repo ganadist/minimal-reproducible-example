@@ -41,4 +41,8 @@ dependencies {
     implementation androidx.constraintlayout
     implementation androidx.room.ktx
     implementation androidx.room.runtime
+
+    testImplementation google.play.services.base
+    testImplementation google.play.services.location
+    testImplementation libs.robolectric.shadows.playservices
 }

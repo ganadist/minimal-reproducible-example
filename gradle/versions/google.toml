@@ -7,12 +7,14 @@ firebase = "28.1.0"
 play-core = "1.10.0"
 
 # https://developers.google.com/android/guides/releases
-play-services-ads = "19.6.0"
+play-services-ads = "20.4.0"
 play-services-analytics = "17.0.0"
 play-services-auth = "19.0.0"
+play-services-base = "17.5.0"
 play-services-location = "18.0.0"
 play-services-maps = "17.0.1"
 play-services-osslicenses = "17.0.0"
+play-services-tasks = "18.0.1"
 play-services-vision = "20.1.3"
 
 # https://github.com/google/exoplayer/releases
@@ -44,9 +46,11 @@ firebase-messaging = { module = "com.google.firebase:firebase-messaging", versio
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
 play-services-analytics = { module = "com.google.android.gms:play-services-analytics", version.ref = "play-services-analytics" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth" }
+play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "play-services-base" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 play-services-osslicenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "play-services-osslicenses" }
+play-services-tasks = { module = "com.google.android.gms:play-services-tasks", version.ref = "play-services-tasks" }
 play-services-vision = { module = "com.google.android.gms:play-services-vision", version.ref = "play-services-vision" }
 
 exoplayer-core = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoplayer" }
