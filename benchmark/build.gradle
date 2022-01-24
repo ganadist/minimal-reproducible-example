@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.test'
+    id 'kotlin-android'
+}
+
+// [START macrobenchmark_setup_android]
+android {
+    // [START_EXCLUDE]
+    compileSdkVersion 31
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 31
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    // [END_EXCLUDE]
+    // Note that your module name may have different name
+    targetProjectPath = ":app"
+    // Enable the benchmark to run separately from the app process
+    experimentalProperties["android.experimental.self-instrumenting"] = true
+
+
+    flavorDimensions 'default'
+    productFlavors {
+        production { }
+    }
+    buildTypes {
+        // declare a build type to match the target app's build type
+        release {
+            debuggable = true
+            signingConfig = debug.signingConfig
+        }
+    }
+}
+// [END macrobenchmark_setup_android]
+
+// [START macrobenchmark_setup_variant]
+androidComponents {
+    beforeVariants(selector().all()) {
+        // enable only the benchmark buildType, since we only want to measure close to release performance
+        enabled = (buildType == 'release' && flavorName == 'production')
+    }
+}
+// [END macrobenchmark_setup_variant]
+
+// [START macrobenchmark_setup_dependencies]
+dependencies {
+    // [START_EXCLUDE]
+    implementation androidx.test.ext.junit.ktx
+    implementation androidx.test.espresso.core
+    implementation androidx.test.uiautomator
+    // [END_EXCLUDE]
+    implementation androidx.benchmark.macro.junit4
+}
+// [END macrobenchmark_setup_dependencies]
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
+}
