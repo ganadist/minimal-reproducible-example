@@ -7,14 +7,16 @@
         dist:instant="false"
         dist:title="@string/title_dynamicfeature1">
         <dist:delivery>
-            <dist:on-demand />
+            <dist:install-time>
+
+            </dist:install-time>
         </dist:delivery>
 
-        <dist:fusing dist:include="false" />
+        <dist:fusing dist:include="true" />
     </dist:module>
 
     <application>
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".TestActivity" />
     </application>
 
 </manifest>
