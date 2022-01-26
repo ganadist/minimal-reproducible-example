@@ -21,6 +21,8 @@ ksp = "1.6.10-1.0.1"
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
 
+commons-codec = "1.15"
+
 # https://junit.org/junit4/
 junit4 = "4.13.2"
 
@@ -59,3 +61,5 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 robolectric-Core = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
 robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
+
+commons-codec = { module = "commons-codec:commons-codec", version.ref = "commons-codec" }

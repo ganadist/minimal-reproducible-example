@@ -71,6 +71,11 @@ dependencies {
     testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin
 
+    testImplementation androidx.test.ktx
+    testImplementation androidx.test.rules
+    testImplementation androidx.test.runner
+    testImplementation androidx.test.ext.junit.ktx
+
     androidTestImplementation androidx.test.ext.junit.ktx
     androidTestImplementation androidx.test.espresso.core
 }

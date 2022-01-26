@@ -41,4 +41,7 @@ dependencies {
     implementation androidx.constraintlayout
     implementation androidx.room.ktx
     implementation androidx.room.runtime
+    implementation androidx.exifinterface
+
+    testImplementation libs.commons.codec
 }
