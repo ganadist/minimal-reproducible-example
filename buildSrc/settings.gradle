@@ -1,0 +1,2 @@
+apply from: "gradle/repositories.gradle"
+apply from: "gradle/version_catalogs.gradle"
