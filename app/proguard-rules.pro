@@ -19,3 +19,21 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# https://www.guardsquare.com/en/products/proguard/manual/examples#logging
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+    public static int wtf(...);
+    public static int println(...);
+}
+
+-assumenosideeffects class java.lang.Throwable {
+    public void printStackTrace();
+}
+-assumenosideeffects class * extends java.lang.Throwable {
+    public void printStackTrace();
+}
