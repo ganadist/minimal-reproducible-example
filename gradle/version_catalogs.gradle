@@ -4,10 +4,10 @@ dependencyResolutionManagement {
         libs {
             from(files("versions/libs.toml"))
         }
-        androidx {
+        androidxLibs {
             from(files("versions/androidx.toml"))
         }
-        google {
+        googleLibs {
             from(files("versions/google.toml"))
         }
     }
