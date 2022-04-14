@@ -1,18 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath libs.android.gradle
-        classpath libs.kotlin.gradle
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
 subprojects {
     repositories {
         google()
@@ -30,3 +17,31 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+def execAndGetStdout(String... args) {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine args
+        standardOutput = stdout
+        errorOutput = java.io.OutputStream.nullOutputStream()
+        ignoreExitValue = true
+    }
+    return stdout.toString().trim()
+}
+
+ext.execAndGetStdout = this.&execAndGetStdout
+
+def getPhysicalMemorySizeGb() {
+    long memSizeGb = 0
+
+    def TOTAL_PHYSICAL_MEMORY = "TotalPhysicalMemory="
+    def line = ext.execAndGetStdout("wmic", "ComputerSystem", "get", "TotalPhysicalMemory", "/value").trim()
+    if (line.startsWith(TOTAL_PHYSICAL_MEMORY)) {
+        line = line.substring(TOTAL_PHYSICAL_MEMORY.length())
+        memSizeGb = Long.valueOf(line) / 1024 / 1024 / 1024
+    }
+    return memSizeGb
+
+}
+
+println("Mem: ${getPhysicalMemorySizeGb()})
