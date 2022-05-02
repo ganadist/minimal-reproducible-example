@@ -2,12 +2,12 @@ def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic
 def hasKotlinPlugin = pluginManager.hasPlugin("kotlin-android")                                      
 
 android {
-    compileSdkVersion "android-30"
-    buildToolsVersion "30.0.3"
+    compileSdkVersion "android-32"
+    buildToolsVersion "32.0.0"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion "30"
+        targetSdkVersion "32"
 	    compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8                                              
             targetCompatibility JavaVersion.VERSION_1_8 
