@@ -67,9 +67,10 @@ configurations.all {
 
 dependencies {
     testImplementation libs.junit4
-    testImplementation libs.robolectric.core
+    testImplementation libs.robolectric
     testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin
+    testImplementation androidx.test.ktx
 
     androidTestImplementation androidx.test.ext.junit.ktx
     androidTestImplementation androidx.test.espresso.core

@@ -56,6 +56,6 @@ mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-Cor
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-Core" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
-robolectric-Core = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
 robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
