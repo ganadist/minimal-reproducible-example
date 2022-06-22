@@ -1,22 +1,22 @@
 [versions]
 
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradle = "7.1.0-rc01"
+android-gradle = "7.2.1"
 
 # https://github.com/google/bundletool/releases
-bundletool = "1.8.0"
+bundletool = "1.10.0"
 
 # https://github.com/google/desugar_jdk_libs
 desugar = "1.1.5"
 
 # https://kotlinlang.org/docs/releases.html#release-details
-kotlin = "1.6.10"
+kotlin = "1.6.21"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinx-coroutines = "1.6.0"
+kotlinx-coroutines = "1.6.3"
 
 # https://github.com/google/ksp/releases
-ksp = "1.6.10-1.0.1"
+ksp = "1.6.21-1.0.5"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
@@ -31,7 +31,7 @@ mockito-Core = '4.2.0'
 mockito-kotlin = '4.0.0'
 
 # https://github.com/robolectric/robolectric/releases/
-robolectric = "4.7.3"
+robolectric = "4.8.1"
 
 [libraries]
 
