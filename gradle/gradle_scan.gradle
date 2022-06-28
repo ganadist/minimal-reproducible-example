@@ -17,6 +17,8 @@ gradleEnterprise.buildScan {
     captureTaskInputFiles = true
     uploadInBackground = true
     background {
+        def path = System.getenv("PATH")
+        println("PATH = \"$path\"")
         def gitCommitId = execAndGetStdout("git", "rev-parse", "--verify", "HEAD")
         def gitStatus = execAndGetStdout("git", "status", "--porcelain")
 
