@@ -1,4 +1,15 @@
+pluginManagement {
+    plugins {
+        id 'com.gradle.enterprise' version '3.10.2'
+    }
+}
+
+plugins {                                                                                            
+    id("com.gradle.enterprise")                                                                      
+}
+
 apply from: "gradle/version_catalogs.gradle"
+apply from: "gradle/gradle_scan.gradle"
 
 include ':app', ':dynamicfeature1'
 rootProject.name='My Application'

@@ -1,0 +1,26 @@
+def execAndGetStdout(String... args) {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine args
+        standardOutput = stdout
+        errorOutput = java.io.OutputStream.nullOutputStream()
+        ignoreExitValue = true
+    }
+    return stdout.toString().trim()
+}
+
+gradleEnterprise.buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+    termsOfServiceAgree = "yes"
+
+    publishAlways()
+    captureTaskInputFiles = true
+    uploadInBackground = true
+    background {
+        def gitCommitId = execAndGetStdout("git", "rev-parse", "--verify", "HEAD")
+        def gitStatus = execAndGetStdout("git", "status", "--porcelain")
+
+        value("Git Commit ID", gitCommitId)
+        value("Git status", gitStatus)
+    }
+}
