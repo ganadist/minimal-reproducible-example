@@ -3,6 +3,9 @@ dependencyResolutionManagement {
     versionCatalogs {
         libs {
             from(files("versions/libs.toml"))
+	    // load versions from gradle.properties
+            version("r8", r8Version)
+            version("android-gradle", androidGradlePluginVersion)
         }
         androidx {
             from(files("versions/androidx.toml"))
