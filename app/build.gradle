@@ -16,11 +16,19 @@ android {
         applicationId "com.example.myapplication"
         versionCode code 
         versionName "1.0"
+        compileOptions {
+            coreLibraryDesugaringEnabled true
+        }
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            postprocessing {
+                removeUnusedCode true
+                optimizeCode true
+                obfuscate true
+                removeUnusedResources true
+                proguardFiles file('proguards-rules.pro')
+            }
         }
     }
     dynamicFeatures = [":dynamicfeature1"]
@@ -35,6 +43,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7
     implementation androidx.appcompat
     implementation androidx.core.ktx
