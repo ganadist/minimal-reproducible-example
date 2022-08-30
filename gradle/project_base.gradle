@@ -1,77 +1,80 @@
-def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
-def hasKotlinPlugin = pluginManager.hasPlugin("kotlin-android")                                      
 
-android {
-    compileSdkVersion "android-32"
-    buildToolsVersion "32.0.0"
+plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
 
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion "32"
-	    compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8                                              
-            targetCompatibility JavaVersion.VERSION_1_8 
-    	}
+    def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
 
-        if (hasKotlinPlugin) {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_1_8.toString()                                       
-                allWarningsAsErrors = true
+    android {
+        buildToolsVersion "33.0.0"
+        compileSdk 33
+
+        defaultConfig {
+            minSdk 21
+            targetSdk 33
+            ndkVersion "25.0.8775105"
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_11
+                targetCompatibility JavaVersion.VERSION_11
             }
+
+            vectorDrawables.useSupportLibrary = true
+
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            testInstrumentationRunnerArguments.putIfAbsent("clearPackageData", "true")
         }
 
-        vectorDrawables.useSupportLibrary = true
+        testOptions {
+            execution = "ANDROIDX_TEST_ORCHESTRATOR"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments.putIfAbsent("clearPackageData", "true")
+            unitTests {
+                // https://github.com/robolectric/robolectric/issues/5597#issuecomment-876564570
+                includeAndroidResources = !hasDynamicFeatureModulePlugin
+
+                all {
+                    testLogging {
+                        events "standardOut", "started", "passed", "failed", "skipped"
+                        showCauses = true
+                        showExceptions = true
+                        showStackTraces = true
+                        showStandardStreams = true
+
+                    }
+                    systemProperty "robolectric.logging", "stdout"
+                }
+            }
+        }
     }
 
-    testOptions {
-        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    configurations.all {
+        // Conflicted with Android platform API such as org.apache.http
+        exclude group: "org.apache.httpcomponents"
+        // Conflicted with Android platform API such as org.json
+        exclude group: "org.json", module: "json"
+        // Conflicted with Android platform API such as javax.xml, org.xml, and org.w3c.dom
+        exclude group: "xalan", module: "xalan"
+        // Conflicted with Android platform API such as org.xmlpull
+        exclude group: "org.ogce", module: "xpp3"
+        exclude group: "xpp3", module: "xpp3"
+    }
 
-        unitTests {
-            // https://github.com/robolectric/robolectric/issues/5597#issuecomment-876564570
-            includeAndroidResources = !hasDynamicFeatureModulePlugin
+    dependencies {
+        testImplementation libs.junit4
+        testImplementation libs.robolectric
+        testImplementation libs.mockito.core
+        testImplementation libs.mockito.kotlin
+        testImplementation androidx.test.ktx
 
-            all {
-                testLogging {
-                    events "standardOut", "started", "passed", "failed", "skipped"
-                    showCauses = true
-                    showExceptions = true
-                    showStackTraces = true
-                    showStandardStreams = true
-
-                }
-                systemProperty "robolectric.logging", "stdout"
-            }
-        }
+        androidTestImplementation androidx.test.ext.junit.ktx
+        androidTestImplementation androidx.test.espresso.core
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+        allWarningsAsErrors = true
+    }
+}
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:all" << "-Werror"
-}
-
-configurations.all {
-    // Conflicted with Android platform API such as org.apache.http
-    exclude group: "org.apache.httpcomponents"
-    // Conflicted with Android platform API such as org.json
-    exclude group: "org.json", module: "json"
-    // Conflicted with Android platform API such as javax.xml, org.xml, and org.w3c.dom
-    exclude group: "xalan", module: "xalan"
-    // Conflicted with Android platform API such as org.xmlpull
-    exclude group: "org.ogce", module: "xpp3"
-    exclude group: "xpp3", module: "xpp3"
-}
-
-dependencies {
-    testImplementation libs.junit4
-    testImplementation libs.robolectric
-    testImplementation libs.mockito.core
-    testImplementation libs.mockito.kotlin
-    testImplementation androidx.test.ktx
-
-    androidTestImplementation androidx.test.ext.junit.ktx
-    androidTestImplementation androidx.test.espresso.core
 }
