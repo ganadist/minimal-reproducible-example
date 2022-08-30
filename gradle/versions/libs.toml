@@ -1,22 +1,25 @@
 [versions]
 
 # https://developer.android.com/studio/releases/gradle-plugin
-android-gradle = "7.2.1"
+android-gradle = "unspecified"
+
+# https://r8.googlesource.com/r8/+refs
+r8 = "unspecified"
 
 # https://github.com/google/bundletool/releases
 bundletool = "1.10.0"
 
 # https://github.com/google/desugar_jdk_libs
-desugar = "1.1.5"
+desugar = "1.2.0"
 
 # https://kotlinlang.org/docs/releases.html#release-details
-kotlin = "1.6.21"
+kotlin = "1.7.10"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinx-coroutines = "1.6.3"
+kotlinx-coroutines = "1.6.4"
 
 # https://github.com/google/ksp/releases
-ksp = "1.6.21-1.0.5"
+ksp = "1.7.10-1.0.7"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
@@ -35,7 +38,9 @@ robolectric = "4.8.1"
 
 [libraries]
 
+r8 = { module = "com.android.tools:r8", version.ref = "r8" }
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
 junit4 = { module = "junit:junit", version.ref = "junit4" }
 
