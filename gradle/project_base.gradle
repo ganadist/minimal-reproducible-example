@@ -1,7 +1,19 @@
 
 plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
-
     def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
+
+    androidComponents {
+        beforeVariants(selector().all()) {
+            switch(flavorName) {
+                case "develop":
+                    enabled = buildType == "debug"
+                    break
+                default:
+                    enabled = buildType == "release"
+                    break
+            }
+        }
+    }
 
     android {
         buildToolsVersion "33.0.0"
@@ -20,6 +32,12 @@ plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
 
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
             testInstrumentationRunnerArguments.putIfAbsent("clearPackageData", "true")
+        }
+
+        productFlavors.all {
+            if (name == "develop") {
+                isDefault = true
+            }
         }
 
         testOptions {
