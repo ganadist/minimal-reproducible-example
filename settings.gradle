@@ -1,3 +1,10 @@
+dependencyResolutionManagement {
+    repositories {
+	google()
+        mavenCentral()
+    }
+}
+
 apply from: "gradle/version_catalogs.gradle"
 
 include ':app', ':dynamicfeature1', ":shared"
