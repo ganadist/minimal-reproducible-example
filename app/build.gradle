@@ -4,18 +4,10 @@ plugins {
 }
 
 android {
-    def versionPropFile = file('version.properties')
-    def Properties versionProp = new Properties()
-    versionProp.load(new FileInputStream(versionPropFile))
-    def code = versionProp['VERSION_CODE'].toInteger()
-
-    //versionProp['VERSION_CODE'] = (code + 1).toString()
-    //versionProp.store(versionPropFile.newWriter(), null)
-
     defaultConfig {
         applicationId "com.example.myapplication"
-        versionCode code 
-        versionName "1.0"
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         compileOptions {
             coreLibraryDesugaringEnabled true
         }
