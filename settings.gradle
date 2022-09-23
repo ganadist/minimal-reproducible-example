@@ -1,6 +1,16 @@
 dependencyResolutionManagement {
     repositories {
-	google()
+	maven {
+	    url "file://${settings.settingsDir}/.m2/repository"
+	    content {
+	        includeModule("com.android.tools.lint", "lint-api")
+	    }
+	}
+	google() {
+	    content {
+	        excludeModule("com.android.tools.lint", "lint-api")
+	    }
+	}
         mavenCentral()
     }
 }
