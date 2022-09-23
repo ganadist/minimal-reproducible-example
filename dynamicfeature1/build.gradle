@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace "com.example.dynamicfeature1"
     defaultConfig {
     }
 

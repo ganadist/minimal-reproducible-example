@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace "com.example.myapplication"
     defaultConfig {
         applicationId "com.example.myapplication"
         versionCode rootProject.ext.versionCode
