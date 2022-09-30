@@ -6,6 +6,7 @@ dependencyResolutionManagement {
 	    // load versions from gradle.properties
             version("r8", r8Version)
             version("android-gradle", androidGradlePluginVersion)
+	    version("ksp", kspPluginVersion)
         }
         androidx {
             from(files("versions/androidx.toml"))

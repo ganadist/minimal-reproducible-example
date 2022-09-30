@@ -19,7 +19,7 @@ kotlin = "1.7.10"
 kotlinx-coroutines = "1.6.4"
 
 # https://github.com/google/ksp/releases
-ksp = "1.7.10-1.0.7"
+ksp = "unspecified"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
@@ -35,6 +35,9 @@ mockito-kotlin = '4.0.0'
 
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "4.8.1"
+
+# https://github.com/bumptech/glide/releases
+glide = "4.14.1"
 
 [libraries]
 
@@ -64,3 +67,10 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
 robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
+
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

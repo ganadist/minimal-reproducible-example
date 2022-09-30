@@ -1,0 +1,23 @@
+plugins {
+    id 'android-library'
+    id 'kotlin-android'
+}
+
+if (useKsp.toBoolean()) {
+    apply plugin: 'com.google.devtools.ksp'
+} else {
+    apply plugin: 'kotlin-kapt'
+}
+
+android {
+    namespace "com.example.mylib"
+}
+
+dependencies {
+    if (useKsp.toBoolean()) {
+        ksp libs.glide.ksp
+    } else {
+        kapt libs.glide.compiler
+    }
+    implementation libs.glide
+}

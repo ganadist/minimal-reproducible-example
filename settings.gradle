@@ -1,4 +1,15 @@
+pluginManagement {
+    repositories {
+	google()
+        mavenCentral()
+    }
+    plugins {
+        id 'com.google.devtools.ksp' version kspPluginVersion
+    }
+}
+
 dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
 	google()
         mavenCentral()
@@ -7,5 +18,5 @@ dependencyResolutionManagement {
 
 apply from: "gradle/version_catalogs.gradle"
 
-include ':app', ':dynamicfeature1', ":shared"
+include ':app', ':dynamicfeature1', ":shared", ":lib:glide"
 rootProject.name='My Application'
