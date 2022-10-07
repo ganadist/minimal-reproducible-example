@@ -1,5 +1,5 @@
-
 plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
+    project.apply plugin: "org.gradle.android.cache-fix"
     def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
 
     androidComponents {

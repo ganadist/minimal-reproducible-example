@@ -3,6 +3,8 @@
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradle = "unspecified"
 
+gradle-android-cache-fix = "2.5.6"
+
 # https://r8.googlesource.com/r8/+refs
 r8 = "unspecified"
 
@@ -74,3 +76,4 @@ glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+gradle-android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "gradle-android-cache-fix" }
