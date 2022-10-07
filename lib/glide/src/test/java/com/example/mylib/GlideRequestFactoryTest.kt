@@ -2,6 +2,7 @@ package com.example.mylib
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import com.bumptech.glide.RequestManager
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,7 +16,7 @@ class GlideRequestFactoryTest {
     private lateinit var context: Context
 
     @Mock
-    private lateinit var mockRequestManager: GlideRequests
+    private lateinit var mockRequestManager: RequestManager
 
     @Before
     fun setUp() {
