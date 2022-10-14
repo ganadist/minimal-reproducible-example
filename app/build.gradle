@@ -15,12 +15,20 @@ android {
     }
     buildTypes {
         release {
+            zipAlignEnabled true
             postprocessing {
                 removeUnusedCode true
                 optimizeCode true
                 obfuscate true
                 removeUnusedResources true
                 proguardFiles file('proguards-rules.pro')
+            }
+        }
+        releaseDebuggable {
+            initWith release
+            debuggable true
+            postprocessing {
+                obfuscate false
             }
         }
     }
@@ -38,9 +46,13 @@ android {
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7
-    implementation androidx.appcompat
     implementation androidx.core.ktx
     implementation androidx.constraintlayout
     implementation androidx.room.ktx
     implementation androidx.room.runtime
+
+    debugImplementation "androidx.appcompat:appcompat:1.7.0-alpha01"
+    releaseDebuggableImplementation "androidx.appcompat:appcompat:1.6.0-rc01"
+    releaseImplementation "androidx.appcompat:appcompat:1.5.1"
+
 }

@@ -1,6 +1,7 @@
 
 plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
     def hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
+    def hasAppModulePlugin = pluginManager.hasPlugin("com.android.application")
 
     androidComponents {
         beforeVariants(selector().all()) {
@@ -8,8 +9,9 @@ plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
                 case "develop":
                     enabled = buildType == "debug"
                     break
-                default:
+		case "production":
                     enabled = buildType == "release"
+                default:
                     break
             }
         }
@@ -57,6 +59,22 @@ plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
 
                     }
                     systemProperty "robolectric.logging", "stdout"
+                }
+            }
+        }
+
+        if (hasAppModulePlugin || hasDynamicFeatureModulePlugin) {
+            buildTypes {
+                debug {
+                    debuggable true
+                }
+                release {
+                    debuggable false
+                }
+                releaseDebuggable {
+                    initWith release
+                    debuggable true
+		    matchingFallbacks = ["debug"]
                 }
             }
         }
