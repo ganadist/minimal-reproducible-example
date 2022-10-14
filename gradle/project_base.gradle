@@ -86,13 +86,13 @@ plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
     }
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
         allWarningsAsErrors = true
     }
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xlint:all" << "-Werror"
 }
