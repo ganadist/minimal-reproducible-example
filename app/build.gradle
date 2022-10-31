@@ -33,6 +33,21 @@ android {
         rc { }
         production { }
     }
+    // Copied from https://developer.android.com/studio/test/gradle-managed-devices
+    testOptions {
+      managedDevices {
+        devices {
+          pixel (com.android.build.api.dsl.ManagedVirtualDevice) {
+            // Use device profiles you typically see in Android Studio.
+            device = "Pixel 2"
+            // Use only API levels 27 and higher.
+            apiLevel = 33
+            // To include Google services, use "google".
+            systemImageSource = "google"
+          }
+        }
+      }
+    }
 }
 
 dependencies {
@@ -43,4 +58,7 @@ dependencies {
     implementation androidx.constraintlayout
     implementation androidx.room.ktx
     implementation androidx.room.runtime
+    androidTestImplementation "androidx.test.ext:truth:1.4.0"
+    androidTestImplementation "com.google.truth:truth:1.1.3"
+
 }
