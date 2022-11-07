@@ -1,3 +1,43 @@
+pluginManagement {
+    repositories {
+        google() {
+	    content {
+	        includeGroupByRegex("com\\.android\\..*")
+	    }
+	}
+	gradlePluginPortal()
+    }
+
+    plugins {
+        id 'com.android.library' version "$androidGradlePluginVersion"
+        id 'com.android.application' version "$androidGradlePluginVersion"
+        id 'com.android.dynamic-feature' version "$androidGradlePluginVersion"
+        id 'com.android.settings' version "$androidGradlePluginVersion"
+    }
+}
+
+plugins {
+    id 'com.android.settings'
+}
+
+android {
+    compileSdk 33
+    minSdk 21
+    ndkVersion "25.0.8775105"
+    buildToolsVersion "33.0.0"
+    execution {
+        defaultProfile "minimal"
+        profiles {
+            minimal {
+                r8 {
+                    runInSeparateProcess true
+                    jvmOptions = ["-Xmx2g", "-XX:+UseParallelGC"]
+                }
+            }
+        }
+    }
+}
+
 dependencyResolutionManagement {
     repositories {
 	google()
