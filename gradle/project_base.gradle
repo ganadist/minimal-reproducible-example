@@ -16,13 +16,8 @@ plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
     }
 
     android {
-        buildToolsVersion "33.0.0"
-        compileSdk 33
-
         defaultConfig {
-            minSdk 21
             targetSdk 33
-            ndkVersion "25.0.8775105"
             compileOptions {
                 sourceCompatibility JavaVersion.VERSION_11
                 targetCompatibility JavaVersion.VERSION_11
