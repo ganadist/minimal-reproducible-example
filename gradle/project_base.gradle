@@ -74,10 +74,10 @@ plugins.withType(com.android.build.gradle.api.AndroidBasePlugin) {
         testImplementation libs.robolectric
         testImplementation libs.mockito.core
         testImplementation libs.mockito.kotlin
-        testImplementation androidx.test.ktx
+        testImplementation androidxLibs.test.ktx
 
-        androidTestImplementation androidx.test.ext.junit.ktx
-        androidTestImplementation androidx.test.espresso.core
+        androidTestImplementation androidxLibs.test.ext.junit.ktx
+        androidTestImplementation androidxLibs.test.espresso.core
     }
 }
 

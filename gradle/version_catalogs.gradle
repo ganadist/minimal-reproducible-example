@@ -7,10 +7,10 @@ dependencyResolutionManagement {
             version("r8", r8Version)
             version("android-gradle", androidGradlePluginVersion)
         }
-        androidx {
+        androidxLibs {
             from(files("versions/androidx.toml"))
         }
-        google {
+        googleLibs {
             from(files("versions/google.toml"))
         }
     }

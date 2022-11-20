@@ -3,6 +3,10 @@
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradle = "unspecified"
 
+gradle-test-retry = "1.4.1"
+
+android-gradle-cache-fix = "2.6.0"
+
 # https://r8.googlesource.com/r8/+refs
 r8 = "unspecified"
 
@@ -19,7 +23,7 @@ kotlin = "1.7.10"
 kotlinx-coroutines = "1.6.4"
 
 # https://github.com/google/ksp/releases
-ksp = "1.7.10-1.0.7"
+ksp = "1.7.10-1.0.6"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
@@ -35,6 +39,7 @@ mockito-kotlin = '4.0.0'
 
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "4.8.1"
+
 
 [libraries]
 
@@ -52,10 +57,16 @@ kotlin-stdlib-jdk7 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", versi
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-test-junit =  { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin"}
 
+ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
+
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-rx2 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "kotlinx-coroutines" }
+
+gradle-test-retry = { module = "org.gradle:test-retry-gradle-plugin", version.ref = "gradle-test-retry"}
+
+android-gradle-cache-fix = { module = "gradle.plugin.org.gradle.android:android-cache-fix-gradle-plugin", version.ref = "android-gradle-cache-fix"}
 
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-Core" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-Core" }

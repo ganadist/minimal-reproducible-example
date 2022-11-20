@@ -26,6 +26,10 @@ android {
     }
     dynamicFeatures = [":dynamicfeature1"]
 
+    testFixtures {
+        enable = true
+    }
+
     flavorDimensions 'default'
     productFlavors {
         develop { }
@@ -38,9 +42,11 @@ android {
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7
-    implementation androidx.appcompat
-    implementation androidx.core.ktx
-    implementation androidx.constraintlayout
-    implementation androidx.room.ktx
-    implementation androidx.room.runtime
+    implementation androidxLibs.appcompat
+    implementation androidxLibs.core.ktx
+    implementation androidxLibs.constraintlayout
+    implementation androidxLibs.room.ktx
+    implementation androidxLibs.room.runtime
+
+    testImplementation testFixtures(project(":shared"))
 }
