@@ -20,8 +20,8 @@ android {
 dependencies {
     implementation project(':app')
     implementation libs.kotlin.stdlib.jdk7
-    implementation androidx.appcompat
-    implementation androidx.constraintlayout
-    implementation androidx.room.ktx
-    implementation androidx.room.runtime
+    implementation androidxLibs.appcompat
+    implementation androidxLibs.constraintlayout
+    implementation androidxLibs.room.ktx
+    implementation androidxLibs.room.runtime
 }
