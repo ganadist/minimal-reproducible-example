@@ -6,6 +6,8 @@ subprojects {
     project.apply from: "$rootDir/gradle/project_base.gradle"
 }
 
+apply from: "$rootDir/gradle/ktlint.gradle"
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -1,0 +1,60 @@
+# This file is the top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+max_line_length = 100
+tab_width = 4
+trim_trailing_whitespace = true
+ij_continuation_indent_size = 8
+ij_smart_tabs = false
+
+[{*.kt,*.kts}]
+# https://pinterest.github.io/ktlint/rules/configuration-ktlint/
+ktlint_code_style = android
+
+## `Set from...` on the right -> (`Predefined style`) -> `Kotlin style guide` (Kotlin plugin 1.2.20+).
+ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+
+## open `Code Generation` tab
+# uncheck `Line comment at first column`;
+ij_kotlin_line_comment_at_first_column = false
+# select `Add a space at comment start`
+ij_kotlin_line_comment_add_space = true
+
+## open `Imports tab`
+# select `Use single name import` (all of them);
+ij_kotlin_name_count_to_use_star_import = 2147483647
+ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+
+## open `Wrapping and Braces` tab
+# change `Keep Maximum Blank Lines` / `In declarations` & `In code` to 1
+ij_kotlin_keep_blank_lines_in_declarations = 1
+ij_kotlin_keep_blank_lines_in_code = 1
+# and `Before '}'` to 0
+ij_kotlin_keep_blank_lines_before_right_brace = 0
+
+## open `Wrapping and Braces` tab
+# uncheck `Function declaration parameters` / `Align when multiline`.
+ij_kotlin_align_multiline_parameters = false
+
+## open `Tabs and Indents` tab
+# change `Continuation indent` to the same value as `Indent` (4 by default)
+continuation_indent_size = 4
+ij_continuation_indent_size = 4
+
+# https://bts.linecorp.com/browse/LINEAND-51575
+# Other: Insert imports for nested classes -> false
+ij_kotlin_import_nested_classes = false
+# Import Layout: import all other imports, then import all alias imports
+ij_kotlin_imports_layout = *,^
+
+# trailing_comma rules still have issue.
+# https://github.com/pinterest/ktlint/issues/1557
+ij_kotlin_allow_trailing_comma = false
+ij_kotlin_allow_trailing_comma_on_call_site = false
+
