@@ -1,0 +1,31 @@
+plugins {
+    id "com.android.library"
+}
+
+android {
+    namespace = "com.myapplication.buildconfig"
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+	buildConfigField("String", "VERSION_NAME", "String.valueOf(\"1.0.0\")")
+	buildConfigField("int", "VERSION_CODE", "Integer.valueOf(100)")
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        develop {
+            buildConfigField "String", "Pluu", "String.valueOf(\"yanolja\")"
+	}
+	beta {
+            buildConfigField "String", "Pluu", "String.valueOf(\"naver\")"
+	}
+	staging {
+            buildConfigField "String", "Pluu", "String.valueOf(\"kakaobank\")"
+	}
+	production {
+            buildConfigField "String", "Pluu", "String.valueOf(\"???\")"
+	}
+    }
+}

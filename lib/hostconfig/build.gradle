@@ -1,0 +1,20 @@
+plugins {
+    id "com.android.library"
+}
+
+android {
+    namespace = "com.myapplication.hostconfig"
+}
+
+dependencies {
+    // use stub when compile time
+    compileOnly(project(":lib:buildconfig-stub"))
+    testCompileOnly(project(":lib:buildconfig-stub"))
+    
+    // use developDebug flavor when perform unittest with debug buildType
+    testDebugRuntimeOnly(project(path: ":lib:buildconfig", configuration: "developDebugRuntimeElements"))
+
+    // use productionRelease flavor when perform unittest with debug buildType
+    testReleaseRuntimeOnly(project(path: ":lib:buildconfig", configuration: "productionReleaseRuntimeElements"))
+}
+ 

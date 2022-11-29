@@ -47,4 +47,6 @@ dependencies {
     implementation androidxLibs.constraintlayout
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+    implementation project(":lib:hostconfig")
+    implementation project(":lib:buildconfig")
 }

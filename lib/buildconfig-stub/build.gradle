@@ -1,0 +1,17 @@
+plugins {
+    id "com.android.library"
+}
+
+android {
+    namespace = "com.myapplication.buildconfig"
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+	buildConfigField("String", "VERSION_NAME", "String.valueOf(\"0\")")
+	buildConfigField("int", "VERSION_CODE", "Integer.valueOf(0)")
+        buildConfigField "String", "Pluu", "String.valueOf(\"stub\")"
+        buildConfigField "String", "FLAVOR", "String.valueOf(\"stub\")"
+    }
+}
