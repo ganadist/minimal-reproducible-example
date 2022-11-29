@@ -1,1 +1,0 @@
-apply from: "gradle/version_catalogs.gradle"

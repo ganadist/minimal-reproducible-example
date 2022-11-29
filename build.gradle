@@ -1,9 +1,35 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+/*
+buildscript {
+    def r8Version = libs.versions.r8.get()
+    if (!r8Version.isEmpty()) {
+	ext.repos.r8(repositories, r8Version)
+
+        dependencies {
+            logger.warn("R8 $r8Version will be applied")
+            classpath libs.r8
+        }
+    }
+
+    ext.repos.google(repositories)
+    ext.repos.mavenCentral(repositories)
+
+    dependencies {
+        classpath libs.android.gradle
+        classpath libs.kotlin.gradle
+    }
+}
+*/
+
+plugins {
+    id "com.myapplication.android.builder" apply false
+    alias(libs.plugins.gradle.test.retry) apply false
+}
 
 apply from: "$rootDir/gradle/build_constant.gradle"
 
 subprojects {
-    project.apply from: "$rootDir/gradle/project_base.gradle"
+    project.apply plugin: "com.myapplication.android.builder"
 }
 
 task clean(type: Delete) {

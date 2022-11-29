@@ -1,6 +1,6 @@
 plugins {
     id("com.android.dynamic-feature")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -12,7 +12,7 @@ android {
     productFlavors {
         develop { }
         beta { }
-        rc { }
+        staging { }
         production { }
     }
 }
