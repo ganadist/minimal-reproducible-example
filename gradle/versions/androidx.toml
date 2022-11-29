@@ -1,63 +1,89 @@
+###
+### This file is a version catalog of AndroidX
+### These values can be referenced with `androidxLibs` accessor
+###   example: activity-ktx -> implementation androidxLibs.activity.ktx
+
 [versions]
+# https://developer.android.com/studio/releases/gradle-plugin
+# This will be overriden by gradle.properties
+android-gradle = "unspecified"
 
 # https://developer.android.com/jetpack/androidx/versions
 activity = "1.6.1"
 annotation = "1.5.0"
+annotation-experimental = '1.3.0'
 appcompat = "1.5.1"
 arch-core = "2.1.0"
+benchmark = "1.1.1"
 biometric = "1.1.0"
 browser = "1.4.0"
 camera = "1.1.0"
 cardview = "1.0.0"
 constraintlayout = "2.1.4"
-compose = "1.2.1"
+constraintlayout-compose = "1.0.1"
+compose-bom = '2022.11.00'
+compose-compiler = "1.3.2"
 concurrent = "1.1.0"
-core = "1.8.0"
+core = "1.9.0"
+datastore = "1.0.0"
 dynamicanimation = "1.0.0"
-exifinterface = "1.3.2"
-fragment = "1.5.2"
+exifinterface = "1.3.5"
+fragment = "1.5.4"
+google-shortcuts = "1.0.1"
 gridlayout = "1.0.0"
 interpolator = "1.0.0"
 legacy-support-v4 = "1.0.0"
 legacy-support-v13 = "1.0.0"
 lifecycle = "2.5.1"
 loader = "1.1.0"
-localbroadcastmanager = "1.0.0"
-media2 = "1.2.1"
-navigation = "2.5.2"
+localbroadcastmanager = "1.1.0"
+media2 = "1.1.3"
+navigation = "2.5.3"
 paging = "3.1.1"
 palette = "1.0.0"
 percentlayout = "1.0.0"
 preference = "1.2.0"
 recyclerview = "1.2.1"
+recyclerview-selection = "1.1.0"
 room = "2.4.3"
 savedstate = "1.2.0"
-security-crypto = "1.0.0"
+slidingpanelayout = "1.2.0"
+splashscreen = "1.0.0"
 startup = "1.1.1"
 swiperefreshlayout = "1.1.0"
 work = "2.7.1"
-test-Core = "1.4.0"
-test-espresso = "3.4.0"
-test-ext-junit = "1.1.3"
-test-ext-truth = "1.4.0"
+test-annotation = "1.0.1"
+test-core = "1.5.0"
+test-espresso = "3.5.0"
+test-ext-junit = "1.1.4"
+test-ext-truth = "1.5.0"
+test-monitor="1.6.0"
+test-orchestrator="1.4.2"
+test-services="1.4.2"
 test-uiautomator = "2.2.0"
 tracing = "1.1.0"
 transition = "1.4.1"
 vectordrawable = "1.1.0"
 versionedparcelable = "1.1.1"
 viewpager2 = "1.0.0"
-webkit = "1.5.0"
-
+webkit = "1.4.0"
+wear-remote-interaction = "1.0.0"
+window = "1.1.0-alpha03"
 
 [libraries]
 
 activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+annotation-experimental = { module = "androidx.annotation:annotation-experimental", version.ref = "annotation-experimental" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 
 arch-core-common = { module = "androidx.arch.core:core-common", version.ref = "arch-core" }
 arch-core-runtime = { module = "androidx.arch.core:core-runtime", version.ref = "arch-core" }
 arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "arch-core" }
+
+benchmark-junit4 = { module = "androidx.benchmark:benchmark-junit4", version.ref = "benchmark" }
+benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 
 biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 
@@ -69,20 +95,49 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 
 cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 
-compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
-compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose" }
-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "compose" }
-compose-runtime-rxjava2 = { module = "androidx.compose.runtime:runtime-rxjava2", version.ref = "compose" }
-compose-runtime-rxjava3 = { module = "androidx.compose.runtime:runtime-rxjava3", version.ref = "compose" }
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics"}
+compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
+compose-foundation = { module = "androidx.compose.foundation:foundation"}
+compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout"}
+compose-material = { module = "androidx.compose.material:material"}
+compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended"}
+compose-material3 = { module = "androidx.compose.material3:material3"}
+# class is reserved keyword, so removed -class suffix
+compose-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class"}
+compose-runtime = { module = "androidx.compose.runtime:runtime"}
+compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata"}
+# rxjava2 is obsoleted, and expose rxjava3 binding only
+#compose-runtime-rxjava2 = { module = "androidx.compose.runtime:runtime-rxjava2"}
+compose-runtime-rxjava3 = { module = "androidx.compose.runtime:runtime-rxjava3"}
+compose-ui = { module = "androidx.compose.ui:ui"}
+compose-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts"}
+compose-ui-util = { module = "androidx.compose.ui:ui-util"}
+compose-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding"}
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling"}
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"}
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4"}
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest"}
 
 concurrent-futures-ktx = { module = "androidx.concurrent:concurrent-futures-ktx", version.ref = "concurrent" }
 
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
 
+core = { module = "androidx.core:core", version.ref = "core" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
+core-google-shortcuts =  { module = "androidx.core:core-google-shortcuts", version.ref = "google-shortcuts" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+
+databinding-adapters = { module = "androidx.databinding:databinding-adapters", version.ref = "android-gradle" }
+databinding-common = { module = "androidx.databinding:databinding-common", version.ref = "android-gradle" }
+databinding-ktx = { module = "androidx.databinding:databinding-ktx", version.ref = "android-gradle" }
+databinding-runtime = { module = "androidx.databinding:databinding-runtime", version.ref = "android-gradle" }
+
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-rxjava3 = { module = "androidx.datastore:datastore-rxjava3", version.ref = "datastore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-preferences-rxjava3 = { module = "androidx.datastore:datastore-preferences-rxjava3", version.ref = "datastore" }
 
 dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation", version.ref = "dynamicanimation" }
 
@@ -98,6 +153,7 @@ interpolator = { module = "androidx.interpolator:interpolator", version.ref = "i
 legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacy-support-v4" }
 legacy-support-v13 = { module = "androidx.legacy:legacy-support-v13", version.ref = "legacy-support-v13" }
 
+lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
 lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
 lifecycle-livedata-core-ktx = { module = "androidx.lifecycle:lifecycle-livedata-core-ktx", version.ref = "lifecycle" }
 lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
@@ -105,6 +161,7 @@ lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.r
 lifecycle-reactivestreams-ktx = { module = "androidx.lifecycle:lifecycle-reactivestreams-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "lifecycle" }
 
@@ -116,8 +173,11 @@ media2-player = { module = "androidx.media2:media2-player", version.ref = "media
 media2-session = { module = "androidx.media2:media2-session", version.ref = "media2" }
 media2-widget = { module = "androidx.media2:media2-widget", version.ref = "media2" }
 
-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+navigation-compose = { module = "androidx.navigation:navigation", version.ref = "navigation" }
+navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
+navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
+navigation-dynamic-features-fragment = { module = "androidx.navigation:navigation-dynamic-features-fragment", version.ref = "navigation" }
+navigation-safeargs-gradle = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation" }
 
 paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
@@ -133,6 +193,7 @@ percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref =
 preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference" }
 
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerview-selection" }
 
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -140,22 +201,26 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "room" }
 room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "room" }
 room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 
 savedstate-ktx = { module = "androidx.savedstate:savedstate-ktx", version.ref = "savedstate" }
 
-security-crypto = { module = "androidx.security:security-crypto", version.ref = "security-crypto" }
+slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "slidingpanelayout" }
 
 startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startup" }
 
 swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
-test-ktx = { module = "androidx.test:core-ktx", version.ref = "test-Core" }
-test-monitor = { module = "androidx.test:monitor", version.ref = "test-Core" }
-test-orchestrator = { module = "androidx.test:orchestrator", version.ref = "test-Core" }
-test-rules = { module = "androidx.test:rules", version.ref = "test-Core" }
-test-runner = { module = "androidx.test:runner", version.ref = "test-Core" }
+test-annotation = { module = "androidx.test:annotation", version.ref = "test-annotation" }
+test-ktx = { module = "androidx.test:core-ktx", version.ref = "test-core" }
+test-monitor = { module = "androidx.test:monitor", version.ref = "test-monitor" }
+test-orchestrator = { module = "androidx.test:orchestrator", version.ref = "test-orchestrator" }
+test-rules = { module = "androidx.test:rules", version.ref = "test-core" }
+test-runner = { module = "androidx.test:runner", version.ref = "test-core" }
+test-services = { module = "androidx.test.services:test-services", version.ref = "test-services" }
+test-services-storage = { module = "androidx.test.services:storage", version.ref = "test-services" }
 
-test-espresso-Core = { module = "androidx.test.espresso:espresso-core", version.ref = "test-espresso" }
+test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "test-espresso" }
 test-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "test-espresso" }
 test-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "test-espresso" }
 test-espresso-web = { module = "androidx.test.espresso:espresso-web", version.ref = "test-espresso" }
@@ -169,7 +234,7 @@ tracing-ktx = { module = "androidx.tracing:tracing-ktx", version.ref = "tracing"
 
 transition-ktx = { module = "androidx.transition:transition-ktx", version.ref = "transition" }
 
-vectordrawable-Core = { module = "androidx.vectordrawable:vectordrawable", version.ref = "vectordrawable" }
+vectordrawable = { module = "androidx.vectordrawable:vectordrawable", version.ref = "vectordrawable" }
 vectordrawable-animated = { module = "androidx.vectordrawable:vectordrawable-animated", version.ref = "vectordrawable" }
 vectordrawable-seekable = { module = "androidx.vectordrawable:vectordrawable-seekable", version.ref = "vectordrawable" }
 
@@ -186,3 +251,42 @@ work-rxjava2 = { module = "androidx.work:work-rxjava2", version.ref = "work"}
 work-rxjava3 = { module = "androidx.work:work-rxjava3", version.ref = "work"}
 work-testing = { module = "androidx.work:work-testing", version.ref = "work"}
 
+wear-remote-interaction = { module = "androidx.wear:wear-remote-interactions", version.ref = "wear-remote-interaction"}
+
+window = { module = "androidx.window:window", version.ref = "window" }
+window-rxjava3 = { module = "androidx.window:window-rxjava3", version.ref = "window" }
+window-testing = { module = "androidx.window:window-testing", version.ref = "window" }
+
+[plugins]
+navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+
+[bundles]
+compose = [
+    "compose-runtime",
+    "compose-runtime-livedata",
+    "compose-foundation",
+    "compose-foundation-layout",
+    "compose-ui",
+    "compose-ui-util",
+    "compose-ui-viewbinding",
+    "compose-material",
+]
+
+test = [
+    "test-ktx",
+    "test-annotation",
+    "test-rules",
+    "test-runner",
+    "test-ext-junit-ktx",
+    "test-ext-truth",
+    "arch-core-testing",
+]
+
+espresso = [
+    "test-espresso-core",
+    "test-espresso-contrib",
+    "test-espresso-intents",
+    "test-espresso-web",
+    "test-uiautomator",
+]

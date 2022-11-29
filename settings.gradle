@@ -1,18 +1,18 @@
 pluginManagement {
-    repositories {
-        google() {
-	    content {
-	        includeGroupByRegex("com\\.android\\..*")
-	    }
-	}
-	gradlePluginPortal()
-    }
+    includeBuild("build-logic")
+
+    apply from: "$settingsDir/gradle/repositories.gradle"
+    settings.ext.repos.google(repositories)
+    settings.ext.repos.gradlePluginPortal(repositories)
 
     plugins {
         id 'com.android.library' version "$androidGradlePluginVersion"
         id 'com.android.application' version "$androidGradlePluginVersion"
         id 'com.android.dynamic-feature' version "$androidGradlePluginVersion"
         id 'com.android.settings' version "$androidGradlePluginVersion"
+        id 'org.jetbrains.kotlin.android' version "$kotlinVersion"
+        id 'org.jetbrains.kotlin.kapt' version "$kotlinVersion"
+        id 'org.gradle.test-retry' version "$gradleTestRetryVersion"
     }
 }
 
@@ -21,10 +21,19 @@ plugins {
 }
 
 android {
-    compileSdk 33
-    minSdk 21
-    ndkVersion "25.0.8775105"
-    buildToolsVersion "33.0.0"
+    def _minSdk = settings.getProperty("minSdk").toInteger()
+    def _compileSdkPreview = settings.getProperty("compileSdkPreview")
+    def _buildToolsVersion = settings.getProperty("buildToolsVersion")
+
+    if (_compileSdkPreview.isEmpty()) {
+        compileSdk settings.getProperty("compileSdk").toInteger()
+    } else {
+        compileSdkPreview _compileSdkPreview
+    }
+
+    minSdk _minSdk
+    ndkVersion "$NDK_VERSION"
+    buildToolsVersion _buildToolsVersion
     execution {
         defaultProfile "minimal"
         profiles {
@@ -39,10 +48,8 @@ android {
 }
 
 dependencyResolutionManagement {
-    repositories {
-	google()
-        mavenCentral()
-    }
+    settings.ext.repos.google(repositories)
+    settings.ext.repos.mavenCentral(repositories)
 }
 
 apply from: "gradle/version_catalogs.gradle"
