@@ -2,7 +2,6 @@ package com.myapplication.android.builder
 
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
-import org.gradle.testing.jacoco.tasks.JacocoReport
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureJacoco(
@@ -20,14 +19,6 @@ internal fun Project.configureJacoco(
         }
         testCoverage {
             jacocoVersion = "0.8.8"
-        }
-    }
-
-    tasks.withType(JacocoReport::class.java).configureEach {
-        reports {
-            csv.required.set(false)
-            html.required.set(true)
-            xml.required.set(true)
         }
     }
 }
