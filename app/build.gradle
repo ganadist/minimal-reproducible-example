@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation project(":lib:feature-api")
+    runtimeOnly project(":lib:feature-impl")
     coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7
     implementation androidxLibs.appcompat

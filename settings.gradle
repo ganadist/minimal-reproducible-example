@@ -56,4 +56,6 @@ apply from: "gradle/version_catalogs.gradle"
 
 include ':app', ':dynamicfeature1', ":shared"
 include ":lib:hostconfig"
+include ":lib:feature-api"
+include ":lib:feature-impl"
 rootProject.name='My Application'
