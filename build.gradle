@@ -35,3 +35,7 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+tasks.named("wrapper") {
+    println("wrapper = $gradleVersion")
+}
