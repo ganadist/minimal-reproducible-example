@@ -25,9 +25,10 @@ android {
     def _compileSdkPreview = settings.getProperty("compileSdkPreview")
     def _buildToolsVersion = settings.getProperty("buildToolsVersion")
 
-    if (_compileSdkPreview.isEmpty()) {
-        compileSdk settings.getProperty("compileSdk").toInteger()
-    } else {
+    compileSdk settings.getProperty("compileSdk").toInteger()
+    compileSdkExtension settings.getProperty("compileSdkExtension").toInteger()
+
+    if (!_compileSdkPreview.isEmpty()) {
         compileSdkPreview _compileSdkPreview
     }
 
