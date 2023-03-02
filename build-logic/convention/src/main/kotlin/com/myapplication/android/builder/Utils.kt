@@ -3,7 +3,6 @@ package com.myapplication.android.builder
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
@@ -24,7 +23,7 @@ internal fun String?.toIntOrZero(): Int = (this ?: "").toIntOrNull() ?: 0
 internal fun String.toCamelCase(): String = if (isEmpty()) {
     ""
 } else {
-    substring(0..0).toUpperCase(Locale.ROOT) + substring(1)
+    substring(0..0).uppercase() + substring(1)
 }
 
 internal fun getBuildDateTime(): Date {
