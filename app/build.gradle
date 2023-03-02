@@ -37,6 +37,11 @@ android {
         staging { }
         production { }
     }
+    sourceSets {
+        develop {
+            manifest.srcFile 'src/develop/AndroidManifest.xml'
+        }
+    }
 }
 
 dependencies {
