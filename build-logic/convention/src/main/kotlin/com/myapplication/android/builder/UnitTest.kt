@@ -1,6 +1,7 @@
 package com.myapplication.android.builder
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.ManagedVirtualDevice
 import java.time.Duration
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -34,6 +35,23 @@ internal fun Project.configureUnitTest(
                 // http://robolectric.org/getting-started/#building-with-android-studiogradle
                 // AGP does not support includeAndroidResources option for robolectric unittest on dynamic features, yet.
                 isIncludeAndroidResources = !hasDynamicFeatureModulePlugin
+            }
+
+            // https://developer.android.com/studio/test/gradle-managed-devices
+            managedDevices {
+                devices.register("gmd", ManagedVirtualDevice::class.java) {
+                    // Use device profiles you typically see in Android Studio.
+                    device = "Pixel 2"
+                    // Use only API levels 27 and higher.
+                    // And latest API levels is 30
+                    apiLevel = 30
+                    // available systemImageSource are
+                    // aosp
+                    // aosp-atd
+                    // google
+                    // google-atd
+                    systemImageSource = "google-atd"
+                }
             }
 
             // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#N281DB
