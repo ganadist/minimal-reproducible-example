@@ -38,12 +38,6 @@ class AndroidBuilderPlugin : Plugin<Project> {
                                 else -> variant.enable = variant.buildType == "release"
                             }
                         }
-                        onVariants(selector().all()) { variant ->
-                            // https://kotlinlang.org/docs/ksp-quickstart.html#make-ide-aware-of-generated-code
-                            // https://github.com/google/ksp/pull/1195
-                            val sourceRoot = "$buildDir/generated/ksp/${variant.name}"
-                            android.sourceSets[variant.name].kotlin.srcDir(sourceRoot)
-                        }
                     }
 
                     configureAndroid(android)
