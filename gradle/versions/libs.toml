@@ -38,7 +38,7 @@ mockito-Core = '4.2.0'
 mockito-kotlin = '4.0.0'
 
 # https://github.com/robolectric/robolectric/releases/
-robolectric = "4.8.1"
+robolectric = "4.9.2"
 
 
 [libraries]
