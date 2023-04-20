@@ -23,7 +23,7 @@ desugar = "1.2.0"
 kotlinx-coroutines = "1.6.4"
 
 # https://github.com/google/ksp/releases
-ksp = "1.8.20-RC-1.0.9"
+ksp = "1.8.20-1.0.11"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
