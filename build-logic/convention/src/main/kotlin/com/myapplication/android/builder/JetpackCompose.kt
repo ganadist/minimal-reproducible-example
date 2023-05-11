@@ -28,7 +28,6 @@ internal fun Project.configureJetpackCompose(
 
     val hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
     val checkComposeVersion = getProperty(CHECK_COMPOSE_VERSION_PROPERTY).toBoolean()
-    val composeBom = androidxLibs.findLibrary("compose-bom").get()
     afterEvaluate {
         val composeFeature = commonExtension.buildFeatures.compose
         if (composeFeature == true) {
@@ -42,7 +41,20 @@ internal fun Project.configureJetpackCompose(
             }
 
             dependencies {
-                add("implementation", platform(composeBom))
+                val composeBom = platform(androidxLibs.findLibrary("compose-bom").get())
+                
+                // Expose compose bom for all dependencies configurations
+                // Because all version catalog items about compose does not have version information
+                arrayOf(
+                    "api",
+                    "compileOnly",
+                    "implementation",
+                    "runtimeOnly",
+                    "androidTestImplementation"
+                ).forEach {
+                    add(it, composeBom)
+                }
+
                 addBundle("implementation", androidxLibs, "compose")
 
                 // https://issuetracker.google.com/issues/209688774
