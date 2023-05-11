@@ -20,10 +20,10 @@ bundletool = "1.10.0"
 desugar = "1.2.0"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinx-coroutines = "1.6.4"
+kotlinx-coroutines = "1.7.0"
 
 # https://github.com/google/ksp/releases
-ksp = "1.8.20-RC-1.0.9"
+ksp = "1.8.21-1.0.11"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "0.43.2"
@@ -38,7 +38,7 @@ mockito-Core = '4.2.0'
 mockito-kotlin = '4.0.0'
 
 # https://github.com/robolectric/robolectric/releases/
-robolectric = "4.8.1"
+robolectric = "4.10.2"
 
 
 [libraries]
