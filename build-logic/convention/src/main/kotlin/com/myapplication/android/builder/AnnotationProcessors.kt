@@ -12,7 +12,7 @@ import org.gradle.kotlin.dsl.getValue
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAnnotationProcessors(
-    commonExtension: CommonExtension<*, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *>
 ) {
     pluginManager.withPlugin(Const.KAPT_PLUGIN_ID) {
         throw GradleException(
