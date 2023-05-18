@@ -5,6 +5,9 @@ plugins {
 
 android {
     namespace "com.example.myapplication"
+
+    buildFeatures.compose = true
+
     defaultConfig {
         applicationId "com.example.myapplication"
         versionCode rootProject.ext.versionCode
@@ -47,4 +50,5 @@ dependencies {
     implementation androidxLibs.constraintlayout
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+
 }

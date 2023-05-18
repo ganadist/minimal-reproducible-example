@@ -76,6 +76,9 @@ robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient"
 robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
 
 [plugins]
+android-app = { id = "com.android.application", version.ref = "android-gradle" }
+android-lib = { id = "com.android.library", version.ref = "android-gradle" }
+android-dfm = { id = "com.android.dynamic-feature", version.ref = "android-gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }

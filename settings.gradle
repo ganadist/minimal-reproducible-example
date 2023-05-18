@@ -1,19 +1,31 @@
 pluginManagement {
-    includeBuild("build-logic")
+
+    // https://issuetracker.google.com/issues/258270051#comment16
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url = uri("https://storage.googleapis.com/r8-releases/raw")
+            }
+        }
+
+        dependencies {
+            if (!r8Version.isEmpty()) {
+                logger.warn("R8 $r8Version will be applied")
+                classpath "com.android.tools:r8:$r8Version"
+	    }
+	}
+    }
 
     apply from: "$settingsDir/gradle/repositories.gradle"
     settings.ext.repos.google(repositories)
     settings.ext.repos.gradlePluginPortal(repositories)
 
     plugins {
-        id 'com.android.library' version "$androidGradlePluginVersion"
-        id 'com.android.application' version "$androidGradlePluginVersion"
-        id 'com.android.dynamic-feature' version "$androidGradlePluginVersion"
         id 'com.android.settings' version "$androidGradlePluginVersion"
-        id 'org.jetbrains.kotlin.android' version "$kotlinVersion"
-        id 'org.jetbrains.kotlin.kapt' version "$kotlinVersion"
-        id 'org.gradle.test-retry' version "$gradleTestRetryVersion"
     }
+
+    includeBuild("build-logic")
 }
 
 plugins {
