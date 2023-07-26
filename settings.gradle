@@ -1,0 +1,35 @@
+pluginManagement {
+    repositories {
+        google()
+	gradlePluginPortal()
+	mavenCentral()
+    }
+
+    plugins {
+        id 'com.android.application' version "$androidGradlePluginVersion"
+        id 'com.android.library' version "$androidGradlePluginVersion"
+        id 'com.android.dynamic-feature' version "$androidGradlePluginVersion"
+        id 'com.android.settings' version "$androidGradlePluginVersion"
+    }
+}
+
+plugins {
+    id 'com.android.settings'
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+	mavenCentral()
+    }
+}
+
+
+android {
+    minSdk 28
+    compileSdk 33
+}
+
+
+include ':app'
+rootProject.name='My Application'
