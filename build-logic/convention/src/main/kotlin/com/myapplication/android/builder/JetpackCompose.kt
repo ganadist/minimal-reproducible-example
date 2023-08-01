@@ -15,7 +15,7 @@ private const val SUPPRESS_KOTLIN_VERSION_OPTION =
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureJetpackCompose(
-    commonExtension: CommonExtension<*, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *>
 ) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")

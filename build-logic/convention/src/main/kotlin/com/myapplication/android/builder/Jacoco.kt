@@ -5,7 +5,7 @@ import org.gradle.api.Project
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureJacoco(
-    commonExtension: CommonExtension<*, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *>
 ) {
     commonExtension.apply {
         buildTypes {

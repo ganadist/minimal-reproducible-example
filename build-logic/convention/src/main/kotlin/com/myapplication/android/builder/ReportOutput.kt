@@ -5,7 +5,7 @@ import org.gradle.api.Project
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureReportOutput(
-    commonExtension: CommonExtension<*, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *>
 ) {
     val changeReport: Boolean = getProperty("build.changereportdir").toBoolean()
     val basename = path.substring(1).replace(":", "_")

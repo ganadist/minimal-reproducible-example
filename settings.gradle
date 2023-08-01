@@ -23,10 +23,14 @@ plugins {
 android {
     def _minSdk = settings.getProperty("minSdk").toInteger()
     def _compileSdkPreview = settings.getProperty("compileSdkPreview")
+    def _compileSdkExtension = settings.getProperty("compileSdkExtension")
     def _buildToolsVersion = settings.getProperty("buildToolsVersion")
 
     compileSdk settings.getProperty("compileSdk").toInteger()
-    compileSdkExtension settings.getProperty("compileSdkExtension").toInteger()
+
+    if (!_compileSdkExtension.isEmpty()) {
+        compileSdkExtension _compileSdkExtension.toInteger()
+    }
 
     if (!_compileSdkPreview.isEmpty()) {
         compileSdkPreview _compileSdkPreview
