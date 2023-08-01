@@ -4,7 +4,7 @@ plugins {
 }
 
 kotlin {
-    android()
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -25,7 +25,7 @@ kotlin {
             }
         }
         val androidMain by getting
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")

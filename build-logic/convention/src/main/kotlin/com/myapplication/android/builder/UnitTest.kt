@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.retry
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureUnitTest(
-    commonExtension: CommonExtension<*, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *>
 ) {
     plugins.apply("org.gradle.test-retry")
 
