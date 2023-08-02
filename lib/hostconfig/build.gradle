@@ -1,0 +1,20 @@
+plugins {
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
+}
+
+android {
+    namespace "com.myapplication.hostconfig"
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
+
+    defaultConfig {
+        buildConfigField("long", "BUILD_TIMESTAMP", "Long.valueOf(0L)")
+    }
+}
+
+dependencies {
+    implementation androidxLibs.bundles.compose
+}
