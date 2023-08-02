@@ -26,5 +26,5 @@ object Const {
         "dogfoodrc"
     )
 
-    val JAVA_VERSION = JavaVersion.VERSION_1_8
+    val JAVA_VERSION = JavaVersion.VERSION_11
 }
