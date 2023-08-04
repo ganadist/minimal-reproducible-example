@@ -11,11 +11,9 @@ internal fun Project.configureKotlin() {
             allWarningsAsErrors = true
             val compilerOptions = mutableListOf<String>()
             val enableK2 =
-                rootProject.getProperty("build.kotlin.k2.enable").toBoolean()
+                rootProject.getProperty("kotlin.experimental.tryK2").toBoolean()
             if (enableK2) {
                 // https://kotlinlang.org/docs/whatsnew-eap.html#how-to-enable-the-kotlin-k2-compiler
-                compilerOptions.add("-language-version")
-                compilerOptions.add("2.0")
                 // when enable k2, compiler always warns
                 allWarningsAsErrors = false
             }
