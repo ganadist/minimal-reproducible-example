@@ -6,6 +6,7 @@ plugins {
 android {
     namespace "com.myapplication.hostconfig"
     buildFeatures {
+        aidl = true
         buildConfig = true
         compose = true
     }

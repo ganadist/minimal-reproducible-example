@@ -8,5 +8,6 @@ private val JVM_OPTIONS = listOf("-Xlint:all", "-Werror")
 internal fun Project.configureJava() {
     tasks.withType(JavaCompile::class.java).configureEach {
         options.compilerArgs.addAll(JVM_OPTIONS)
+        options.compilerArgs.add("-Xlint:-options")
     }
 }
