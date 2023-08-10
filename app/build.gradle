@@ -37,9 +37,23 @@ android {
         staging { }
         production { }
     }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = true
+        }
+	abi {
+            enableSplit = false
+        }
+    }
 }
 
 dependencies {
+    implementation project(":lib:lib1")
+    implementation project(":lib:lib2")
     coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7
     implementation androidxLibs.appcompat

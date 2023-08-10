@@ -61,4 +61,6 @@ apply from: "gradle/version_catalogs.gradle"
 
 include ':app', ':dynamicfeature1', ":shared"
 include ":lib:hostconfig"
+include ":lib:lib1"
+include ":lib:lib2"
 rootProject.name='My Application'
