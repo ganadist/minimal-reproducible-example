@@ -1,0 +1,13 @@
+name: Hello Python
+on:
+    workflow_dispatch:
+
+jobs:
+  hello_python:
+    name: Hello Python
+    runs-on: self-hosted
+
+    steps:
+      - name: setup Python
+        uses: ganadist/setup-python-not-ubuntu@v0.0.1
+
