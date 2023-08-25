@@ -24,7 +24,7 @@ buildscript {
 
 plugins {
     id "com.myapplication.android.builder" apply false
-    alias(libs.plugins.gradle.test.retry) apply false
+    alias(libs.plugins.gradle.enterprise).apply(false)
 }
 
 apply from: "$rootDir/gradle/build_constant.gradle"

@@ -9,7 +9,10 @@ r8 = "unspecified"
 # https://kotlinlang.org/docs/releases.html#release-details
 kotlin = "unspecified"
 
-gradle-test-retry = "unspecified"
+# https://docs.gradle.com/enterprise/gradle-plugin/
+# This will be overriden by gradle.properties
+gradle-enterprise = "unspecified"
+
 
 android-cache-fix = "unspecified"
 
@@ -46,7 +49,7 @@ r8 = { module = "com.android.tools:r8", version.ref = "r8" }
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" } 
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
-gradle-test-retry = { module = "org.gradle:test-retry-gradle-plugin", version.ref = "gradle-test-retry"}
+gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
 
 bundletool = { module = "com.android.toos.build:bundletool", version.ref = "bundletool" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
@@ -82,5 +85,5 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
-gradle-test-retry = { id = "org.gradle.test-retry", version.ref = "gradle-test-retry" }
+gradle-enterprise = { id = "com.gradle.enterprise", version.ref = "gradle-enterprise" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

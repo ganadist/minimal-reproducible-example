@@ -1,20 +1,18 @@
 package com.myapplication.android.builder
 
 import com.android.build.api.dsl.CommonExtension
+import com.gradle.enterprise.gradleplugin.testretry.retry
 import java.time.Duration
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.retry
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureUnitTest(
     commonExtension: CommonExtension<*, *, *, *, *>
 ) {
-    plugins.apply("org.gradle.test-retry")
-
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
     commonExtension.apply {
         defaultConfig {
