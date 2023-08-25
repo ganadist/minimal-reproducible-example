@@ -1,7 +1,6 @@
 
 package com.myapplication.android.builder
 
-import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.GradleException
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -15,7 +14,7 @@ private val MIN_CHECKER_VERSION = VersionNumber.parse(MIN_CHECKER_VERSION_STRING
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *>,
+    commonExtension: AGPCommonExtension,
     javaVersion: JavaVersion
 ) {
     commonExtension.apply {
@@ -27,7 +26,7 @@ internal fun Project.configureAndroid(
             vectorDrawables.useSupportLibrary = true
         }
 
-        packagingOptions {
+        packaging {
             jniLibs {
                 pickFirsts.addAll(
                     arrayOf(

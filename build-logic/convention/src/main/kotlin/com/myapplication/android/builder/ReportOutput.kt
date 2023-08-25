@@ -1,11 +1,10 @@
 package com.myapplication.android.builder
 
-import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureReportOutput(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: AGPCommonExtension
 ) {
     val changeReport: Boolean = getProperty("build.changereportdir").toBoolean()
     val basename = path.substring(1).replace(":", "_")

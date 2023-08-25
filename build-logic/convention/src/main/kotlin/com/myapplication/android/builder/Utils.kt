@@ -1,5 +1,6 @@
 package com.myapplication.android.builder
 
+import com.android.build.api.dsl.CommonExtension
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -7,6 +8,8 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.DependencyHandlerScope
+
+typealias AGPCommonExtension = CommonExtension<*, *, *, *, *>
 
 internal fun Project.getProperty(
     propertyName: String,
