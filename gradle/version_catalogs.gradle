@@ -5,7 +5,7 @@ dependencyResolutionManagement {
             version("r8", r8Version)
             version("android-gradle", androidGradlePluginVersion)
             version("kotlin", kotlinVersion)
-            version("gradle-test-retry", gradleTestRetryVersion)
+            version("gradle-enterprise", gradleEnterprisePluginVersion)
             version("android-cache-fix", androidCacheFixVersion)
         }
         androidxLibs {
