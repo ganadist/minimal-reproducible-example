@@ -3,6 +3,7 @@ package com.myapplication.android.builder
 
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.GradleException
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.exclude
@@ -14,13 +15,14 @@ private val MIN_CHECKER_VERSION = VersionNumber.parse(MIN_CHECKER_VERSION_STRING
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *>,
+    javaVersion: JavaVersion
 ) {
     commonExtension.apply {
         defaultConfig {
             compileOptions {
-                sourceCompatibility = Const.JAVA_VERSION
-                targetCompatibility = Const.JAVA_VERSION
+                sourceCompatibility = javaVersion
+                targetCompatibility = javaVersion
             }
             vectorDrawables.useSupportLibrary = true
         }
