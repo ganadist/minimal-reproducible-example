@@ -17,17 +17,24 @@ import com.myapplication.android.builder.configureKotlin
 import com.myapplication.android.builder.configureLint
 import com.myapplication.android.builder.configureReportOutput
 import com.myapplication.android.builder.configureUnitTest
+import com.myapplication.android.builder.getProperty
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.get
 
 @Suppress("UnstableApiUsage")
 class AndroidBuilderPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
+    override fun apply(
+        target: Project
+    ) {
         with(target) {
             plugins.withType(BasePlugin::class.java) {
                 val hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
                 val hasTestPlugin = pluginManager.hasPlugin("com.android.test")
+                val bytecodeVersion = JavaVersion.toVersion(
+                    getProperty("build.jvmtarget.intermediates")
+                )
 
                 extensions.getByType(CommonExtension::class.java).let { android ->
                     extensions.getByType(AndroidComponentsExtension::class.java).apply {
@@ -40,7 +47,7 @@ class AndroidBuilderPlugin : Plugin<Project> {
                         }
                     }
 
-                    configureAndroid(android)
+                    configureAndroid(android, bytecodeVersion)
                     configureAnnotationProcessors(android)
                     configureLint(android)
                     // testplugin does not provide configuration for unittest/androidTest
@@ -49,8 +56,8 @@ class AndroidBuilderPlugin : Plugin<Project> {
                     }
                     configureJacoco(android)
                     configureReportOutput(android)
-                    configureJava()
-                    configureKotlin()
+                    configureJava(bytecodeVersion)
+                    configureKotlin(bytecodeVersion)
                     configureJetpackCompose(android)
                 }
             }
@@ -61,6 +68,14 @@ class AndroidBuilderPlugin : Plugin<Project> {
 
             plugins.withType(DynamicFeaturePlugin::class.java) {
                 configureDynamicFeature(extensions.getByType(DynamicFeatureExtension::class.java))
+            }
+
+            plugins.withId("org.jetbrains.kotlin.jvm") {
+                val bytecodeVersion = JavaVersion.toVersion(
+                    getProperty("build.jvmtarget.host")
+                )
+                configureJava(bytecodeVersion)
+                configureKotlin(bytecodeVersion)
             }
         }
     }

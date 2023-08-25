@@ -1,13 +1,14 @@
 package com.myapplication.android.builder
 
 import java.time.Duration
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-internal fun Project.configureKotlin() {
+internal fun Project.configureKotlin(javaVersion: JavaVersion) {
     tasks.withType(KotlinCompile::class.java).configureEach {
         kotlinOptions {
-            jvmTarget = Const.JAVA_VERSION.toString()
+            jvmTarget = javaVersion.toString()
             allWarningsAsErrors = true
             val compilerOptions = mutableListOf<String>()
             val enableK2 =
