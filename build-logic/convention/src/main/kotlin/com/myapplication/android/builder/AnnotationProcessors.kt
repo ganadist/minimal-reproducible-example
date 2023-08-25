@@ -1,6 +1,5 @@
 package com.myapplication.android.builder
 
-import com.android.build.api.dsl.CommonExtension
 import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -12,12 +11,11 @@ import org.gradle.kotlin.dsl.getValue
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAnnotationProcessors(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: AGPCommonExtension
 ) {
     pluginManager.withPlugin(Const.KAPT_PLUGIN_ID) {
         throw GradleException(
             "Use ksp compiler instead of kapt on $project"
-                
         )
     }
 

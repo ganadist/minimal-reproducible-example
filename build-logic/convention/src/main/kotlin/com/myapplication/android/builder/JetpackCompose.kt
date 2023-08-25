@@ -1,6 +1,5 @@
 package com.myapplication.android.builder
 
-import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -15,7 +14,7 @@ private const val SUPPRESS_KOTLIN_VERSION_OPTION =
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureJetpackCompose(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: AGPCommonExtension
 ) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")

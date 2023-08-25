@@ -1,6 +1,5 @@
 package com.myapplication.android.builder
 
-import com.android.build.api.dsl.CommonExtension
 import com.gradle.enterprise.gradleplugin.testretry.retry
 import java.time.Duration
 import org.gradle.api.Project
@@ -11,7 +10,7 @@ import org.gradle.kotlin.dsl.getByType
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureUnitTest(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: AGPCommonExtension
 ) {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
     commonExtension.apply {

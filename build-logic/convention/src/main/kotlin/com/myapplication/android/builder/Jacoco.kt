@@ -1,11 +1,10 @@
 package com.myapplication.android.builder
 
-import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureJacoco(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: AGPCommonExtension
 ) {
     commonExtension.apply {
         buildTypes {
