@@ -55,6 +55,23 @@ def addR8Repository(RepositoryHandler handler, String r8Version) {
 }
 
 def addGoogleRepository(RepositoryHandler handler) {
+    // https://androidx.dev/
+    handler.maven {
+        url("https://androidx.dev/snapshots/builds/${androidXSnapshotBuildId}/artifacts/repository")
+        content {
+            includeVersionByRegex("androidx\\..*", ".*", ".*-SNAPSHOT")
+        }
+    }
+
+    // https://androidx.dev/storage/compose-compiler/repository
+    handler.maven {
+        url("https://androidx.dev/storage/compose-compiler/repository")
+        content {
+            includeVersionByRegex("androidx\\.compose\\.compiler", ".*", ".*-dev-k.*")
+        }
+    }
+
+
     // https://maven.google.com/
     def repo = handler.maven {
         url(RepoUrls.google)
@@ -67,17 +84,6 @@ def addGoogleRepository(RepositoryHandler handler) {
     }
     repo.mavenContent {
         releasesOnly()
-    }
-
-    // https://androidx.dev/
-    handler.maven {
-        url("https://androidx.dev/snapshots/builds/${androidXSnapshotBuildId}/artifacts/repository")
-        content {
-            includeGroupByRegex("androidx\\..*")
-        }
-        mavenContent {
-            snapshotsOnly()
-        }
     }
 }
 
