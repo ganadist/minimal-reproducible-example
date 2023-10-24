@@ -97,8 +97,6 @@ internal fun Project.configureUnitTest(
         testImplementation(libs, "robolectric")
 
         testImplementation(libs, "mockito-core")
-        // Add mockito-inline dependency to mocking kotlin class easily
-        testImplementation(libs, "mockito-inline")
 
         pluginManager.withPlugin(Const.KOTLIN_ANDROID_PLUGIN_ID) {
             testImplementation(libs, "kotlin-test-junit")
