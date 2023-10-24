@@ -26,22 +26,22 @@ desugar = "1.2.0"
 kotlinx-coroutines = "1.7.3"
 
 # https://github.com/google/ksp/releases
-ksp = "1.9.0-1.0.12"
+ksp = "1.9.10-1.0.13"
 
 # https://github.com/pinterest/ktlint/releases
-ktlint = "0.43.2"
+ktlint = "1.0.1"
 
 # https://junit.org/junit4/
 junit4 = "4.13.2"
 
 # https://github.com/mockito/mockito/releases
-mockito-Core = '4.2.0'
+mockito-core = '5.6.0'
 
 # https://github.com/mockito/mockito-kotlin/releases
-mockito-kotlin = '4.0.0'
+mockito-kotlin = '5.1.0'
 
 # https://github.com/robolectric/robolectric/releases/
-robolectric = "4.10.2"
+robolectric = "4.10.3"
 
 
 [libraries]
@@ -70,8 +70,8 @@ kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx
 
 android-cache-fix = { module = "gradle.plugin.org.gradle.android:android-cache-fix-gradle-plugin", version.ref = "android-cache-fix"}
 
-mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-Core" }
-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-Core" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-core" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }

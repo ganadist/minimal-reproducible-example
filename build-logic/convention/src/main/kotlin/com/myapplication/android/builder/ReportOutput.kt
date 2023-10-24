@@ -8,8 +8,9 @@ internal fun Project.configureReportOutput(
 ) {
     val changeReport: Boolean = getProperty("build.changereportdir").toBoolean()
     val basename = path.substring(1).replace(":", "_")
-    val reportsDir = file("${rootProject.buildDir}/reports/$basename")
-    val testResultsDir = file("${rootProject.buildDir}/test-results/$basename")
+    val buildDir = rootProject.layout.buildDirectory.asFile.get()
+    val reportsDir = file("${buildDir}/reports/$basename")
+    val testResultsDir = file("${buildDir}/test-results/$basename")
 
     if (changeReport) {
         commonExtension.apply {
