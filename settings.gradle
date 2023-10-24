@@ -1,19 +1,13 @@
 pluginManagement {
-    includeBuild("build-logic")
-
     apply from: "$settingsDir/gradle/repositories.gradle"
     settings.ext.repos.google(repositories)
     settings.ext.repos.gradlePluginPortal(repositories)
 
     plugins {
-        id 'com.android.library' version "$androidGradlePluginVersion"
-        id 'com.android.application' version "$androidGradlePluginVersion"
-        id 'com.android.dynamic-feature' version "$androidGradlePluginVersion"
         id 'com.android.settings' version "$androidGradlePluginVersion"
-        id 'org.jetbrains.kotlin.android' version "$kotlinVersion"
-        id 'org.jetbrains.kotlin.kapt' version "$kotlinVersion"
         id 'com.gradle.enterprise' version "$gradleEnterprisePluginVersion"
     }
+    includeBuild("build-logic")
 }
 
 plugins {
