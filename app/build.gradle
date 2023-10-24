@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    alias(libs.plugins.androidx.baselineprofile)
+    alias(androidxLibs.plugins.baselineprofile)
 }
 
 android {
@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-    implementation libs.profileinstaller
+    implementation androidxLibs.profileinstaller
     baselineProfile project(':baselineprofile')
     coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7

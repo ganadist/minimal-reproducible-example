@@ -4,7 +4,7 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 plugins {
     alias(libs.plugins.android.test)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.androidx.baselineprofile)
+    alias(androidxLibs.plugins.baselineprofile)
 }
 
 android {
@@ -54,8 +54,7 @@ baselineProfile {
 }
 
 dependencies {
-    implementation(libs.junit)
-    implementation(libs.espresso.core)
-    implementation(libs.uiautomator)
-    implementation(libs.benchmark.macro.junit4)
+    implementation(androidxLibs.bundles.test)
+    implementation(androidxLibs.bundles.espresso)
+    implementation(androidxLibs.benchmark.macro.junit4)
 }
