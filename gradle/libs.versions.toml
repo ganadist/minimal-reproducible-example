@@ -42,6 +42,12 @@ mockito-kotlin = '5.1.0'
 
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "4.10.3"
+junit = "1.1.5"
+espresso-core = "3.5.1"
+uiautomator = "2.2.0"
+benchmark-macro-junit4 = "1.2.0-rc02"
+androidx-baselineprofile = "1.2.0-rc02"
+profileinstaller = "1.3.1"
 
 
 [libraries]
@@ -77,6 +83,11 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
 robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
+junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
+profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android-gradle" }
@@ -91,3 +102,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
 gradle-enterprise = { id = "com.gradle.enterprise", version.ref = "gradle-enterprise" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-baselineprofile" }

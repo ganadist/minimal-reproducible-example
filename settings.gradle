@@ -6,6 +6,11 @@ pluginManagement {
     plugins {
         id 'com.android.settings' version "$androidGradlePluginVersion"
         id 'com.gradle.enterprise' version "$gradleEnterprisePluginVersion"
+        alias(libs.plugins.android.test)
+        alias(libs.plugins.kotlin.android)
+        alias(libs.plugins.androidx.baselineprofile)
+        alias(libs.plugins.android.app)
+        alias(libs.plugins.androidx.baselineprofile)
     }
     includeBuild("build-logic")
 }
@@ -57,3 +62,4 @@ apply from: "gradle/version_catalogs.gradle"
 include ':app', ':dynamicfeature1', ":shared"
 include ":lib:hostconfig"
 rootProject.name='My Application'
+include ':baselineprofile'
