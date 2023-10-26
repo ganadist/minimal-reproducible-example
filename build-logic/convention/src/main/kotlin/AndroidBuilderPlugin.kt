@@ -44,7 +44,7 @@ class AndroidBuilderPlugin : Plugin<Project> {
                             when(variant.flavorName) {
                                 "" -> variant.enable = true
                                 "develop" -> variant.enable = variant.buildType == "debug"
-                                else -> variant.enable = variant.buildType == "release"
+                                else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
                             }
                         }
                     }
@@ -87,5 +87,15 @@ class AndroidBuilderPlugin : Plugin<Project> {
                 configureKotlin(bytecodeVersion)
             }
         }
+    }
+
+    companion object {
+        private val RELEASE_BUILD_TYPES = arrayOf(
+            "release",
+            // https://issuetracker.google.com/issues/307478189
+            // build types from baselineprofile plugin
+            "benchmarkRelease",
+            "nonMinifiedRelease"
+        )
     }
 }
