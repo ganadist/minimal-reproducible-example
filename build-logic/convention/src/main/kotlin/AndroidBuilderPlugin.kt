@@ -39,17 +39,15 @@ class AndroidBuilderPlugin : Plugin<Project> {
                 )
 
                 extensions.getByType(CommonExtension::class.java).let { android ->
-                    /*
                     extensions.getByType(AndroidComponentsExtension::class.java).apply {
                         beforeVariants(selector().all()) { variant ->
                             when(variant.flavorName) {
                                 "" -> variant.enable = true
                                 "develop" -> variant.enable = variant.buildType == "debug"
-                                else -> variant.enable = variant.buildType == "release"
+                                else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
                             }
                         }
                     }
-                    */
 
                     configureAndroid(android, bytecodeVersion)
                     configureAnnotationProcessors(android)
@@ -89,5 +87,14 @@ class AndroidBuilderPlugin : Plugin<Project> {
                 configureKotlin(bytecodeVersion)
             }
         }
+    }
+
+    companion object {
+        private val RELEASE_BUILD_TYPES = arrayOf(
+            "release",
+            // build types from baselineprofile plugin
+            "benchmarkRelease",
+            "nonMinifiedRelease"
+        )
     }
 }
