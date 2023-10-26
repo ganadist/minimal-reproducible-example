@@ -21,7 +21,7 @@ android {
                 optimizeCode true
                 obfuscate true
                 removeUnusedResources true
-                proguardFiles file('proguards-rules.pro')
+                proguardFiles file('proguard-rules.pro')
             }
         }
     }

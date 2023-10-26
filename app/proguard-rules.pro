@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# SOME PROGUARD RULEZ
+# referenced from: void com.google.android.payments.standard.StandardPaymentsUtils.verifyCallingAppIsGoogleSigned(android.content.Context, java.lang.String, boolean))
+-dontwarn com.google.apps.tiktok.testing.errorprone.SuppressViolation
