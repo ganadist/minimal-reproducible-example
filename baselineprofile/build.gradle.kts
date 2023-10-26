@@ -9,14 +9,6 @@ plugins {
 
 android {
     namespace = "com.example.baselineprofile"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 28
-        targetSdk = 34
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 
     targetProjectPath = ":app"
 
@@ -43,7 +35,6 @@ baselineProfile {
 }
 
 dependencies {
-    implementation(androidxLibs.bundles.test)
-    implementation(androidxLibs.bundles.espresso)
+    // basic dependencies will be loaded by build-logic
     implementation(androidxLibs.benchmark.macro.junit4)
 }
