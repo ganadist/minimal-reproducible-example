@@ -9,7 +9,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 @Suppress("UnstableApiUsage")
-internal fun Project.configureUnitTest(
+internal fun Project.configureTest(
     commonExtension: AGPCommonExtension
 ) {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
@@ -88,6 +88,17 @@ internal fun Project.configureUnitTest(
         }
     }
 
+    tasks.withType(Test::class.java).configureEach {
+        timeout.set(
+            Duration.ofMinutes(
+                rootProject.getProperty("build.timeout.unittest").toLong()
+            )
+        )
+    }
+}
+
+@Suppress("UnstableApiUsage")
+internal fun Project.configureTestDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
     val googleLibs = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
@@ -113,12 +124,17 @@ internal fun Project.configureUnitTest(
         androidTestUtil(androidxLibs, "test-orchestrator")
         addBundle("androidTestImplementation", androidxLibs, "espresso")
     }
+}
 
-    tasks.withType(Test::class.java).configureEach {
-        timeout.set(
-            Duration.ofMinutes(
-                rootProject.getProperty("build.timeout.unittest").toLong()
-            )
-        )
+@Suppress("UnstableApiUsage")
+internal fun Project.configureTestProjectDependencies() {
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+    val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
+    dependencies {
+        implementation(libs, "junit4")
+
+        addBundle("implementation", androidxLibs, "test")
+        addBundle("implementation", androidxLibs, "espresso")
+        androidTestUtil(androidxLibs, "test-orchestrator")
     }
 }
