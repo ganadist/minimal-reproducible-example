@@ -5,6 +5,7 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BasePlugin
 import com.android.build.gradle.DynamicFeaturePlugin
+import com.android.build.gradle.LibraryPlugin
 import com.myapplication.android.builder.Const
 import com.myapplication.android.builder.configureAndroid
 import com.myapplication.android.builder.configureAnnotationProcessors
@@ -30,8 +31,6 @@ class AndroidBuilderPlugin : Plugin<Project> {
     ) {
         with(target) {
             plugins.withType(BasePlugin::class.java) {
-                val hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
-                val hasTestPlugin = pluginManager.hasPlugin("com.android.test")
                 val bytecodeVersion = JavaVersion.toVersion(
                     getProperty("build.jvmtarget.intermediates")
                 )
@@ -52,10 +51,6 @@ class AndroidBuilderPlugin : Plugin<Project> {
                     configureAndroid(android, bytecodeVersion)
                     configureAnnotationProcessors(android)
                     configureLint(android)
-                    // testplugin does not provide configuration for unittest/androidTest
-                    if (!hasTestPlugin) {
-                        configureUnitTest(android)
-                    }
                     configureJacoco(android)
                     configureReportOutput(android)
                     configureJava(bytecodeVersion)
@@ -64,12 +59,24 @@ class AndroidBuilderPlugin : Plugin<Project> {
                 }
             }
 
+            plugins.withType(LibraryPlugin::class.java) {
+                extensions.getByType(CommonExtension::class.java).let { android ->
+                    configureUnitTest(android)
+                }
+            }
+
             plugins.withType(AppPlugin::class.java) {
                 configureApplication(extensions.getByType(ApplicationExtension::class.java))
+                extensions.getByType(CommonExtension::class.java).let { android ->
+                    configureUnitTest(android)
+                }
             }
 
             plugins.withType(DynamicFeaturePlugin::class.java) {
                 configureDynamicFeature(extensions.getByType(DynamicFeatureExtension::class.java))
+                extensions.getByType(CommonExtension::class.java).let { android ->
+                    configureUnitTest(android)
+                }
             }
 
             plugins.withId("org.jetbrains.kotlin.jvm") {
