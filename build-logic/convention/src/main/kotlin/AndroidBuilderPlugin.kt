@@ -37,6 +37,7 @@ class AndroidBuilderPlugin : Plugin<Project> {
                 )
 
                 extensions.getByType(CommonExtension::class.java).let { android ->
+                    /*
                     extensions.getByType(AndroidComponentsExtension::class.java).apply {
                         beforeVariants(selector().all()) { variant ->
                             when(variant.flavorName) {
@@ -46,6 +47,7 @@ class AndroidBuilderPlugin : Plugin<Project> {
                             }
                         }
                     }
+                    */
 
                     configureAndroid(android, bytecodeVersion)
                     configureAnnotationProcessors(android)
