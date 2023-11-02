@@ -1,0 +1,43 @@
+import org.gradle.api.GradleException
+
+class Const {
+    static final Set<String> RECOMMANDED_JVM_VERSIONS = ["21"]
+}
+
+def MINIMUM_JVM_VERSION = settings.getProperty("build.jvmtarget.host")
+Const.RECOMMANDED_JVM_VERSIONS.add(MINIMUM_JVM_VERSION)
+
+def checkJvmRequires() {
+    def jvmVersion = System.getProperty("java.specification.version")
+    if (!Const.RECOMMANDED_JVM_VERSIONS.contains(jvmVersion)) {
+        throw new GradleException(
+            "Use Jetbrain Runtime 17 which is included on Android Studio or JDK 17 LTS version"
+        )
+    }
+
+    if (jvmVersion.equals("21")) {
+        logger.warn("You must use JDK 21 from https://github.com/ganadist/graalvm-ce-builds/releases/tag/2023-10-24")
+    }
+}
+
+def checkRosetta() {
+    // https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment#Determine-Whether-Your-App-Is-Running-as-a-Translated-Binary
+    if (System.getProperty("os.name").contains("OS X") &&
+        ext.execAndGetStdout("sysctl", "-in", "sysctl.proc_translated")
+            .equals("1")
+    ) {
+        throw new GradleException(
+            "Your build is running under rosetta. Please setup your Android Studio properly"
+        )
+    }
+}
+
+
+def checkBuildRequires() {
+    if (!getProperty("build.check.requires").toBoolean()) {
+        return
+    }
+    checkJvmRequires()
+}
+
+checkBuildRequires()
