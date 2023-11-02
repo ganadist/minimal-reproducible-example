@@ -9,6 +9,9 @@ r8 = "unspecified"
 # https://kotlinlang.org/docs/releases.html#release-details
 kotlin = "unspecified"
 
+# https://github.com/google/ksp/releases
+ksp = "unspecified"
+
 # https://docs.gradle.com/enterprise/gradle-plugin/
 # This will be overriden by gradle.properties
 gradle-enterprise = "unspecified"
@@ -24,9 +27,6 @@ desugar = "1.2.0"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlinx-coroutines = "1.7.3"
-
-# https://github.com/google/ksp/releases
-ksp = "1.9.10-1.0.13"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "1.0.1"
