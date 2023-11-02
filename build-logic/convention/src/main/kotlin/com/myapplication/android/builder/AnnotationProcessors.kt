@@ -11,7 +11,7 @@ import org.gradle.kotlin.dsl.getValue
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAnnotationProcessors(
-    commonExtension: AGPCommonExtension
+    @Suppress("Unused_parameter") commonExtension: AGPCommonExtension
 ) {
     pluginManager.withPlugin(Const.KAPT_PLUGIN_ID) {
         throw GradleException(
