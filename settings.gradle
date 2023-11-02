@@ -1,4 +1,5 @@
 pluginManagement {
+    apply from: "$settingsDir/gradle/build_requires_checker.gradle"
     apply from: "$settingsDir/gradle/repositories.gradle"
     settings.ext.repos.google(repositories)
     settings.ext.repos.gradlePluginPortal(repositories)
