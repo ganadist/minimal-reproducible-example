@@ -1,16 +1,18 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    def versionPropFile = file('version.properties')
-    def Properties versionProp = new Properties()
-    versionProp.load(new FileInputStream(versionPropFile))
-    def code = versionProp['VERSION_CODE'].toInteger()
-
-    //versionProp['VERSION_CODE'] = (code + 1).toString()
-    //versionProp.store(versionPropFile.newWriter(), null)
+    namespace "com.example.myapplication"
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        compileOptions {
+            coreLibraryDesugaringEnabled true
+        }
+    }
 
     signingConfigs {
         release {
@@ -21,17 +23,16 @@ android {
         }
     }
 
-    defaultConfig {
-        applicationId "com.example.myapplication"
-        versionCode code 
-        versionName "1.0"
-        signingConfig signingConfigs.release
-    }
-
     buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        release {
+            postprocessing {
+                removeUnusedCode true
+                optimizeCode true
+                obfuscate true
+                removeUnusedResources true
+                proguardFiles file('proguards-rules.pro')
+            }
+	    signingConfig signingConfigs.release
         }
 
         release {
@@ -41,20 +42,29 @@ android {
     }
     dynamicFeatures = [":dynamicfeature1"]
 
+    buildFeatures {
+        compose = true
+    }
+
+    testFixtures {
+        enable = true
+    }
+
     flavorDimensions 'default'
     productFlavors {
         develop { }
         beta { }
-        rc { }
+        staging { }
         production { }
     }
 }
 
 dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
     implementation libs.kotlin.stdlib.jdk7
-    implementation androidx.appcompat
-    implementation androidx.core.ktx
-    implementation androidx.constraintlayout
-    implementation androidx.room.ktx
-    implementation androidx.room.runtime
+    implementation androidxLibs.appcompat
+    implementation androidxLibs.core.ktx
+    implementation androidxLibs.constraintlayout
+    implementation androidxLibs.room.ktx
+    implementation androidxLibs.room.runtime
 }

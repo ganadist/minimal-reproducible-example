@@ -1,14 +1,21 @@
-enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     versionCatalogs {
         libs {
-            from(files("versions/libs.toml"))
+	    // load versions from gradle.properties
+            version("r8", r8Version)
+            version("android-gradle", androidGradlePluginVersion)
+            version("kotlin", kotlinVersion)
+            version("ksp", "${kotlinVersion}-${kspVersion}")
+            version("gradle-enterprise", gradleEnterprisePluginVersion)
+            version("android-cache-fix", androidCacheFixVersion)
         }
-        androidx {
-            from(files("versions/androidx.toml"))
+        androidxLibs {
+            from(files("androidx.versions.toml"))
+            version("android-gradle", androidGradlePluginVersion)
+            version("compose-compiler", composeCompilerVersion)
         }
-        google {
-            from(files("versions/google.toml"))
+        googleLibs {
+            from(files("google.versions.toml"))
         }
     }
 }

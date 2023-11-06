@@ -5,21 +5,24 @@ plugins {
 
 // [START macrobenchmark_setup_android]
 android {
+    namespace "com.example.macrobenchmark"
+
     // [START_EXCLUDE]
-    compileSdkVersion 31
+    compileSdkVersion 34
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
     // [END_EXCLUDE]
     // Note that your module name may have different name
@@ -54,11 +57,11 @@ androidComponents {
 // [START macrobenchmark_setup_dependencies]
 dependencies {
     // [START_EXCLUDE]
-    implementation androidx.test.ext.junit.ktx
-    implementation androidx.test.espresso.core
-    implementation androidx.test.uiautomator
+    implementation androidxLibs.test.ext.junit.ktx
+    implementation androidxLibs.test.espresso.core
+    implementation androidxLibs.test.uiautomator
     // [END_EXCLUDE]
-    implementation androidx.benchmark.macro.junit4
+    implementation androidxLibs.benchmark.macro.junit4
 }
 // [END macrobenchmark_setup_dependencies]
 

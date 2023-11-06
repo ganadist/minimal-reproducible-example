@@ -1,9 +1,10 @@
 plugins {
     id("com.android.dynamic-feature")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
+    namespace "com.example.dynamicfeature1"
     defaultConfig {
     }
 
@@ -11,7 +12,7 @@ android {
     productFlavors {
         develop { }
         beta { }
-        rc { }
+        staging { }
         production { }
     }
 }
@@ -19,8 +20,8 @@ android {
 dependencies {
     implementation project(':app')
     implementation libs.kotlin.stdlib.jdk7
-    implementation androidx.appcompat
-    implementation androidx.constraintlayout
-    implementation androidx.room.ktx
-    implementation androidx.room.runtime
+    implementation androidxLibs.appcompat
+    implementation androidxLibs.constraintlayout
+    implementation androidxLibs.room.ktx
+    implementation androidxLibs.room.runtime
 }

@@ -1,0 +1,93 @@
+[versions]
+
+# https://developer.android.com/studio/releases/gradle-plugin
+android-gradle = "unspecified"
+
+# https://r8.googlesource.com/r8/+refs
+r8 = "unspecified"
+
+# https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "unspecified"
+
+# https://github.com/google/ksp/releases
+ksp = "unspecified"
+
+# https://docs.gradle.com/enterprise/gradle-plugin/
+# This will be overriden by gradle.properties
+gradle-enterprise = "unspecified"
+
+
+android-cache-fix = "unspecified"
+
+# https://github.com/google/bundletool/releases
+bundletool = "1.10.0"
+
+# https://github.com/google/desugar_jdk_libs
+desugar = "1.2.0"
+
+# https://github.com/Kotlin/kotlinx.coroutines/releases
+kotlinx-coroutines = "1.7.3"
+
+# https://github.com/pinterest/ktlint/releases
+ktlint = "1.0.1"
+
+# https://junit.org/junit4/
+junit4 = "4.13.2"
+
+# https://github.com/mockito/mockito/releases
+mockito-core = '5.6.0'
+
+# https://github.com/mockito/mockito-kotlin/releases
+mockito-kotlin = '5.1.0'
+
+# https://github.com/robolectric/robolectric/releases/
+robolectric = "4.11.1"
+
+
+[libraries]
+r8 = { module = "com.android.tools:r8", version.ref = "r8" }
+android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" } 
+ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
+gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
+
+bundletool = { module = "com.android.toos.build:bundletool", version.ref = "bundletool" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
+
+junit4 = { module = "junit:junit", version.ref = "junit4" }
+
+ktlint = { module = "com.pinterest:ktlint", version.ref = "ktlint" }
+
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-stdlib-jdk7 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-test-junit =  { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin"}
+
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-rx2 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "kotlinx-coroutines" }
+
+android-cache-fix = { module = "gradle.plugin.org.gradle.android:android-cache-fix-gradle-plugin", version.ref = "android-cache-fix"}
+
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-core" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
+
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
+robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
+
+[plugins]
+android-app = { id = "com.android.application", version.ref = "android-gradle" }
+android-lib = { id = "com.android.library", version.ref = "android-gradle" }
+android-dfm = { id = "com.android.dynamic-feature", version.ref = "android-gradle" }
+android-test = { id = "com.android.test", version.ref = "android-gradle" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
+gradle-enterprise = { id = "com.gradle.enterprise", version.ref = "gradle-enterprise" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

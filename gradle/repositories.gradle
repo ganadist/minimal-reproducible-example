@@ -1,0 +1,140 @@
+class RepoUrls {
+    static final r8 = "https://storage.googleapis.com/r8-releases/raw"
+    static final r8Snapshot = "https://storage.googleapis.com/r8-releases/raw/master"
+    static final google = "https://maven.google.com"
+    static final gradlePluginPortal = "https://plugins.gradle.org/m2"
+    // https://storage-download.googleapis.com/maven-central
+    static final mavenCentral = "https://maven-central-asia.storage-download.googleapis.com/maven2"
+}
+
+class ArtifactGroups {
+    // These artifacts that are hosted on https://maven.google.com/
+    // and included with google() closure only
+    static final google = [
+        "androidx\\..*",
+
+        "com\\.android",
+        "com\\.android\\..*",
+
+        "com\\.crashlytics\\..*",
+
+        "com\\.google\\.ads\\..*",
+        "com\\.google\\.android\\..*",
+        "com\\.google\\.androidbrowserhelper",
+        "com\\.google\\.ar",
+        "com\\.google\\.ar\\..*",
+        "com\\.google\\.assistant\\..*",
+        "com\\.google\\.firebase",
+        "com\\.google\\.gms",
+        "com\\.google\\.mlkit",
+        "com\\.google\\.oboe",
+        "com\\.google\\.prefab",
+        "com\\.google\\.testing\\.platform",
+
+        "org\\.chromium\\.net"
+    ]
+}
+
+def addR8Repository(RepositoryHandler handler, String r8Version) {
+    def r8Repo = ""
+    if (r8Version == null || r8Version.isEmpty()) {
+        return
+    }
+
+    switch(r8Version) {
+        case { it.contains(".") } : r8Repo = RepoUrls.r8 ; break
+        default : r8Repo = RepoUrls.r8Snapshot ; break
+    }
+
+    handler.maven {
+        url(r8Repo)
+        content {
+            includeModule("com.android.tools", "r8")
+        }
+    }
+}
+
+def addGoogleRepository(RepositoryHandler handler) {
+    // https://androidx.dev/
+    handler.maven {
+        url("https://androidx.dev/snapshots/builds/${androidXSnapshotBuildId}/artifacts/repository")
+        content {
+            includeVersionByRegex("androidx\\..*", ".*", ".*-SNAPSHOT")
+        }
+    }
+
+    // https://androidx.dev/storage/compose-compiler/repository
+    handler.maven {
+        url("https://androidx.dev/storage/compose-compiler/repository")
+        content {
+            includeVersionByRegex("androidx\\.compose\\.compiler", ".*", ".*-dev-k.*")
+        }
+    }
+
+
+    // https://maven.google.com/
+    def repo = handler.maven {
+        url(RepoUrls.google)
+    }
+
+    repo.content {
+        ArtifactGroups.google.each {
+            includeGroupByRegex(it)
+        }
+    }
+    repo.mavenContent {
+        releasesOnly()
+    }
+}
+
+def addMavenCentralRepository(RepositoryHandler handler) {
+    def repo = handler.maven {
+        url(RepoUrls.mavenCentral)
+    }
+
+    repo.content {
+        def vendorArtifacts = ArtifactGroups.google
+
+        // Do not request vendor specific artifacts to maven-central repo
+        vendorArtifacts.each {
+            excludeGroupByRegex(it)
+        }
+    }
+}
+
+def addGradlePluginRepository(RepositoryHandler handler) {
+    def repo = handler.maven {
+        url(RepoUrls.gradlePluginPortal)
+    }
+
+    repo.content {
+        def vendorArtifacts = ArtifactGroups.google
+
+        // Do not request vendor specific artifacts to gradlePluginPortal repo
+        vendorArtifacts.each {
+            excludeGroupByRegex(it)
+        }
+    }
+}
+
+ext.repos = new Properties()
+
+/**
+ To use these groovy closures
+ * Kotlin DSL
+ ```
+ val repos: java.util.Properties by rootProject.extra
+ repositories {
+     (repos["google"] as groovy.lang.Closure<*>).call(this)
+ }
+ ```
+ * Groovy
+ ```
+ ext.repos.google(repositories)
+
+ ```
+ */
+ext.repos.r8 = this.&addR8Repository
+ext.repos.google = this.&addGoogleRepository
+ext.repos.gradlePluginPortal = this.&addGradlePluginRepository
+ext.repos.mavenCentral = this.&addMavenCentralRepository
