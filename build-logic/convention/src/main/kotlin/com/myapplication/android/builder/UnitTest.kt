@@ -1,5 +1,6 @@
 package com.myapplication.android.builder
 
+import com.android.build.api.dsl.ManagedVirtualDevice
 import com.gradle.enterprise.gradleplugin.testretry.retry
 import java.time.Duration
 import org.gradle.api.Project
@@ -13,6 +14,7 @@ internal fun Project.configureTest(
     commonExtension: AGPCommonExtension
 ) {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
+    val androidTestApiLevel = getProperty("build.androidtest.sdk").toIntOrZero()
     commonExtension.apply {
         defaultConfig {
             // https://developer.android.com/training/testing/junit-runner#ato-gradle
@@ -32,6 +34,17 @@ internal fun Project.configureTest(
                 // AGP does not support includeAndroidResources option for robolectric unittest on dynamic features, yet.
                 isIncludeAndroidResources = !hasDynamicFeatureModulePlugin
             }
+
+            // https://developer.android.com/studio/test/gradle-managed-devices
+            managedDevices {
+                devices.register("gmd", ManagedVirtualDevice::class.java) {
+                    device = "Pixel 2"
+
+                    apiLevel = androidTestApiLevel
+                    systemImageSource = "google-atd"
+                }
+            }
+
 
             // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#N281DB
             // These values can be adjusted on Jenkins job configuration
