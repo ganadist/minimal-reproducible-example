@@ -19,7 +19,7 @@ annotation = "1.7.0"
 annotation-experimental = '1.3.1'
 appcompat = "1.6.1"
 arch-core = "2.2.0"
-benchmark = "1.2.0"
+benchmark = "1.2.2"
 biometric = "1.1.0"
 browser = "1.6.0"
 camera = "1.3.0"
@@ -47,6 +47,7 @@ paging = "3.2.1"
 palette = "1.0.0"
 percentlayout = "1.0.0"
 preference = "1.2.1"
+profileinstaller= "1.3.1"
 recyclerview = "1.3.0"
 recyclerview-selection = "1.1.0"
 room = "2.6.0"
@@ -197,6 +198,8 @@ percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref =
 
 preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference" }
 
+profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
+
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerview-selection" }
 
@@ -263,6 +266,7 @@ window-rxjava3 = { module = "androidx.window:window-rxjava3", version.ref = "win
 window-testing = { module = "androidx.window:window-testing", version.ref = "window" }
 
 [plugins]
+baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 
