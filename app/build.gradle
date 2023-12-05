@@ -33,7 +33,7 @@ android {
         enable = true
     }
 
-    flavorDimensions 'default'
+    flavorDimensions = ["default"]
     productFlavors {
         develop { }
         beta { }
