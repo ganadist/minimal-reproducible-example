@@ -16,8 +16,8 @@ internal fun Project.configureTest(
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
     val androidTestApiLevel = getProperty("build.androidtest.sdk").toIntOrZero()
     commonExtension.apply {
+        // https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/runner?hl=en#enable-android
         defaultConfig {
-            // https://developer.android.com/training/testing/junit-runner#ato-gradle
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
             // The following argument makes the Android Test Orchestrator run its
