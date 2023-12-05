@@ -55,6 +55,6 @@ dependencyResolutionManagement {
 
 apply from: "gradle/version_catalogs.gradle"
 
-include ':app', ':dynamicfeature1', ":shared"
+include ':app', ":shared"
 include ":lib:hostconfig"
 rootProject.name='My Application'

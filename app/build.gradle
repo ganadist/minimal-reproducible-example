@@ -24,7 +24,6 @@ android {
             }
         }
     }
-    dynamicFeatures = [":dynamicfeature1"]
 
     buildFeatures {
         compose = true
