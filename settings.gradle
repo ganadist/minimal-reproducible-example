@@ -57,4 +57,5 @@ apply from: "gradle/version_catalogs.gradle"
 
 include ':app', ":shared"
 include ":lib:hostconfig"
+include ":tests:baselineprofile"
 rootProject.name='My Application'

@@ -1,0 +1,48 @@
+plugins {
+    alias(libs.plugins.android.test)
+    alias(libs.plugins.kotlin.android)
+    alias(androidxLibs.plugins.baselineprofile)
+}
+
+android {
+    namespace = "com.example.baselineprofile"
+
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    targetProjectPath = ":app"
+
+    testOptions.managedDevices {
+        devices {
+            genBaselineProfile (com.android.build.api.dsl.ManagedVirtualDevice) {
+                device = "Pixel 2"
+                apiLevel = rootProject.getProperty("compileSdk").toInteger()
+                systemImageSource = "google"
+            }
+        }
+    }
+
+    flavorDimensions = ["default"]
+    productFlavors {
+        // DO NOT allow develop flavor for benchmarking.
+        rc { }
+        production { }
+    }
+    buildTypes {
+        // DO NOT add debug build type for benchmarking.
+        maybeCreate("release")
+    }
+}
+
+baselineProfile {
+    managedDevices += "genBaselineProfile"
+    useConnectedDevices = false
+}
+
+dependencies {
+    // default dependencies are set by
+    // build-logic/convention/src/main/kotlin/com/myapplication/android/builder/UnitTest.kt
+
+    implementation(androidxLibs.benchmark.macro.junit4)
+}
