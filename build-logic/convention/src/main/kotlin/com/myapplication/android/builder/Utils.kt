@@ -9,7 +9,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
-typealias AGPCommonExtension = CommonExtension<*, *, *, *, *>
+typealias AGPCommonExtension = CommonExtension<*, *, *, *, *, *>
 
 internal fun Project.getProperty(
     propertyName: String,
