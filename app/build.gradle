@@ -1,7 +1,17 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    alias(androidxLibs.plugins.baselineprofile)
+}
+
+def enableBaselineProfileGenerator = getProperty("build.baselineprofile.generate.enable").toBoolean()
+def enableDexlayoutOptimizer = getProperty("build.dexlayout.optimize.enable").toBoolean()
+if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
+    logger.warn("Baseline Profile generator was disabled, and cannot enable Dex Layout Optimizer")
+    enableDexlayoutOptimizer = false
+}
+def enableBaselineProfileInstaller = getProperty("build.baselineprofileinstaller.enable").toBoolean()
+if (enableBaselineProfileGenerator) {
+    apply plugin: "androidx.baselineprofile"
 }
 
 android {
@@ -16,6 +26,13 @@ android {
     }
     buildTypes {
         release {
+            if (enableDexlayoutOptimizer) {
+                logger.warn("Dex Layout Optimizer was enabled")
+            }
+            experimentalProperties[
+                "android.experimental.r8.dex-startup-optimization"
+            ] = enableDexlayoutOptimizer
+
             postprocessing {
                 removeUnusedCode true
                 optimizeCode true
@@ -23,6 +40,11 @@ android {
                 removeUnusedResources true
                 proguardFiles file('proguards-rules.pro')
             }
+
+            // baselineprofile plugin does not support postprocessing dsl block, yet.
+            // So, we need assign proguard rule again
+            // https://issuetracker.google.com/issues/307784512
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), file('proguards/proguard.cfg')
         }
     }
 
@@ -45,13 +67,28 @@ android {
 
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
+
+    if (enableBaselineProfileGenerator) {
+       baselineProfile(project(":tests:baselineprofile"))
+    }
+    if (enableBaselineProfileInstaller) {
+       runtimeOnly(androidxLibs.profileinstaller)
+    }
+
     implementation libs.kotlin.stdlib.jdk7
     implementation androidxLibs.appcompat
     implementation androidxLibs.core.ktx
     implementation androidxLibs.constraintlayout
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+}
 
-    baselineProfile(project(":tests:baselineprofile"))
-    runtimeOnly(androidxLibs.profileinstaller)
+if (enableBaselineProfileGenerator) {
+    baselineProfile {
+        variants {
+            release {
+                automaticGenerationDuringBuild = true
+            }
+        }
+    }
 }
