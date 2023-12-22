@@ -14,6 +14,8 @@ internal fun Project.configureTest(
     commonExtension: AGPCommonExtension
 ) {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
+    val hasTestModulePlugin = pluginManager.hasPlugin("com.android.test")
+    val hasBaselineProfilePlugin = pluginManager.hasPlugin("androidx.baselineprofile")
     val androidTestApiLevel = getProperty("build.androidtest.sdk").toIntOrZero()
     commonExtension.apply {
         // https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/runner?hl=en#enable-android
@@ -27,7 +29,10 @@ internal fun Project.configureTest(
         }
 
         testOptions {
-            execution = "ANDROIDX_TEST_ORCHESTRATOR"
+            // https://issuetracker.google.com/issues/314821647
+            if (!hasTestModulePlugin && !hasBaselineProfilePlugin) {
+                execution = "ANDROIDX_TEST_ORCHESTRATOR"
+            }
 
             unitTests {
                 // http://robolectric.org/getting-started/#building-with-android-studiogradle
