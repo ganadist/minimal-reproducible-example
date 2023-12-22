@@ -23,7 +23,7 @@ android-cache-fix = "unspecified"
 bundletool = "1.10.0"
 
 # https://github.com/google/desugar_jdk_libs
-desugar = "1.2.0"
+desugar = "2.0.4"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlinx-coroutines = "1.7.3"
@@ -35,10 +35,10 @@ ktlint = "1.0.1"
 junit4 = "4.13.2"
 
 # https://github.com/mockito/mockito/releases
-mockito-core = '5.6.0'
+mockito-core = '5.8.0'
 
 # https://github.com/mockito/mockito-kotlin/releases
-mockito-kotlin = '5.1.0'
+mockito-kotlin = '5.2.1'
 
 # https://github.com/robolectric/robolectric/releases/
 robolectric = "4.11.1"
