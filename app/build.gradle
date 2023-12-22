@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    alias(androidxLibs.plugins.baselineprofile)
 }
 
 android {
@@ -50,4 +51,7 @@ dependencies {
     implementation androidxLibs.constraintlayout
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+
+    baselineProfile(project(":tests:baselineprofile"))
+    runtimeOnly(androidxLibs.profileinstaller)
 }
