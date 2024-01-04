@@ -54,11 +54,27 @@ internal fun Project.configureTest(
             // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#N281DB
             // These values can be adjusted on Jenkins job configuration
             val testMaxForks = getProperty("build.unittest.maxforks", "0").toIntOrZero()
-            val testJvmArgs = getProperty("build.unittest.jvmargs")
             val testForkEvery = getProperty("build.unittest.forkevery", "8").toLong()
             val testHeapSizeMin = getProperty("build.unittest.heapsize.min", "1g")
             val testHeapSizeMax = getProperty("build.unittest.heapsize.max", "6g")
             val testEnableLogging = getProperty("build.unittest.logging", "true").toBoolean()
+            val testJvmArgs = mutableListOf(
+                // https://developer.android.com/build/optimize-your-build#experiment-with-the-jvm-parallel-garbage-collector
+                "-XX:+UseParallelGC",
+                // https://github.com/robolectric/robolectric/issues/7456
+                "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                "--add-opens=java.base/java.util=ALL-UNNAMED",
+                // https://github.com/raphw/byte-buddy/issues/612#issuecomment-463618016
+                "-Djdk.attach.allowAttachSelf=true",
+                // https://github.com/mockito/mockito/issues/3037#issuecomment-1588199599
+                "-XX:+EnableDynamicAgentLoading",
+            ).apply {
+                val jvmArgsFromProperty = getProperty("build.unittest.jvmargs")
+                if (jvmArgsFromProperty.isNotBlank()) {
+                    addAll(jvmArgsFromProperty.split(" "))
+                }
+            }
+
 
             unitTests.all {
                 if (testMaxForks == 0) {
@@ -69,10 +85,8 @@ internal fun Project.configureTest(
                 }
                 it.minHeapSize = testHeapSizeMin
                 it.maxHeapSize = testHeapSizeMax
+                it.jvmArgs = testJvmArgs
 
-                if (testJvmArgs.isNotBlank()) {
-                    it.jvmArgs = testJvmArgs.split(" ")
-                }
                 it.setForkEvery(testForkEvery)
 
                 if (testEnableLogging) {
