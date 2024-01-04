@@ -44,6 +44,9 @@ internal fun Project.configureAndroid(
         }
     }
 
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+    val jacocoVersion = libs.findVersion("jacoco").get().requiredVersion
+
     configurations.all {
         resolutionStrategy.eachDependency {
             if (requested.group.startsWith("com.android.support") ||
@@ -78,6 +81,14 @@ internal fun Project.configureAndroid(
                 if (VersionNumber.parse(requested.version) < atLeastVersion) {
                     useVersion(atLeastVersion.toString())
                 }
+            }
+
+            // workaround for https://issuetracker.google.com/issues/298703884
+            if (requested.group == "org.jacoco" &&
+                requested.name == "org.jacoco.agent" &&
+                VersionNumber.parse(requested.version) < VersionNumber.parse(jacocoVersion)
+            ) {
+                useVersion(jacocoVersion)
             }
         }
 
