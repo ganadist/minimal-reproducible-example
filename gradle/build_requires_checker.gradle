@@ -41,22 +41,21 @@ abstract class RosettaValueSource extends ExecValueSource {
 }
 
 class Const {
-    static final Set<String> RECOMMANDED_JVM_VERSIONS = ["21"]
+    // minimum version will set from gradle.properties
+    static String MINIMUM_JVM_VERSION = ""
+    static final Set<String> ACCEPTABLE_JVM_VERSIONS = ["21"]
 }
 
-def MINIMUM_JVM_VERSION = settings.getProperty("build.jvmtarget.host")
-Const.RECOMMANDED_JVM_VERSIONS.add(MINIMUM_JVM_VERSION)
+Const.MINIMUM_JVM_VERSION = settings.getProperty("build.jvmtarget.host")
+Const.ACCEPTABLE_JVM_VERSIONS.add(Const.MINIMUM_JVM_VERSION)
 
 def checkJvmRequires() {
     def jvmVersion = System.getProperty("java.specification.version")
-    if (!Const.RECOMMANDED_JVM_VERSIONS.contains(jvmVersion)) {
+    if (!Const.ACCEPTABLE_JVM_VERSIONS.contains(jvmVersion)) {
         throw new GradleException(
-            "Use Jetbrain Runtime 17 which is included on Android Studio or JDK 17 LTS version"
+            "Use Jetbrain Runtime ${Const.MINIMUM_JVM_VERSION} which is included on Android Studio" +
+	    "or JDK ${Const.MINIMUM_JVM_VERSION} LTS version"
         )
-    }
-
-    if (jvmVersion.equals("21")) {
-        logger.warn("You must use JDK 21 from https://github.com/ganadist/graalvm-ce-builds/releases/tag/2023-10-24")
     }
 }
 
