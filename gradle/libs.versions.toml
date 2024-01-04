@@ -31,6 +31,9 @@ kotlinx-coroutines = "1.7.3"
 # https://github.com/pinterest/ktlint/releases
 ktlint = "1.0.1"
 
+# https://github.com/jacoco/jacoco/releases
+jacoco = "0.8.11"
+
 # https://junit.org/junit4/
 junit4 = "4.13.2"
 
