@@ -1,0 +1,11 @@
+apply from: "$settingsDir/gradle/repositories.gradle"
+
+dependencyResolutionManagement {
+    settings.ext.repos.google(repositories)
+    settings.ext.repos.gradlePluginPortal(repositories)
+    settings.ext.repos.mavenCentral(repositories)
+}
+
+apply from: "gradle/version_catalogs.gradle"
+
+include(":convention")

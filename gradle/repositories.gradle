@@ -63,6 +63,15 @@ def addGoogleRepository(RepositoryHandler handler) {
         }
     }
 
+    handler.maven {
+        url("https://androidx.dev/studio/builds/${studioSnapshotBuildId}/artifacts/artifacts/repository")
+        content {
+            includeVersionByRegex("androidx\\.databinding.*", ".*", ".*-dev")
+            includeVersionByRegex("com\\.android", ".*", ".*-dev.*")
+            includeVersionByRegex("com\\.android\\..*", ".*", ".*-dev.*")
+        }
+    }
+
     // https://androidx.dev/storage/compose-compiler/repository
     handler.maven {
         url("https://androidx.dev/storage/compose-compiler/repository")
