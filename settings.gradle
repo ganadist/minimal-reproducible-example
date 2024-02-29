@@ -1,6 +1,21 @@
 pluginManagement {
     apply from: "$settingsDir/gradle/build_requires_checker.gradle"
     apply from: "$settingsDir/gradle/repositories.gradle"
+
+    buildscript {
+	// r8Versoin is declared in gradle.properties
+        if (!r8Version.isEmpty()) {
+            settings.repos.r8(repositories, r8Version)
+
+            dependencies {
+                logger.warn("R8 $r8Version will be applied")
+                classpath("com.android.tools:r8:$r8Version") {
+                    exclude(group: "com.google.guava", module: "guava")
+                }
+            }
+        }
+    }
+
     settings.ext.repos.google(repositories)
     settings.ext.repos.gradlePluginPortal(repositories)
 
