@@ -2,13 +2,12 @@ package com.myapplication.android.builder
 
 import com.android.build.api.dsl.DynamicFeatureExtension
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 @Suppress("UnstableApiUsage")
-internal fun Project.configureDynamicFeature(
-    dynamicFeatureExtension: DynamicFeatureExtension
-) {
-    dynamicFeatureExtension.apply {
+internal fun Project.configureDynamicFeature() {
+    extensions.configure<DynamicFeatureExtension> {
         buildTypes {
             maybeCreate("releaseDebuggable").apply {
                 // initWith(BuildType.DEBUG)

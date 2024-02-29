@@ -14,10 +14,9 @@ private val MIN_CHECKER_VERSION = VersionNumber.parse(MIN_CHECKER_VERSION_STRING
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAndroid(
-    commonExtension: AGPCommonExtension,
     javaVersion: JavaVersion
 ) {
-    commonExtension.apply {
+    android {
         defaultConfig {
             compileOptions {
                 sourceCompatibility = javaVersion

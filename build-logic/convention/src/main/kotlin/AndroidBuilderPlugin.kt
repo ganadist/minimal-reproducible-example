@@ -1,12 +1,9 @@
-import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.CommonExtension
-import com.android.build.api.dsl.DynamicFeatureExtension
-import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BasePlugin
 import com.android.build.gradle.DynamicFeaturePlugin
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.TestPlugin
+import com.myapplication.android.builder.componentsExtension
 import com.myapplication.android.builder.configureAndroid
 import com.myapplication.android.builder.configureAnnotationProcessors
 import com.myapplication.android.builder.configureApplication
@@ -37,27 +34,25 @@ class AndroidBuilderPlugin : Plugin<Project> {
                     getProperty("build.jvmtarget.intermediates")
                 )
 
-                extensions.getByType(CommonExtension::class.java).let { android ->
-                    extensions.getByType(AndroidComponentsExtension::class.java).apply {
-                        beforeVariants(selector().all()) { variant ->
-                            when(variant.flavorName) {
-                                "" -> variant.enable = true
-                                "develop" -> variant.enable = variant.buildType == "debug"
-                                else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
-                            }
+                componentsExtension.apply {
+                    beforeVariants(selector().all()) { variant ->
+                        when(variant.flavorName) {
+                            "" -> variant.enable = true
+                            "develop" -> variant.enable = variant.buildType == "debug"
+                            else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
                         }
                     }
-
-                    configureAndroid(android, bytecodeVersion)
-                    configureAnnotationProcessors(android)
-                    configureLint(android)
-                    configureTest(android)
-                    configureJacoco(android)
-                    configureReportOutput(android)
-                    configureJava(bytecodeVersion)
-                    configureKotlin(bytecodeVersion)
-                    configureJetpackCompose(android)
                 }
+
+                configureAndroid(bytecodeVersion)
+                configureAnnotationProcessors()
+                configureLint()
+                configureTest()
+                configureJacoco()
+                configureReportOutput()
+                configureJava(bytecodeVersion)
+                configureKotlin(bytecodeVersion)
+                configureJetpackCompose()
             }
 
             plugins.withType<LibraryPlugin>().configureEach {
@@ -65,12 +60,12 @@ class AndroidBuilderPlugin : Plugin<Project> {
             }
 
             plugins.withType<AppPlugin>().configureEach {
-                configureApplication(extensions.getByType(ApplicationExtension::class.java))
+                configureApplication()
                 configureTestDependencies()
             }
 
             plugins.withType<DynamicFeaturePlugin>().configureEach {
-                configureDynamicFeature(extensions.getByType(DynamicFeatureExtension::class.java))
+                configureDynamicFeature()
                 configureTestDependencies()
             }
 

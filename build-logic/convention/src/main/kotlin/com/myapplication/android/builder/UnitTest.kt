@@ -11,14 +11,12 @@ import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
-internal fun Project.configureTest(
-    commonExtension: AGPCommonExtension
-) {
+internal fun Project.configureTest() {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
     val hasTestModulePlugin = pluginManager.hasPlugin("com.android.test")
     val hasBaselineProfilePlugin = pluginManager.hasPlugin("androidx.baselineprofile")
     val androidTestApiLevel = getProperty("build.androidtest.sdk").toIntOrZero()
-    commonExtension.apply {
+    android {
         // https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/runner?hl=en#enable-android
         defaultConfig {
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
