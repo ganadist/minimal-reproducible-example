@@ -7,7 +7,6 @@ import com.android.build.gradle.BasePlugin
 import com.android.build.gradle.DynamicFeaturePlugin
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.TestPlugin
-import com.myapplication.android.builder.Const
 import com.myapplication.android.builder.configureAndroid
 import com.myapplication.android.builder.configureAnnotationProcessors
 import com.myapplication.android.builder.configureApplication
@@ -25,7 +24,7 @@ import com.myapplication.android.builder.getProperty
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 class AndroidBuilderPlugin : Plugin<Project> {
@@ -33,7 +32,7 @@ class AndroidBuilderPlugin : Plugin<Project> {
         target: Project
     ) {
         with(target) {
-            plugins.withType(BasePlugin::class.java) {
+            plugins.withType<BasePlugin>().configureEach {
                 val bytecodeVersion = JavaVersion.toVersion(
                     getProperty("build.jvmtarget.intermediates")
                 )
@@ -61,21 +60,21 @@ class AndroidBuilderPlugin : Plugin<Project> {
                 }
             }
 
-            plugins.withType(LibraryPlugin::class.java) {
+            plugins.withType<LibraryPlugin>().configureEach {
                 configureTestDependencies()
             }
 
-            plugins.withType(AppPlugin::class.java) {
+            plugins.withType<AppPlugin>().configureEach {
                 configureApplication(extensions.getByType(ApplicationExtension::class.java))
                 configureTestDependencies()
             }
 
-            plugins.withType(DynamicFeaturePlugin::class.java) {
+            plugins.withType<DynamicFeaturePlugin>().configureEach {
                 configureDynamicFeature(extensions.getByType(DynamicFeatureExtension::class.java))
                 configureTestDependencies()
             }
 
-            plugins.withType(TestPlugin::class.java) {
+            plugins.withType<TestPlugin>().configureEach {
                 configureTestProjectDependencies()
             }
 

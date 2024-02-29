@@ -3,10 +3,11 @@ package com.myapplication.android.builder
 import java.time.Duration
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun Project.configureKotlin(javaVersion: JavaVersion) {
-    tasks.withType(KotlinCompile::class.java).configureEach {
+    tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = javaVersion.toString()
             allWarningsAsErrors = true

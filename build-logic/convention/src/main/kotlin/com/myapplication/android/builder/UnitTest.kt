@@ -8,6 +8,7 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureTest(
@@ -120,7 +121,7 @@ internal fun Project.configureTest(
         }
     }
 
-    tasks.withType(Test::class.java).configureEach {
+    tasks.withType<Test>().configureEach {
         timeout.set(
             Duration.ofMinutes(
                 rootProject.getProperty("build.timeout.unittest").toLong()

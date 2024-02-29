@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 private const val CHECK_COMPOSE_VERSION_PROPERTY =
@@ -74,7 +75,7 @@ internal fun Project.configureJetpackCompose(
             }
 
             if (!checkComposeVersion) {
-                tasks.withType(KotlinCompile::class.java).configureEach {
+                tasks.withType<KotlinCompile>().configureEach {
                     kotlinOptions {
                         freeCompilerArgs = freeCompilerArgs + listOf(
                             "-P",
