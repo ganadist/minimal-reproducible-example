@@ -60,17 +60,20 @@ android {
         this.compileSdkPreview = compileSdkPreview
     }
 
+    """
     execution {
         defaultProfile = "minimal"
         profiles {
             create("minimal") {
                 r8 {
-                    runInSeparateProcess = true
+                    // https://issuetracker.google.com/issues/283632726
+                    runInSeparateProcess = false
                     jvmOptions.addAll(listOf("-Xmx2g", "-XX:+UseParallelGC"))
                 }
             }
         }
     }
+    """
 }
 
 dependencyResolutionManagement {
