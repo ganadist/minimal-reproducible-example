@@ -1,62 +1,72 @@
 pluginManagement {
-    apply from: "$settingsDir/gradle/build_requires_checker.gradle"
-    apply from: "$settingsDir/gradle/repositories.gradle"
+    apply(from = File(settingsDir, "gradle/build_requires_checker.gradle"))
+    apply(from = File(settingsDir, "gradle/repositories.gradle"))
+
+    val repos: java.util.Properties by settings.extra
+
+    // r8Versoin is declared in gradle.properties
+    val r8Version: String by settings
+    val androidGradlePluginVersion: String by settings
+    val gradleEnterprisePluginVersion: String by settings
 
     buildscript {
-	// r8Versoin is declared in gradle.properties
         if (!r8Version.isEmpty()) {
-            settings.repos.r8(repositories, r8Version)
+            repositories {
+                (repos["r8"] as groovy.lang.Closure<*>).call(this, r8Version)
+            }
 
             dependencies {
                 logger.warn("R8 $r8Version will be applied")
                 classpath("com.android.tools:r8:$r8Version") {
-                    exclude(group: "com.google.guava", module: "guava")
+                    exclude(group = "com.google.guava", module = "guava")
                 }
             }
         }
     }
 
-    settings.ext.repos.google(repositories)
-    settings.ext.repos.gradlePluginPortal(repositories)
+    repositories {
+        (repos["google"] as groovy.lang.Closure<*>).call(this)
+        (repos["gradlePluginPortal"] as groovy.lang.Closure<*>).call(this)
+    }
 
     plugins {
-        id 'com.android.settings' version "$androidGradlePluginVersion"
-        id 'com.gradle.enterprise' version "$gradleEnterprisePluginVersion"
+        id("com.android.settings") version androidGradlePluginVersion
+        id("com.gradle.enterprise") version gradleEnterprisePluginVersion
     }
     includeBuild("build-logic")
 }
 
 plugins {
-    id 'com.gradle.enterprise'
-    id 'com.android.settings'
+    id("com.gradle.enterprise")
+    id("com.android.settings")
 }
 
 android {
-    def _minSdk = settings.getProperty("minSdk").toInteger()
-    def _compileSdkPreview = settings.getProperty("compileSdkPreview")
-    def _compileSdkExtension = settings.getProperty("compileSdkExtension")
-    def _buildToolsVersion = settings.getProperty("buildToolsVersion")
+    val minSdk: String by settings
+    val compileSdk : String by settings
+    val compileSdkPreview: String by settings
+    val compileSdkExtension: String by settings
+    val buildToolsVersion: String by settings
 
-    compileSdk settings.getProperty("compileSdk").toInteger()
+    this.minSdk = minSdk.toInt()
+    this.compileSdk = compileSdk.toInt()
+    this.buildToolsVersion = buildToolsVersion
 
-    if (!_compileSdkExtension.isEmpty()) {
-        compileSdkExtension _compileSdkExtension.toInteger()
+    if (compileSdkExtension.isNotEmpty()) {
+        this.compileSdkExtension = compileSdkExtension.toInt()
     }
 
-    if (!_compileSdkPreview.isEmpty()) {
-        compileSdkPreview _compileSdkPreview
+    if (compileSdkPreview.isNotEmpty()) {
+        this.compileSdkPreview = compileSdkPreview
     }
 
-    minSdk _minSdk
-    ndkVersion "$NDK_VERSION"
-    buildToolsVersion _buildToolsVersion
     execution {
-        defaultProfile "minimal"
+        defaultProfile = "minimal"
         profiles {
-            minimal {
+            create("minimal") {
                 r8 {
-                    runInSeparateProcess true
-                    jvmOptions = ["-Xmx2g", "-XX:+UseParallelGC"]
+                    runInSeparateProcess = true
+                    jvmOptions.addAll(listOf("-Xmx2g", "-XX:+UseParallelGC"))
                 }
             }
         }
@@ -64,13 +74,17 @@ android {
 }
 
 dependencyResolutionManagement {
-    settings.ext.repos.google(repositories)
-    settings.ext.repos.mavenCentral(repositories)
+    val repos: java.util.Properties by settings.extra
+    repositories {
+        (repos["google"] as groovy.lang.Closure<*>).call(this)
+        (repos["mavenCentral"] as groovy.lang.Closure<*>).call(this)
+    }
 }
 
-apply from: "gradle/version_catalogs.gradle"
+apply(from = File(settingsDir, "gradle/version_catalogs.gradle"))
 
-include ':app', ":shared"
-include ":lib:hostconfig"
-include ":tests:baselineprofile"
-rootProject.name='My Application'
+include(":app")
+include(":shared")
+include(":lib:hostconfig")
+include(":tests:baselineprofile")
+rootProject.name = "My Application"
