@@ -78,6 +78,7 @@ class StartupBenchmarks {
             setupBlock = {
                 killProcess()
                 if (!loginCompleted) {
+                    loginUtil.clearUserData()
                     // Login procedure need to invoke only once
                     login()
                     loginCompleted = true
@@ -88,7 +89,8 @@ class StartupBenchmarks {
                 startActivityAndWait()
 
                 loginUtil.waitMainActivity(5 * 1000)
-                loginUtil.stopProcess()
+
+                killProcess()
             }
         )
     }

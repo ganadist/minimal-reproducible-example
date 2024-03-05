@@ -98,13 +98,6 @@ class LoginUtil(
         runCommand("pm clear $applicationId")
     }
 
-    private fun waitForObject(selector: BySelector, timeout: Long = 5000): UiObject2 {
-        if (device.wait(Until.hasObject(selector), timeout)) {
-            return device.findObject(selector)
-        }
-        error("Cannot find object with selector: $selector")
-    }
-
     fun proceed(
         username: String,
         password: String,
@@ -135,8 +128,6 @@ class LoginUtil(
         }
 
         context.startActivity(loginIndent)
-
-        waitForObject((By.res(applicationId, "login_button")), timeout).click()
 
         waitMainActivity(timeout)
     }
