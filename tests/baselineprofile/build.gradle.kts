@@ -2,6 +2,7 @@
 
 import androidx.baselineprofile.gradle.producer.BaselineProfileProducerExtension
 import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.api.dsl.TestProductFlavor
 import com.android.build.gradle.tasks.CheckTestedAppObfuscation
 
 plugins {
@@ -43,8 +44,36 @@ if (enableBaselineProfileGenerator) {
     }
 }
 
+private fun TestProductFlavor.setBuildConfig(
+    key: String,
+    usage: String,
+    phase: String,
+    propSuffix: String
+) {
+    val propPrefix = "build.$usage.$phase.login"
+    val propValue = getProperty("$propPrefix.$propSuffix")
+    buildConfigField(
+        "String",
+        key,
+        "String.valueOf(\"$propValue\")"
+    )
+}
+
+private fun TestProductFlavor.setLoginConfig(
+    configPrefix: String,
+    usage: String,
+    phase: String
+) {
+    setBuildConfig("${configPrefix}_LOGIN_USERNAME", usage, phase, "username")
+    setBuildConfig("${configPrefix}_LOGIN_PASSWORD", usage, phase, "password")
+}
+
 android {
     namespace = "com.example.baselineprofile"
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -56,8 +85,14 @@ android {
     flavorDimensions.add("default")
     productFlavors {
         // DO NOT allow develop flavor for benchmarking.
-        create("rc")
-        create("production")
+        create("rc") {
+            setLoginConfig("BASELINE", "baselineprofile", "rc")
+            setLoginConfig("BENCHMARK", "benchmark", "rc")
+        }
+        create("production") {
+            setLoginConfig("BASELINE", "baselineprofile", "production")
+            setLoginConfig("BENCHMARK", "benchmark", "production")
+        }
     }
     buildTypes {
         // DO NOT add debug build type for benchmarking.
