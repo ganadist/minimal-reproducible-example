@@ -2,6 +2,7 @@
 
 import androidx.baselineprofile.gradle.producer.BaselineProfileProducerExtension
 import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.gradle.tasks.CheckTestedAppObfuscation
 
 plugins {
     alias(libs.plugins.android.test)
@@ -69,4 +70,9 @@ dependencies {
     // build-logic/convention/src/main/kotlin/com/myapplication/android/builder/UnitTest.kt
 
     implementation(androidxLibs.benchmark.macro.junit4)
+}
+
+// Disable obfuscation check for benchmarking.
+tasks.withType(CheckTestedAppObfuscation::class.java).configureEach {
+    enabled = false
 }
