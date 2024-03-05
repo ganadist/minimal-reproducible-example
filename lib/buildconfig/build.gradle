@@ -1,0 +1,25 @@
+plugins {
+    id("com.android.library")
+}
+
+android {
+    namespace "com.example.constant"
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+        buildConfigField("boolean", "ALLOW_DEEPLINK_LOGIN", "Boolean.valueOf(\"false\")")
+    }
+
+    buildTypes {
+        debug { }
+	release { }
+	benchmarkRelease {
+            buildConfigField("boolean", "ALLOW_DEEPLINK_LOGIN", "Boolean.valueOf(\"true\")")
+	}
+	nonMinifiedRelease {
+            buildConfigField("boolean", "ALLOW_DEEPLINK_LOGIN", "Boolean.valueOf(\"true\")")
+	}
+    }
+}

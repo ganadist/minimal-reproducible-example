@@ -7,6 +7,7 @@ import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,6 +39,24 @@ class StartupBenchmarks {
     @get:Rule
     val rule = MacrobenchmarkRule()
 
+    private val loginUtil = LoginUtil(
+        LoginUtil.APPLICATION_ID
+    )
+
+    private fun login() {
+        loginUtil.grantPermissions()
+        loginUtil.proceed(
+            BuildConfig.BENCHMARK_LOGIN_USERNAME,
+            BuildConfig.BENCHMARK_LOGIN_PASSWORD,
+            timeout = 5 * 1000
+        )
+    }
+
+    @Before
+    fun setUp() {
+        loginUtil.disableInstallVerifier()
+    }
+
     @Test
     fun startupCompilationNone() =
         benchmark(CompilationMode.None())
@@ -47,26 +66,29 @@ class StartupBenchmarks {
         benchmark(CompilationMode.Partial(BaselineProfileMode.Require))
 
     private fun benchmark(compilationMode: CompilationMode) {
+        var loginCompleted = false
+        loginUtil.stopProcess()
+
         rule.measureRepeated(
-            packageName = "com.example.myapplication",
+            packageName = LoginUtil.APPLICATION_ID,
             metrics = listOf(StartupTimingMetric()),
             compilationMode = compilationMode,
             startupMode = StartupMode.COLD,
             iterations = 10,
             setupBlock = {
-                pressHome()
+                killProcess()
+                if (!loginCompleted) {
+                    // Login procedure need to invoke only once
+                    login()
+                    loginCompleted = true
+                    killProcess()
+                }
             },
             measureBlock = {
                 startActivityAndWait()
 
-                // TODO Add interactions to wait for when your app is fully drawn.
-                // The app is fully drawn when Activity.reportFullyDrawn is called.
-                // For Jetpack Compose, you can use ReportDrawn, ReportDrawnWhen and ReportDrawnAfter
-                // from the AndroidX Activity library.
-
-                // Check the UiAutomator documentation for more information on how to
-                // interact with the app.
-                // https://d.android.com/training/testing/other-components/ui-automator
+                loginUtil.waitMainActivity(5 * 1000)
+                loginUtil.stopProcess()
             }
         )
     }

@@ -88,6 +88,7 @@ apply(from = File(settingsDir, "gradle/version_catalogs.gradle"))
 
 include(":app")
 include(":shared")
+include(":lib:buildconfig")
 include(":lib:hostconfig")
 include(":tests:baselineprofile")
 rootProject.name = "My Application"
