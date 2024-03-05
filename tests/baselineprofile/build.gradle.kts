@@ -8,7 +8,7 @@ android {
     namespace = "com.example.baselineprofile"
 
     defaultConfig {
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
     }
 
@@ -16,19 +16,19 @@ android {
 
     testOptions.managedDevices {
         devices {
-            genBaselineProfile (com.android.build.api.dsl.ManagedVirtualDevice) {
+            create<com.android.build.api.dsl.ManagedVirtualDevice>("genBaselineProfile") {
                 device = "Pixel 2"
-                apiLevel = rootProject.getProperty("compileSdk").toInteger()
+                apiLevel = rootProject.properties["compileSdk"].toString().toInt()
                 systemImageSource = "google"
             }
         }
     }
 
-    flavorDimensions = ["default"]
+    flavorDimensions.add("default")
     productFlavors {
         // DO NOT allow develop flavor for benchmarking.
-        rc { }
-        production { }
+        create("rc")
+        create("production")
     }
     buildTypes {
         // DO NOT add debug build type for benchmarking.
