@@ -1,7 +1,45 @@
+@file:Suppress("UnstableApiUsage")
+
+import androidx.baselineprofile.gradle.producer.BaselineProfileProducerExtension
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
     alias(libs.plugins.android.test)
     alias(libs.plugins.kotlin.android)
-    alias(androidxLibs.plugins.baselineprofile)
+}
+
+private fun Project.getProperty(name: String): String {
+    return rootProject.properties[name].toString()
+}
+
+private fun String?.toBoolean(): Boolean {
+    return when (this) {
+        "1",
+        "yes",
+        "true" -> true
+        else -> false
+    }
+}
+
+val enableBaselineProfileGenerator = getProperty(
+    "build.baselineprofile.generate.enable"
+).toBoolean()
+
+if (enableBaselineProfileGenerator) {
+    apply(plugin = "androidx.baselineprofile")
+
+    android.testOptions.managedDevices.devices {
+        create<ManagedVirtualDevice>("genBaselineProfile") {
+            device = "Pixel 2"
+            apiLevel = getProperty("compileSdk").toInt()
+            systemImageSource = "google"
+        }
+    }
+
+    extensions.findByType(BaselineProfileProducerExtension::class.java)?.apply {
+        managedDevices += "genBaselineProfile"
+        useConnectedDevices = false
+    }
 }
 
 android {
@@ -14,16 +52,6 @@ android {
 
     targetProjectPath = ":app"
 
-    testOptions.managedDevices {
-        devices {
-            create<com.android.build.api.dsl.ManagedVirtualDevice>("genBaselineProfile") {
-                device = "Pixel 2"
-                apiLevel = rootProject.properties["compileSdk"].toString().toInt()
-                systemImageSource = "google"
-            }
-        }
-    }
-
     flavorDimensions.add("default")
     productFlavors {
         // DO NOT allow develop flavor for benchmarking.
@@ -34,11 +62,6 @@ android {
         // DO NOT add debug build type for benchmarking.
         maybeCreate("release")
     }
-}
-
-baselineProfile {
-    managedDevices += "genBaselineProfile"
-    useConnectedDevices = false
 }
 
 dependencies {
