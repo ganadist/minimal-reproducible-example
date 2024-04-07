@@ -4,7 +4,7 @@ pluginManagement {
 
     val repos: java.util.Properties by settings.extra
 
-    // r8Versoin is declared in gradle.properties
+    // r8Version is declared in gradle.properties
     val r8Version: String by settings
     val androidGradlePluginVersion: String by settings
     val gradleEnterprisePluginVersion: String by settings
