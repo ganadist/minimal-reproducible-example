@@ -10,6 +10,12 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 
+private val testFilterMap = mapOf(
+    "small" to "androidx.test.filters.SmallTest",
+    "medium" to "androidx.test.filters.MediumTest",
+    "large" to "androidx.test.filters.LargeTest",
+)
+
 @Suppress("UnstableApiUsage")
 internal fun Project.configureTest() {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
@@ -75,7 +81,20 @@ internal fun Project.configureTest() {
             }
 
 
+            /**
+             * JUnit4 Size filter which is similar with instrumentation test.
+             * https://github.com/junit-team/junit4/wiki/Categories
+             * https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/runner?hl=en#filter-tests
+             */
+            val testSize = getProperty("build.testRunnerArguments.size")
+            val testFilter = testFilterMap[testSize] ?: ""
             unitTests.all {
+                it.useJUnit {
+                    if (testFilter.isNotEmpty()) {
+                        includeCategories(testFilter)
+                    }
+                }
+
                 if (testMaxForks == 0) {
                     it.maxParallelForks =
                         (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
