@@ -34,25 +34,31 @@ class AndroidBuilderPlugin : Plugin<Project> {
                     getProperty("build.jvmtarget.intermediates")
                 )
 
-                componentsExtension.apply {
-                    beforeVariants(selector().all()) { variant ->
-                        when(variant.flavorName) {
-                            "" -> variant.enable = true
-                            "develop" -> variant.enable = variant.buildType == "debug"
-                            else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
-                        }
-                    }
+                val hasCommonExtensions = PLUGINS_HAS_COMMON_EXTENSIONS.any {
+                    plugins.hasPlugin(it)
                 }
 
-                configureAndroid(bytecodeVersion)
-                configureAnnotationProcessors()
-                configureLint()
-                configureTest()
-                configureJacoco()
-                configureReportOutput()
-                configureJava(bytecodeVersion)
-                configureKotlin(bytecodeVersion)
-                configureJetpackCompose()
+                if (hasCommonExtensions) {
+                    componentsExtension.apply {
+                        beforeVariants(selector().all()) { variant ->
+                            when (variant.flavorName) {
+                                "" -> variant.enable = true
+                                "develop" -> variant.enable = variant.buildType == "debug"
+                                else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
+                            }
+                        }
+                    }
+
+                    configureAndroid(bytecodeVersion)
+                    configureAnnotationProcessors()
+                    configureLint()
+                    configureTest()
+                    configureJacoco()
+                    configureReportOutput()
+                    configureJava(bytecodeVersion)
+                    configureKotlin(bytecodeVersion)
+                    configureJetpackCompose()
+                }
             }
 
             plugins.withType<LibraryPlugin>().configureEach {
@@ -90,6 +96,13 @@ class AndroidBuilderPlugin : Plugin<Project> {
             // build types from baselineprofile plugin
             "benchmarkRelease",
             "nonMinifiedRelease"
+        )
+
+        private val PLUGINS_HAS_COMMON_EXTENSIONS = arrayOf(
+            "com.android.application",
+            "com.android.dynamic-feature",
+            "com.android.library",
+            "com.android.test"
         )
     }
 }
