@@ -9,7 +9,7 @@ if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
     logger.warn("Baseline Profile generator was disabled, and cannot enable Dex Layout Optimizer")
     enableDexlayoutOptimizer = false
 }
-def enableBaselineProfileInstaller = getProperty("build.baselineprofileinstaller.enable").toBoolean()
+
 if (enableBaselineProfileGenerator) {
     apply plugin: "androidx.baselineprofile"
 }
@@ -71,9 +71,8 @@ dependencies {
     if (enableBaselineProfileGenerator) {
        baselineProfile(project(":tests:baselineprofile"))
     }
-    if (enableBaselineProfileInstaller) {
-       runtimeOnly(androidxLibs.profileinstaller)
-    }
+
+    runtimeOnly(androidxLibs.profileinstaller)
 
     implementation libs.kotlin.stdlib.jdk7
     implementation androidxLibs.appcompat
