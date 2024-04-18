@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 private const val CHECK_COMPOSE_VERSION_PROPERTY =
@@ -13,13 +14,11 @@ private const val SUPPRESS_KOTLIN_VERSION_OPTION =
     "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck="
 
 @Suppress("UnstableApiUsage")
-internal fun Project.configureJetpackCompose(
-    commonExtension: AGPCommonExtension
-) {
+internal fun Project.configureJetpackCompose() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
     val composeCompilerVersion = androidxLibs.findVersion("compose.compiler").get().toString()
-    commonExtension.apply {
+    android {
         composeOptions {
             kotlinCompilerExtensionVersion = composeCompilerVersion
         }
@@ -28,7 +27,7 @@ internal fun Project.configureJetpackCompose(
     val hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
     val checkComposeVersion = getProperty(CHECK_COMPOSE_VERSION_PROPERTY).toBoolean()
     afterEvaluate {
-        val composeFeature = commonExtension.buildFeatures.compose
+        val composeFeature = androidExtension.buildFeatures.compose
         if (composeFeature == true) {
             if (false) {
                 throw GradleException(
@@ -74,7 +73,7 @@ internal fun Project.configureJetpackCompose(
             }
 
             if (!checkComposeVersion) {
-                tasks.withType(KotlinCompile::class.java).configureEach {
+                tasks.withType<KotlinCompile>().configureEach {
                     kotlinOptions {
                         freeCompilerArgs = freeCompilerArgs + listOf(
                             "-P",

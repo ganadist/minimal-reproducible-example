@@ -1,6 +1,7 @@
 package com.myapplication.android.builder
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.variant.AndroidComponentsExtension
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -9,7 +10,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 
-typealias AGPCommonExtension = CommonExtension<*, *, *, *, *>
+typealias AndroidExtension = CommonExtension<*, *, *, *, *, *>
 
 internal fun Project.getProperty(
     propertyName: String,
@@ -20,6 +21,16 @@ internal fun Project.getProperty(
     } else {
         defValue
     }
+
+internal val Project.androidExtension: AndroidExtension
+    get() = extensions.getByType(CommonExtension::class.java)
+
+internal val Project.componentsExtension: AndroidComponentsExtension<*, *, *>
+    get() = extensions.getByType(AndroidComponentsExtension::class.java)
+
+internal fun Project.android(block: AndroidExtension.() -> Unit) {
+    androidExtension.block()
+}
 
 internal fun String?.toIntOrZero(): Int = (this ?: "").toIntOrNull() ?: 0
 

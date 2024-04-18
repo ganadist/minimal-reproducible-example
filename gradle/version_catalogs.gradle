@@ -5,12 +5,14 @@ dependencyResolutionManagement {
             version("r8", r8Version)
             version("android-gradle", androidGradlePluginVersion)
             version("kotlin", kotlinVersion)
+            version("ksp", "${kotlinVersion}-${kspVersion}")
             version("gradle-enterprise", gradleEnterprisePluginVersion)
             version("android-cache-fix", androidCacheFixVersion)
         }
         androidxLibs {
             from(files("androidx.versions.toml"))
             version("android-gradle", androidGradlePluginVersion)
+            version("compose-compiler", composeCompilerVersion)
         }
         googleLibs {
             from(files("google.versions.toml"))

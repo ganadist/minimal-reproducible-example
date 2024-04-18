@@ -1,13 +1,10 @@
-import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.CommonExtension
-import com.android.build.api.dsl.DynamicFeatureExtension
-import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.BasePlugin
 import com.android.build.gradle.DynamicFeaturePlugin
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.TestPlugin
 import com.myapplication.android.builder.Const
+import com.myapplication.android.builder.componentsExtension
 import com.myapplication.android.builder.configureAndroid
 import com.myapplication.android.builder.configureAnnotationProcessors
 import com.myapplication.android.builder.configureApplication
@@ -25,7 +22,7 @@ import com.myapplication.android.builder.getProperty
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 class AndroidBuilderPlugin : Plugin<Project> {
@@ -33,15 +30,19 @@ class AndroidBuilderPlugin : Plugin<Project> {
         target: Project
     ) {
         with(target) {
-            plugins.withType(BasePlugin::class.java) {
+            plugins.withType<BasePlugin>().configureEach {
                 val bytecodeVersion = JavaVersion.toVersion(
                     getProperty("build.jvmtarget.intermediates")
                 )
 
-                extensions.getByType(CommonExtension::class.java).let { android ->
-                    extensions.getByType(AndroidComponentsExtension::class.java).apply {
+                val hasCommonExtensions = PLUGINS_HAS_COMMON_EXTENSIONS.any {
+                    plugins.hasPlugin(it)
+                }
+
+                if (hasCommonExtensions) {
+                    componentsExtension.apply {
                         beforeVariants(selector().all()) { variant ->
-                            when(variant.flavorName) {
+                            when (variant.flavorName) {
                                 "" -> variant.enable = true
                                 "develop" -> variant.enable = variant.buildType == "debug"
                                 else -> variant.enable = variant.buildType in RELEASE_BUILD_TYPES
@@ -49,33 +50,33 @@ class AndroidBuilderPlugin : Plugin<Project> {
                         }
                     }
 
-                    configureAndroid(android, bytecodeVersion)
-                    configureAnnotationProcessors(android)
-                    configureLint(android)
-                    configureTest(android)
-                    configureJacoco(android)
-                    configureReportOutput(android)
+                    configureAndroid(bytecodeVersion)
+                    configureAnnotationProcessors()
+                    configureLint()
+                    configureTest()
+                    configureJacoco()
+                    configureReportOutput()
                     configureJava(bytecodeVersion)
                     configureKotlin(bytecodeVersion)
-                    configureJetpackCompose(android)
+                    configureJetpackCompose()
                 }
             }
 
-            plugins.withType(LibraryPlugin::class.java) {
+            plugins.withType<LibraryPlugin>().configureEach {
                 configureTestDependencies()
             }
 
-            plugins.withType(AppPlugin::class.java) {
-                configureApplication(extensions.getByType(ApplicationExtension::class.java))
+            plugins.withType<AppPlugin>().configureEach {
+                configureApplication()
                 configureTestDependencies()
             }
 
-            plugins.withType(DynamicFeaturePlugin::class.java) {
-                configureDynamicFeature(extensions.getByType(DynamicFeatureExtension::class.java))
+            plugins.withType<DynamicFeaturePlugin>().configureEach {
+                configureDynamicFeature()
                 configureTestDependencies()
             }
 
-            plugins.withType(TestPlugin::class.java) {
+            plugins.withType<TestPlugin>().configureEach {
                 configureTestProjectDependencies()
             }
 
@@ -92,9 +93,17 @@ class AndroidBuilderPlugin : Plugin<Project> {
     companion object {
         private val RELEASE_BUILD_TYPES = arrayOf(
             "release",
+            // https://issuetracker.google.com/issues/307478189
             // build types from baselineprofile plugin
             "benchmarkRelease",
             "nonMinifiedRelease"
+        )
+
+        private val PLUGINS_HAS_COMMON_EXTENSIONS = arrayOf(
+            "com.android.application",
+            "com.android.dynamic-feature",
+            "com.android.library",
+            "com.android.test"
         )
     }
 }

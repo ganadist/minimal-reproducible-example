@@ -13,16 +13,14 @@ class ArtifactGroups {
     static final google = [
         "androidx\\..*",
 
-        "com\\.android",
-        "com\\.android\\..*",
+        "com\\.android(\\..*|)",
 
         "com\\.crashlytics\\..*",
 
         "com\\.google\\.ads\\..*",
         "com\\.google\\.android\\..*",
         "com\\.google\\.androidbrowserhelper",
-        "com\\.google\\.ar",
-        "com\\.google\\.ar\\..*",
+        "com\\.google\\.ar(\\..*|)",
         "com\\.google\\.assistant\\..*",
         "com\\.google\\.firebase",
         "com\\.google\\.gms",
@@ -60,6 +58,14 @@ def addGoogleRepository(RepositoryHandler handler) {
         url("https://androidx.dev/snapshots/builds/${androidXSnapshotBuildId}/artifacts/repository")
         content {
             includeVersionByRegex("androidx\\..*", ".*", ".*-SNAPSHOT")
+        }
+    }
+
+    handler.maven {
+        url("https://androidx.dev/studio/builds/${studioSnapshotBuildId}/artifacts/artifacts/repository")
+        content {
+            includeVersionByRegex("androidx\\.databinding(\\..*|)", ".*", ".*-dev")
+            includeVersionByRegex("com\\.android(\\..*|)", ".*", ".*-dev.*")
         }
     }
 

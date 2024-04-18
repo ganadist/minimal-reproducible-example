@@ -1,0 +1,96 @@
+import java.io.IOException
+import java.io.OutputStream
+import org.gradle.api.GradleException
+import org.gradle.api.provider.ValueSource
+import org.gradle.api.provider.ValueSourceParameters
+import org.gradle.process.ExecOperations
+
+class NullOutputStream extends OutputStream {
+    @Override
+    public void write(int i) throws IOException { }
+    @Override
+    public void write(byte[] b) throws IOException { }
+    @Override
+    public void write(byte[] b, int off, int len) throws IOException { }
+
+    static final OutputStream INSTANCE = new NullOutputStream()
+}
+
+abstract class ExecValueSource implements ValueSource<String, ValueSourceParameters.None> {
+    @Inject
+    abstract ExecOperations getExecOperations()
+
+    abstract List<String> getCommandLine()
+
+    String obtain() {
+        ByteArrayOutputStream output = new ByteArrayOutputStream()
+        execOperations.exec {
+            it.commandLine getCommandLine()
+            it.standardOutput = output
+            it.errorOutput = NullOutputStream.INSTANCE
+            it.ignoreExitValue = true
+        }
+        return output.toString().trim()
+    }
+}
+
+abstract class RosettaValueSource extends ExecValueSource {
+    List<String> getCommandLine() {
+        return ["sysctl", "-in", "sysctl.proc_translated"]
+    }
+}
+
+class Const {
+    // minimum version will set from gradle.properties
+    static String MINIMUM_JVM_VERSION = ""
+    static final Set<String> ACCEPTABLE_JVM_VERSIONS = ["21"]
+    static final String JAVA_REQUIREMENT_DOC = "https://github.com/ganadist/minimal-reproducible-example/wiki/Minimum-Java-Version-Requirement"
+}
+
+Const.MINIMUM_JVM_VERSION = settings.getProperty("build.jvmtarget.host")
+Const.ACCEPTABLE_JVM_VERSIONS.add(Const.MINIMUM_JVM_VERSION)
+
+def showGuideAndThrow(String url, String message) {
+    try {
+        java.awt.Desktop.getDesktop().browse(new URI(url))
+    } catch (Exception ignore) {
+        logger.error("Open $url on your browser")
+    }
+    throw new GradleException("$message \nPlease see $url")
+}
+
+def checkJvmRequires() {
+    def jvmVersion = System.getProperty("java.specification.version")
+    if (!Const.ACCEPTABLE_JVM_VERSIONS.contains(jvmVersion)) {
+        showGuideAndThrow(
+            Const.JAVA_REQUIREMENT_DOC,
+            "You are using java executable from " + System.getProperty("java.home") + "\n" +
+            "Use Jetbrain Runtime ${Const.MINIMUM_JVM_VERSION} which is included on Android Studio " +
+            "or JDK ${Const.MINIMUM_JVM_VERSION} LTS version"
+        )
+    }
+}
+
+def checkRosetta() {
+    // https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment#Determine-Whether-Your-App-Is-Running-as-a-Translated-Binary
+    if (System.getProperty("os.name").contains("OS X")) {
+        def rosettaProvider = providers.of(RosettaValueSource.class) {}
+        def rosettaEnabled = rosettaProvider.get()
+
+        if (rosettaEnabled == "1") {
+            throw new GradleException(
+                "Your build is running under rosetta. Please setup your Android Studio properly"
+            )
+        }
+    }
+}
+
+def checkBuildRequires() {
+    if (!getProperty("build.check.requires").toBoolean()) {
+        return
+    }
+    checkJvmRequires()
+    checkRosetta()
+}
+
+checkBuildRequires()

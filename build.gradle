@@ -1,28 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    apply from: "$rootDir/gradle/repositories.gradle"
-    def r8Version = libs.versions.r8.get()
-    if (!r8Version.isEmpty()) {
-       ext.repos.r8(repositories, r8Version)
-
-        dependencies {
-            logger.warn("R8 $r8Version will be applied")
-            classpath libs.r8
-        }
-    }
-
-    ext.repos.google(repositories)
-    ext.repos.mavenCentral(repositories)
-
-    dependencies {
-        classpath libs.android.gradle
-        classpath libs.kotlin.gradle
-    }
-}
-
 plugins {
     alias(libs.plugins.android.app).apply(false)
     alias(libs.plugins.android.lib).apply(false)
+    alias(libs.plugins.android.kmp.lib).apply(false)
+    alias(libs.plugins.android.lint).apply(false)
     alias(libs.plugins.android.dfm).apply(false)
     alias(libs.plugins.android.test).apply(false)
     alias(androidxLibs.plugins.baselineprofile).apply(false)
@@ -31,6 +12,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt).apply(false)
     alias(libs.plugins.kotlin.parcelize).apply(false)
     alias(libs.plugins.kotlin.serialization).apply(false)
+    alias(libs.plugins.kmp).apply(false)
     alias(libs.plugins.ksp).apply(false)
 
     id "com.myapplication.android.builder" apply false

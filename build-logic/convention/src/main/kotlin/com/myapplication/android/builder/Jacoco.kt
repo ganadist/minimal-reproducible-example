@@ -3,10 +3,8 @@ package com.myapplication.android.builder
 import org.gradle.api.Project
 
 @Suppress("UnstableApiUsage")
-internal fun Project.configureJacoco(
-    commonExtension: AGPCommonExtension
-) {
-    commonExtension.apply {
+internal fun Project.configureJacoco() {
+    android {
         buildTypes {
             maybeCreate("debug").apply {
                 enableUnitTestCoverage =

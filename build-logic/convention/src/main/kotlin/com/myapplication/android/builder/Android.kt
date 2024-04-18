@@ -14,10 +14,9 @@ private val MIN_CHECKER_VERSION = VersionNumber.parse(MIN_CHECKER_VERSION_STRING
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureAndroid(
-    commonExtension: AGPCommonExtension,
     javaVersion: JavaVersion
 ) {
-    commonExtension.apply {
+    android {
         defaultConfig {
             compileOptions {
                 sourceCompatibility = javaVersion
@@ -44,7 +43,23 @@ internal fun Project.configureAndroid(
         }
     }
 
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+    val jacocoVersion = libs.findVersion("jacoco").get().requiredVersion
+
+    val googleLibs = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
+    val guavaAndroidVersion = googleLibs.findVersion("guava").get().requiredVersion
+
     configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            // workaround for https://issuetracker.google.com/issues/316191239
+            // inspired from https://github.com/androidx/androidx/blob/267fa9b/buildSrc/private/src/main/kotlin/androidx/build/AndroidXImplPlugin.kt#L755-L772
+            // configuration name (${variant}RuntimeClasspath) is provided by Android Gradle Plugin
+            if (name.endsWith("RuntimeClasspath")) {
+                substitute(module("com.google.guava:listenablefuture"))
+                    .using(module("com.google.guava:guava:$guavaAndroidVersion"))
+            }
+        }
+
         resolutionStrategy.eachDependency {
             if (requested.group.startsWith("com.android.support") ||
                 requested.group.startsWith("android.arch")
@@ -78,6 +93,14 @@ internal fun Project.configureAndroid(
                 if (VersionNumber.parse(requested.version) < atLeastVersion) {
                     useVersion(atLeastVersion.toString())
                 }
+            }
+
+            // workaround for https://issuetracker.google.com/issues/298703884
+            if (requested.group == "org.jacoco" &&
+                requested.name == "org.jacoco.agent" &&
+                VersionNumber.parse(requested.version) < VersionNumber.parse(jacocoVersion)
+            ) {
+                useVersion(jacocoVersion)
             }
         }
 

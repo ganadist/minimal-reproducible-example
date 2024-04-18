@@ -8,27 +8,31 @@
 # This will be overriden by gradle.properties
 android-gradle = "unspecified"
 
+# stable: https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+# dev: https://androidx.dev/storage/compose-compiler/repository
+# This will be overriden by gradle.properties
+compose-compiler = "unspecified"
+
 # https://developer.android.com/jetpack/androidx/versions
-activity = "1.8.0"
-annotation = "1.7.0"
+activity = "1.8.2"
+annotation = "1.7.1"
 annotation-experimental = '1.3.1'
 appcompat = "1.6.1"
 arch-core = "2.2.0"
-benchmark = "1.2.0"
+benchmark = "1.2.3"
 biometric = "1.1.0"
-browser = "1.6.0"
-camera = "1.3.0"
+browser = "1.7.0"
+camera = "1.3.1"
 cardview = "1.0.0"
 constraintlayout = "2.1.4"
 constraintlayout-compose = "1.0.1"
 compose-bom = '2023.10.01'
-compose-compiler = "1.5.3"
 concurrent = "1.1.0"
 core = "1.12.0"
 datastore = "1.0.0"
 dynamicanimation = "1.0.0"
-exifinterface = "1.3.6"
-fragment = "1.6.1"
+exifinterface = "1.3.7"
+fragment = "1.6.2"
 google-shortcuts = "1.1.0"
 gridlayout = "1.0.0"
 interpolator = "1.0.0"
@@ -38,7 +42,7 @@ lifecycle = "2.6.2"
 loader = "1.1.0"
 localbroadcastmanager = "1.1.0"
 media2 = "1.2.1"
-navigation = "2.7.4"
+navigation = "2.7.6"
 paging = "3.2.1"
 palette = "1.0.0"
 percentlayout = "1.0.0"
@@ -46,7 +50,7 @@ preference = "1.2.1"
 profileinstaller = "1.3.1"
 recyclerview = "1.3.0"
 recyclerview-selection = "1.1.0"
-room = "2.6.0"
+room = "2.6.1"
 savedstate = "1.2.1"
 slidingpanelayout = "1.2.0"
 splashscreen = "1.0.1"
@@ -63,14 +67,14 @@ test-orchestrator="1.4.2"
 test-runner = "1.5.2"
 test-services="1.4.2"
 test-uiautomator = "2.2.0"
-tracing = "1.1.0"
+tracing = "1.2.0"
 transition = "1.4.1"
 vectordrawable = "1.1.0"
 versionedparcelable = "1.1.1"
 viewpager2 = "1.0.0"
-webkit = "1.6.1"
+webkit = "1.9.0"
 wear-remote-interaction = "1.0.0"
-window = "1.1.0"
+window = "1.2.0"
 
 [libraries]
 
@@ -194,7 +198,7 @@ percentlayout = { module = "androidx.percentlayout:percentlayout", version.ref =
 
 preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference" }
 
-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
+profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
 
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerview-selection" }
@@ -262,9 +266,9 @@ window-rxjava3 = { module = "androidx.window:window-rxjava3", version.ref = "win
 window-testing = { module = "androidx.window:window-testing", version.ref = "window" }
 
 [plugins]
+baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
-baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 
 [bundles]
 compose = [
