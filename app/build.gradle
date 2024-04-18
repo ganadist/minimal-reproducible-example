@@ -45,7 +45,7 @@ android {
             // baselineprofile plugin does not support postprocessing dsl block, yet.
             // So, we need assign proguard rule again
             // https://issuetracker.google.com/issues/307784512
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), file('proguard-rules.pro')
+            // proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), file('proguard-rules.pro')
         }
     }
 
