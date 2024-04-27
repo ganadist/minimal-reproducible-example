@@ -15,5 +15,13 @@ gradlePlugin {
             id = "com.myapplication.android.builder"
             implementationClass = "AndroidBuilderPlugin"
         }
+        register("androidVersionCatalogsLoader") {
+            id = "com.myapplication.android.versions.loader"
+            implementationClass = "AndroidVersionCatalogsLoaderPlugin"
+        }
+        register("androidVersionCatalogsChecker") {
+            id = "com.myapplication.android.versions.checker"
+            implementationClass = "AndroidVersionCatalogsCheckerPlugin"
+        }
     }
 }
