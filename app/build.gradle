@@ -75,9 +75,14 @@ dependencies {
     runtimeOnly(androidxLibs.profileinstaller)
 
     implementation libs.kotlin.stdlib.jdk7
+    implementation androidxLibs.annotation
+    implementation androidxLibs.activity.ktx
     implementation androidxLibs.appcompat
     implementation androidxLibs.core.ktx
     implementation androidxLibs.constraintlayout
+    implementation androidxLibs.fragment.ktx
+    implementation androidxLibs.lifecycle.livedata.ktx
+    implementation androidxLibs.lifecycle.viewmodel.ktx
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
 }
