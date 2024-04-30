@@ -2,9 +2,7 @@ package com.myapplication.android.builder
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -15,8 +13,6 @@ private const val SUPPRESS_KOTLIN_VERSION_OPTION =
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureJetpackCompose() {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-    val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
     val composeCompilerVersion = androidxLibs.findVersion("compose.compiler").get().toString()
     android {
         composeOptions {

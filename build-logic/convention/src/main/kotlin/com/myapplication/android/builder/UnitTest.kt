@@ -4,10 +4,8 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 import com.gradle.enterprise.gradleplugin.testretry.retry
 import java.time.Duration
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 
 private val testFilterMap = mapOf(
@@ -149,10 +147,6 @@ internal fun Project.configureTest() {
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureTestDependencies() {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-    val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
-    val googleLibs = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
-
     dependencies {
         testImplementation(libs, "junit4")
         testImplementation(libs, "robolectric")
@@ -178,8 +172,6 @@ internal fun Project.configureTestDependencies() {
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureTestProjectDependencies() {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-    val androidxLibs = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
     dependencies {
         implementation(libs, "junit4")
 

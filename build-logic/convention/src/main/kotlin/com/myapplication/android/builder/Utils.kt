@@ -8,7 +8,9 @@ import java.util.Date
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.DependencyHandlerScope
+import org.gradle.kotlin.dsl.getByType
 
 typealias AndroidExtension = CommonExtension<*, *, *, *, *, *>
 
@@ -31,6 +33,15 @@ internal val Project.componentsExtension: AndroidComponentsExtension<*, *, *>
 internal fun Project.android(block: AndroidExtension.() -> Unit) {
     androidExtension.block()
 }
+
+internal val Project.libs : VersionCatalog
+    get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+internal val Project.androidxLibs : VersionCatalog
+    get() = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
+
+internal val Project.googleLibs : VersionCatalog
+    get() = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
 
 internal fun String?.toIntOrZero(): Int = (this ?: "").toIntOrNull() ?: 0
 

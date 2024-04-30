@@ -4,9 +4,7 @@ package com.myapplication.android.builder
 import org.gradle.api.GradleException
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.exclude
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.util.internal.VersionNumber
 
 private const val MIN_CHECKER_VERSION_STRING = "3.12.0"
@@ -43,10 +41,7 @@ internal fun Project.configureAndroid(
         }
     }
 
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val jacocoVersion = libs.findVersion("jacoco").get().requiredVersion
-
-    val googleLibs = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
     val guavaAndroidVersion = googleLibs.findVersion("guava").get().requiredVersion
 
     configurations.all {
