@@ -11,7 +11,6 @@ class ComposeK2MigrationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             plugins.withType<BasePlugin>().configureEach {
-                val composeCompilerVersion = androidxLibs.findVersion("compose.compiler").get().toString()
                 android {
                     afterEvaluate {
                         if (buildFeatures.compose == true) {
@@ -32,9 +31,6 @@ class ComposeK2MigrationPlugin : Plugin<Project> {
                             )
                         }
                         buildFeatures.compose = true
-                        composeOptions {
-                            kotlinCompilerExtensionVersion = composeCompilerVersion
-                        }
                     }
                 }
             }

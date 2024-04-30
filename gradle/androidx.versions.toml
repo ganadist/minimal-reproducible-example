@@ -8,11 +8,6 @@
 # This will be overriden by gradle.properties
 android-gradle = "unspecified"
 
-# stable: https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-# dev: https://androidx.dev/storage/compose-compiler/repository
-# This will be overriden by gradle.properties
-compose-compiler = "unspecified"
-
 # https://developer.android.com/jetpack/androidx/versions
 activity = "1.8.2"
 annotation = "1.7.1"
@@ -103,7 +98,6 @@ cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics"}
-compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
 compose-foundation = { module = "androidx.compose.foundation:foundation"}
 compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout"}
 compose-material = { module = "androidx.compose.material:material"}
