@@ -23,5 +23,10 @@ gradlePlugin {
             id = "com.myapplication.android.versions.checker"
             implementationClass = "AndroidVersionCatalogsCheckerPlugin"
         }
+        register("composeK2MigrationPlugin") {
+            id = "com.myapplication.compose.k2.migration"
+            implementationClass = "ComposeK2MigrationPlugin"
+            version = "0.0.1"
+        }
     }
 }
