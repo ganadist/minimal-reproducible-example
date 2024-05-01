@@ -82,6 +82,7 @@ dependencies {
     implementation androidxLibs.lifecycle.viewmodel.ktx
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+    implementation androidxLibs.localbroadcastmanager
 }
 
 if (enableBaselineProfileGenerator) {
