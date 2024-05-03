@@ -11,30 +11,13 @@ class ComposeK2MigrationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             plugins.withType<BasePlugin>().configureEach {
-                val composeCompilerVersion = androidxLibs.findVersion("compose.compiler").get().toString()
+                val composeCompilerVersion =
+                    androidxLibs.findVersion("compose.compiler").get().requiredVersion
+
                 android {
-                    afterEvaluate {
-                        if (buildFeatures.compose == true) {
-                            throw GradleException(
-                                "`android.buildFeatures.compose = true` will be deprecated. \n" +
-                                    "Use compose gradle plugin like this.\n" +
-                                    "\n" +
-                                    "plugins { \n" +
-                                    "    alias(libs.plugins.kotlin.compose)\n" +
-                                    "}\n"
-                            )
-                        }
-                        if (composeOptions.kotlinCompilerExtensionVersion != null) {
-                            throw GradleException(
-                                "android.composeOptions.kotlinCompilerExtensionVersion will be " +
-                                    "deprecated.\n" +
-                                    "Please remove its usage from your build.gradle file"
-                            )
-                        }
-                        buildFeatures.compose = true
-                        composeOptions {
-                            kotlinCompilerExtensionVersion = composeCompilerVersion
-                        }
+                    buildFeatures.compose = true
+                    composeOptions {
+                        kotlinCompilerExtensionVersion = composeCompilerVersion
                     }
                 }
             }
