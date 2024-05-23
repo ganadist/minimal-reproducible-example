@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+def enableL8 = getProperty("build.l8.enable").toBoolean()
 def enableBaselineProfileGenerator = getProperty("build.baselineprofile.generate.enable").toBoolean()
 def enableDexlayoutOptimizer = getProperty("build.dexlayout.optimize.enable").toBoolean()
 if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
@@ -22,7 +23,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         compileOptions {
-            coreLibraryDesugaringEnabled true
+            coreLibraryDesugaringEnabled enableL8
         }
     }
     buildTypes {
@@ -63,7 +64,9 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring libs.desugar.jdk.libs
+    if (enableL8) {
+        coreLibraryDesugaring libs.desugar.jdk.libs
+    }
 
     if (enableBaselineProfileGenerator) {
        baselineProfile(project(":tests:baselineprofile"))
