@@ -38,13 +38,13 @@ jacoco = "0.8.11"
 junit4 = "4.13.2"
 
 # https://github.com/mockito/mockito/releases
-mockito-core = '5.8.0'
+mockito-core = '5.12.0'
 
 # https://github.com/mockito/mockito-kotlin/releases
-mockito-kotlin = '5.2.1'
+mockito-kotlin = '5.4.0'
 
 # https://github.com/robolectric/robolectric/releases/
-robolectric = "4.11.1"
+robolectric = "4.13"
 
 
 [libraries]
