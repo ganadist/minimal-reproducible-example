@@ -94,5 +94,8 @@ if (enableBaselineProfileGenerator) {
                 automaticGenerationDuringBuild = true
             }
         }
+        warnings {
+            disabledVariants = false
+        }
     }
 }
