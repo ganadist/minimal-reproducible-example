@@ -90,6 +90,7 @@ dependencies {
     implementation androidxLibs.room.runtime
     implementation googleLibs.play.services.base
     implementation googleLibs.play.services.osslicenses
+    implementation "org.commonmark:commonmark:0.23.0"
 }
 
 if (enableBaselineProfileGenerator) {
