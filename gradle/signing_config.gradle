@@ -1,0 +1,12 @@
+android {
+    def debugKeystoreFile = "debug.keystore"
+    signingConfigs {
+        debug {
+            storeFile rootProject.file(debugKeystoreFile)
+        }
+    }
+
+    defaultConfig {
+        signingConfig signingConfigs.debug
+    }
+}

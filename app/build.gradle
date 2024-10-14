@@ -2,7 +2,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     alias(libs.plugins.kotlin.compose)
+    id("com.google.android.gms.oss-licenses-plugin")
 }
+
+apply from: "$rootDir/gradle/signing_config.gradle"
 
 def enableL8 = getProperty("build.l8.enable").toBoolean()
 def enableBaselineProfileGenerator = getProperty("build.baselineprofile.generate.enable").toBoolean()
@@ -85,6 +88,8 @@ dependencies {
     implementation androidxLibs.lifecycle.viewmodel.ktx
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+    implementation googleLibs.play.services.base
+    implementation googleLibs.play.services.osslicenses
 }
 
 if (enableBaselineProfileGenerator) {
