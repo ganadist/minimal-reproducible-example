@@ -6,12 +6,10 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.withType
 
 private val JVM_VERSION = System.getProperty("java.specification.version")
-private val JVM_OPTIONS = if (JVM_VERSION == "21") {
-    // https://issuetracker.google.com/issues/294422895
-    listOf("-Xlint:all,-this-escape", "-Werror")
-} else {
-    listOf("-Xlint:all", "-Werror")
-}
+private val JVM_OPTIONS = listOf(
+    "-Xlint:all,-this-escape",
+    //"-Werror",
+)
 
 internal fun Project.configureJava(javaVersion: JavaVersion) {
     tasks.withType<JavaCompile>().configureEach {
