@@ -1,5 +1,23 @@
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
+import java.util.Date
+
 plugins {
     alias(libs.plugins.android.lib)
+}
+
+def getBuildDateTime() {
+    def timestamp = project.providers.environmentVariable("BUILD_TIMESTAMP").getOrNull()
+    if (timestamp == null) {
+        return new Date()
+    }
+    def date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").parse(timestamp, ParsePosition(0))
+    if (date == null) {
+        System.err.println("Warn: Invalid BUILD_TIMESTAMP \"${timestamp}\": use current Date()")
+        return new Date()
+    }
+
+    return date
 }
 
 android {
@@ -9,7 +27,16 @@ android {
         buildConfig = true
     }
 
+    def buildtime = getBuildDateTime()
+
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
+        buildConfigField(
+	    "Long",
+	    "BUILD_TIMESTAMP",
+	    "Long.valueOf(${buildtime.getTime()}L)"
+	)
+
+	manifestPlaceholders = [timestamp: "${buildtime.getTime()}"]
     }
 }

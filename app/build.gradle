@@ -73,6 +73,7 @@ dependencies {
     }
 
     runtimeOnly(androidxLibs.profileinstaller)
+    implementation(project(":lib:hostconfig"))
 
     implementation libs.kotlin.stdlib.jdk7
     implementation androidxLibs.annotation
