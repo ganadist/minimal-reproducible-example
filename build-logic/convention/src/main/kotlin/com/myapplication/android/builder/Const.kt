@@ -14,7 +14,6 @@ object Const {
     const val KSP_PLUGIN_ID = "com.google.devtools.ksp"
     const val KOTLIN_ANDROID_PLUGIN_ID = "org.jetbrains.kotlin.android"
     const val KOTLIN_COMPOSE_PLUGIN_ID = "org.jetbrains.kotlin.plugin.compose"
-    const val KOTLIN_K2_MIGRATION_PLUGIN_ID = "com.myapplication.compose.k2.migration"
 
     val BUILD_TYPES = listOf("debug", "releaseDebuggable", "release")
     val BUILD_FLAVORS = listOf(

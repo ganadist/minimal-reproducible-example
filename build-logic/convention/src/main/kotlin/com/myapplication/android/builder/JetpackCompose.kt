@@ -12,11 +12,6 @@ internal fun Project.configureJetpackCompose() {
             checkComposeConfiguration()
         }
     }
-
-    plugins.withId(Const.KOTLIN_K2_MIGRATION_PLUGIN_ID) {
-        applyComposeDependencies()
-        // cannot check compose configuration
-    }
 }
 
 private fun Project.checkComposeConfiguration() {
