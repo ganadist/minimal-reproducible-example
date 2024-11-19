@@ -12,7 +12,6 @@ dependencyResolutionManagement {
         androidxLibs {
             from(files("androidx.versions.toml"))
             version("android-gradle", androidGradlePluginVersion)
-            version("compose-compiler", composeCompilerVersion)
         }
         googleLibs {
             from(files("google.versions.toml"))
