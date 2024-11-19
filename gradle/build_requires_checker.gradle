@@ -43,7 +43,7 @@ abstract class RosettaValueSource extends ExecValueSource {
 class Const {
     // minimum version will set from gradle.properties
     static String MINIMUM_JVM_VERSION = ""
-    static final Set<String> ACCEPTABLE_JVM_VERSIONS = ["21"]
+    static final Set<String> ACCEPTABLE_JVM_VERSIONS = []
     static final String JAVA_REQUIREMENT_DOC = "https://github.com/ganadist/minimal-reproducible-example/wiki/Minimum-Java-Version-Requirement"
 }
 
