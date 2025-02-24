@@ -1,0 +1,22 @@
+import javax.inject.Inject
+
+interface InjectedExecOperations {
+    @Inject ExecOperations getExecOps()
+}
+
+tasks.named('wrapper') {
+    distributionType = Wrapper.DistributionType.BIN
+
+    def injected = objects.newInstance(InjectedExecOperations)
+
+    doLast {
+        logger.warn("")
+        injected.execOps.exec {
+            commandLine "git", "add", "-v", "gradle/wrapper", "gradlew", "gradlew.bat"
+        }
+        injected.execOps.exec {
+            commandLine "git", "status"
+        }
+        logger.warn(" Gradle was updated with $gradleVersion by gradle/wrapper.gradle script.")
+    }
+}
