@@ -12,9 +12,9 @@ kotlin = "unspecified"
 # https://github.com/google/ksp/releases
 ksp = "unspecified"
 
-# https://docs.gradle.com/enterprise/gradle-plugin/
+# https://plugins.gradle.org/plugin/com.gradle.develocity
 # This will be overriden by gradle.properties
-gradle-enterprise = "unspecified"
+gradle-develocity= "unspecified"
 
 
 android-cache-fix = "unspecified"
@@ -52,7 +52,7 @@ r8 = { module = "com.android.tools:r8", version.ref = "r8" }
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" } 
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
-gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
+gradle-develocity = { module = "com.gradle:develocity-gradle-plugin", version.ref = "gradle-develocity" }
 
 bundletool = { module = "com.android.toos.build:bundletool", version.ref = "bundletool" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
@@ -96,5 +96,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
-gradle-enterprise = { id = "com.gradle.enterprise", version.ref = "gradle-enterprise" }
+gradle-develocity = { id = "com.gradle.develocity", version.ref = "gradle-develocity" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

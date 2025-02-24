@@ -6,7 +6,7 @@ dependencies {
     implementation(libs.android.gradle)
     implementation(libs.kotlin.gradle)
     compileOnly(libs.ksp.gradle)
-    compileOnly(libs.gradle.enterprise)
+    compileOnly(libs.gradle.develocity)
 }
 
 gradlePlugin {

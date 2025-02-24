@@ -19,7 +19,7 @@ plugins {
     id "com.myapplication.android.builder" apply false
     id "com.myapplication.android.versions.loader"
     id "com.myapplication.android.versions.checker" apply false
-    alias(libs.plugins.gradle.enterprise).apply(false)
+    alias(libs.plugins.gradle.develocity).apply(false)
 }
 
 apply from: "$rootDir/gradle/build_constant.gradle"

@@ -7,7 +7,8 @@ pluginManagement {
     // r8Version is declared in gradle.properties
     val r8Version: String by settings
     val androidGradlePluginVersion: String by settings
-    val gradleEnterprisePluginVersion: String by settings
+    val gradleDevelocityPluginVersion: String by settings
+    val gradleUserDataPluginVersion: String by settings
 
     buildscript {
         if (!r8Version.isEmpty()) {
@@ -31,14 +32,27 @@ pluginManagement {
 
     plugins {
         id("com.android.settings") version androidGradlePluginVersion
-        id("com.gradle.enterprise") version gradleEnterprisePluginVersion
+        id("com.gradle.develocity") version gradleDevelocityPluginVersion
+        id("com.gradle.common-custom-user-data-gradle-plugin") version gradleUserDataPluginVersion
     }
     includeBuild("build-logic")
 }
 
 plugins {
-    id("com.gradle.enterprise")
+    id("com.gradle.develocity")
+    id("com.gradle.common-custom-user-data-gradle-plugin")
     id("com.android.settings")
+}
+
+develocity {
+    buildScan {
+        // public gradle scan server
+        server.set("https://scans.gradle.com")
+        termsOfUseUrl.set("https://gradle.com/help/legal-terms-of-use")
+        termsOfUseAgree.set("yes")
+        // must be false to submit scan on demand
+        publishing.onlyIf { false }
+    }
 }
 
 android {

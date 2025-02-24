@@ -1,11 +1,11 @@
 package com.myapplication.android.builder
 
 import com.android.build.api.dsl.ManagedVirtualDevice
-import com.gradle.enterprise.gradleplugin.testretry.retry
 import java.time.Duration
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.develocity
 import org.gradle.kotlin.dsl.withType
 
 private val testFilterMap = mapOf(
@@ -120,23 +120,23 @@ internal fun Project.configureTest() {
                     roboDependencyUrlProp,
                     "https://maven-central-asia.storage-download.googleapis.com/maven2"
                 )
-
-                it.retry {
-                    maxRetries.set(
-                        getProperty("build.unittest.retry.max", "0").toIntOrZero()
-                    )
-                    maxFailures.set(
-                        getProperty("build.unittest.retry.maxfailures", "0").toIntOrZero()
-                    )
-                    failOnPassedAfterRetry.set(
-                        getProperty("bulid.unittest.retry.treatasfail", "false").toBoolean()
-                    )
-                }
             }
         }
     }
 
     tasks.withType<Test>().configureEach {
+        develocity.testRetry {
+            maxRetries.set(
+                        getProperty("build.unittest.retry.max", "0").toIntOrZero()
+            )
+            maxFailures.set(
+                        getProperty("build.unittest.retry.maxfailures", "0").toIntOrZero()
+            )
+            failOnPassedAfterRetry.set(
+                        getProperty("bulid.unittest.retry.treatasfail", "false").toBoolean()
+            )
+        }
+
         timeout.set(
             Duration.ofMinutes(
                 rootProject.getProperty("build.timeout.unittest").toLong()
