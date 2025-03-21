@@ -52,7 +52,7 @@ robolectric = "4.14.1"
 [libraries]
 r8 = { module = "com.android.tools:r8", version.ref = "r8" }
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" } 
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
 gradle-develocity = { module = "com.gradle:develocity-gradle-plugin", version.ref = "gradle-develocity" }
 
@@ -80,8 +80,6 @@ mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
-robolectric-shadows-httpclient = { module = "org.robolectric:shadows-httpclient", version.ref = "robolectric" }
-robolectric-shadows-playservices = { module = "org.robolectric:shadows-playservices", version.ref = "robolectric" }
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android-gradle" }
