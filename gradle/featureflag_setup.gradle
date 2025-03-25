@@ -1,0 +1,15 @@
+featureFlag {
+    phases = [
+        "OFF"    : [] as Set,
+        "DEV"    : [flavor("develop")] as Set,
+        "BETA"   : [flavor("develop"), flavor("beta")] as Set,
+        "RC"     : [flavor("develop"), flavor("beta"),
+            flavor("rc")] as Set,
+        "RELEASE": [flavor("develop"),
+	    flavor("beta"), 
+            flavor("rc"), 
+            flavor("production")] as Set
+    ]
+    releasePhaseSet = [flavor("production")] as Set
+    versionName = '0.0.1'
+}

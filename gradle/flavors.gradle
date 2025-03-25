@@ -1,0 +1,10 @@
+android {
+    flavorDimensions "default"
+
+    productFlavors {
+        maybeCreate("develop")
+        maybeCreate("beta")
+        maybeCreate("rc")
+        maybeCreate("production")
+    }
+}

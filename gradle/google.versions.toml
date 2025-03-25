@@ -63,10 +63,10 @@ material-compose-theme-adapter = "1.1.21"
 material-compose-theme-adapter3 = "1.0.21"
 
 # https://github.com/google/gson/blob/master/CHANGELOG.md
-gson = "2.10.1"
+gson = "2.12.1"
 
 # https://github.com/google/guava/releases
-guava = "32.0.1-android"
+guava = "33.4.0-android"
 
 # https://github.com/google/truth/releases
 truth = "1.1.3"
