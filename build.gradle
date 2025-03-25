@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.android.lint).apply(false)
     alias(libs.plugins.android.dfm).apply(false)
     alias(libs.plugins.android.test).apply(false)
+    alias(libs.plugins.screenshot.testing).apply(false)
     alias(androidxLibs.plugins.baselineprofile).apply(false)
 
     alias(libs.plugins.kotlin.android).apply(false)
