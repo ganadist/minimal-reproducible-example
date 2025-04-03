@@ -17,13 +17,13 @@ if (enableBaselineProfileGenerator) {
 }
 
 android {
-    namespace "com.example.myapplication"
+    namespace = "com.example.myapplication"
     defaultConfig {
-        applicationId "com.example.myapplication"
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        applicationId = "com.example.myapplication"
+        versionCode = rootProject.ext.versionCode
+        versionName = rootProject.ext.versionName
         compileOptions {
-            coreLibraryDesugaringEnabled enableL8
+            coreLibraryDesugaringEnabled = enableL8
         }
     }
     buildTypes {
@@ -36,10 +36,10 @@ android {
             ] = enableDexlayoutOptimizer
 
             postprocessing {
-                removeUnusedCode true
-                optimizeCode true
-                obfuscate true
-                removeUnusedResources true
+                removeUnusedCode = true
+                optimizeCode = true
+                obfuscate = true
+                removeUnusedResources = true
                 proguardFiles file('proguards-rules.pro')
             }
 

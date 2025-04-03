@@ -45,7 +45,7 @@ def addR8Repository(RepositoryHandler handler, String r8Version) {
     }
 
     handler.maven {
-        url(r8Repo)
+        url = r8Repo
         content {
             includeModule("com.android.tools", "r8")
         }
@@ -55,14 +55,14 @@ def addR8Repository(RepositoryHandler handler, String r8Version) {
 def addGoogleRepository(RepositoryHandler handler) {
     // https://androidx.dev/
     handler.maven {
-        url("https://androidx.dev/snapshots/builds/${androidXSnapshotBuildId}/artifacts/repository")
+        url = "https://androidx.dev/snapshots/builds/${androidXSnapshotBuildId}/artifacts/repository"
         content {
             includeVersionByRegex("androidx\\..*", ".*", ".*-SNAPSHOT")
         }
     }
 
     handler.maven {
-        url("https://androidx.dev/studio/builds/${studioSnapshotBuildId}/artifacts/artifacts/repository")
+        url = "https://androidx.dev/studio/builds/${studioSnapshotBuildId}/artifacts/artifacts/repository"
         content {
             includeVersionByRegex("androidx\\.databinding(\\..*|)", ".*", ".*-dev")
             includeVersionByRegex("com\\.android(\\..*|)", ".*", ".*-dev.*")
@@ -71,7 +71,7 @@ def addGoogleRepository(RepositoryHandler handler) {
 
     // https://androidx.dev/storage/compose-compiler/repository
     handler.maven {
-        url("https://androidx.dev/storage/compose-compiler/repository")
+        url = "https://androidx.dev/storage/compose-compiler/repository"
         content {
             includeVersionByRegex("androidx\\.compose\\.compiler", ".*", ".*-dev-k.*")
         }
@@ -80,7 +80,7 @@ def addGoogleRepository(RepositoryHandler handler) {
 
     // https://maven.google.com/
     def repo = handler.maven {
-        url(RepoUrls.google)
+        url = RepoUrls.google
     }
 
     repo.content {
@@ -95,7 +95,7 @@ def addGoogleRepository(RepositoryHandler handler) {
 
 def addMavenCentralRepository(RepositoryHandler handler) {
     def repo = handler.maven {
-        url(RepoUrls.mavenCentral)
+        url = RepoUrls.mavenCentral
     }
 
     repo.content {
@@ -110,7 +110,7 @@ def addMavenCentralRepository(RepositoryHandler handler) {
 
 def addGradlePluginRepository(RepositoryHandler handler) {
     def repo = handler.maven {
-        url(RepoUrls.gradlePluginPortal)
+        url = RepoUrls.gradlePluginPortal
     }
 
     repo.content {
