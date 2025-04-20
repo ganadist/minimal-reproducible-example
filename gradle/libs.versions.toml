@@ -18,9 +18,6 @@ ksp = "unspecified"
 # This will be overriden by gradle.properties
 gradle-develocity= "unspecified"
 
-
-android-cache-fix = "unspecified"
-
 # https://github.com/google/bundletool/releases
 bundletool = "1.10.0"
 
@@ -73,8 +70,6 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-coroutines-rx2 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "kotlinx-coroutines" }
 
-android-cache-fix = { module = "gradle.plugin.org.gradle.android:android-cache-fix-gradle-plugin", version.ref = "android-cache-fix"}
-
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-core" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
@@ -98,6 +93,5 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
-android-cache-fix = { id = "org.gradle.android.cache-fix", version.ref = "android-cache-fix" }
 gradle-develocity = { id = "com.gradle.develocity", version.ref = "gradle-develocity" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

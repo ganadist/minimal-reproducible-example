@@ -7,7 +7,6 @@ dependencyResolutionManagement {
             version("kotlin", kotlinVersion)
             version("ksp", "${kotlinVersion}-${kspVersion}")
             version("gradle-develocity", gradleDevelocityPluginVersion)
-            version("android-cache-fix", androidCacheFixVersion)
         }
         androidxLibs {
             from(files("androidx.versions.toml"))
