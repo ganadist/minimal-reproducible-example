@@ -45,7 +45,7 @@ internal fun Project.configureTest() {
 
             // https://developer.android.com/studio/test/gradle-managed-devices
             managedDevices {
-                devices.register("gmd", ManagedVirtualDevice::class.java) {
+                allDevices.register("gmd", ManagedVirtualDevice::class.java) {
                     device = "Pixel 2"
 
                     apiLevel = androidTestApiLevel

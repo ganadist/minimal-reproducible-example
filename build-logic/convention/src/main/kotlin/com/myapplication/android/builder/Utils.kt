@@ -64,7 +64,7 @@ internal fun getBuildDateTime(): Date {
 
 internal fun Project.execAndStdout(vararg args: String): String {
     val stdout = java.io.ByteArrayOutputStream()
-    exec {
+    providers.exec {
         workingDir = rootDir
         commandLine(*args)
         isIgnoreExitValue = true
