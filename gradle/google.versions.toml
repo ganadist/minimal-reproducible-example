@@ -46,7 +46,7 @@ dagger = "2.42"
 exoplayer = "2.18.1"
 
 # https://github.com/google/auto/releases
-auto-service = "1.0.1"
+auto-service = "1.1.1"
 
 # https://github.com/ZacSweers/auto-service-ksp/releases
 # FIXME: Will be merged to auto-service
