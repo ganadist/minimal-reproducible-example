@@ -269,6 +269,7 @@ window-testing = { module = "androidx.window:window-testing", version.ref = "win
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+room = { id = "androidx.room", version.ref = "room" }
 
 [bundles]
 compose = [

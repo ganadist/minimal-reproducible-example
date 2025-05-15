@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.lib)
+    alias(libs.plugins.ksp)
+    alias(androidxLibs.plugins.room)
 }
 
 android {
@@ -12,4 +14,13 @@ android {
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+dependencies {
+    ksp(androidxLibs.room.compiler)
+    implementation(androidxLibs.room.runtime)
 }
