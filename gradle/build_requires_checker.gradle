@@ -40,16 +40,6 @@ abstract class RosettaValueSource extends ExecValueSource {
     }
 }
 
-class Const {
-    // minimum version will set from gradle.properties
-    static String MINIMUM_JVM_VERSION = ""
-    static final Set<String> ACCEPTABLE_JVM_VERSIONS = []
-    static final String JAVA_REQUIREMENT_DOC = "https://github.com/ganadist/minimal-reproducible-example/wiki/Minimum-Java-Version-Requirement"
-}
-
-Const.MINIMUM_JVM_VERSION = settings.getProperty("build.jvmtarget.host")
-Const.ACCEPTABLE_JVM_VERSIONS.add(Const.MINIMUM_JVM_VERSION)
-
 def showGuideAndThrow(String url, String message) {
     try {
         java.awt.Desktop.getDesktop().browse(new URI(url))
@@ -57,18 +47,6 @@ def showGuideAndThrow(String url, String message) {
         logger.error("Open $url on your browser")
     }
     throw new GradleException("$message \nPlease see $url")
-}
-
-def checkJvmRequires() {
-    def jvmVersion = System.getProperty("java.specification.version")
-    if (!Const.ACCEPTABLE_JVM_VERSIONS.contains(jvmVersion)) {
-        showGuideAndThrow(
-            Const.JAVA_REQUIREMENT_DOC,
-            "You are using java executable from " + System.getProperty("java.home") + "\n" +
-            "Use Jetbrain Runtime ${Const.MINIMUM_JVM_VERSION} which is included on Android Studio " +
-            "or JDK ${Const.MINIMUM_JVM_VERSION} LTS version"
-        )
-    }
 }
 
 def checkRosetta() {
@@ -89,7 +67,6 @@ def checkBuildRequires() {
     if (!getProperty("build.check.requires").toBoolean()) {
         return
     }
-    checkJvmRequires()
     checkRosetta()
 }
 
