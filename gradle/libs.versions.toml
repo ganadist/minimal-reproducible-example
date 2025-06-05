@@ -3,7 +3,7 @@
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradle = "unspecified"
 
-screenshot-testing = "0.0.1-alpha09"
+compose-screenshot = "0.0.1-alpha10"
 
 # https://r8.googlesource.com/r8/+refs
 r8 = "unspecified"
@@ -53,6 +53,9 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
 gradle-develocity = { module = "com.gradle:develocity-gradle-plugin", version.ref = "gradle-develocity" }
 
+compose-screenshot-gradle = { module = "com.android.compose.screenshot:com.android.compose.screenshot.gradle.plugin", version.ref = "compose-screenshot" }
+screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "compose-screenshot"}
+
 bundletool = { module = "com.android.toos.build:bundletool", version.ref = "bundletool" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 
@@ -83,7 +86,7 @@ android-kmp-lib = { id = "com.android.kotlin.multiplatform.library", version.ref
 android-lint = { id = "com.android.lint", version.ref = "android-gradle" }
 android-dfm = { id = "com.android.dynamic-feature", version.ref = "android-gradle" }
 android-test = { id = "com.android.test", version.ref = "android-gradle" }
-screenshot-testing = { id = "com.android.compose.screenshot", version.ref = "screenshot-testing" }
+compose-screenshot = { id = "com.android.compose.screenshot", version.ref = "compose-screenshot" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
