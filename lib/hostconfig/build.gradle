@@ -1,9 +1,14 @@
 plugins {
     alias(libs.plugins.android.lib)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.screenshot)
 }
 
 android {
     namespace = "com.example.hostconfig"
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
     buildFeatures {
         buildConfig = true
@@ -12,4 +17,9 @@ android {
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
+}
+
+dependencies {
+    compileOnly(googleLibs.auto.service.annotations)
+    ksp(googleLibs.auto.service.ksp)
 }
