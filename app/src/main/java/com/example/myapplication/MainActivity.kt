@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
 class ColorItem(
     val name: String,
-    @VisibleForTesting private val color: Int = 0
+    @param:VisibleForTesting private val color: Int = 0
 ) {
     override fun toString(): String {
         return name
