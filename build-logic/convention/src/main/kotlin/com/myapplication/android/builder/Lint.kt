@@ -7,8 +7,6 @@ internal fun Project.configureLint() {
     android {
         lint {
             lintConfig = file("$rootDir/app/lint.xml")
-            abortOnError = false
-            checkReleaseBuilds = true
         }
     }
 }

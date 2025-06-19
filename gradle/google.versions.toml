@@ -10,9 +10,6 @@ gms-oss-licenses = "0.10.5"
 firebase = "31.0.1"
 firebase-crashlytics-gradle = "2.9.2"
 
-# https://developer.android.com/reference/com/google/android/play/core/release-notes
-play-core = "1.10.3"
-
 # https://developers.google.com/ml-kit/release-notes#android-api-latest-versions
 mlkit-language = "17.0.3"
 
@@ -149,7 +146,5 @@ flexbox = { module = "com.google.android:flexbox", version.ref = "flexbox" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 material-compose-theme-adapter = { module = "com.google.android.material:compose-theme-adapter", version.ref = "material-compose-theme-adapter" }
 material-compose-theme-adapter3 = { module = "com.google.android.material:compose-theme-adapter-3", version.ref = "material-compose-theme-adapter3" }
-
-play-core = { module = "com.google.android.play:core", version.ref = "play-core" }
 
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
