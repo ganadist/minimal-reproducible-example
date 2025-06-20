@@ -79,6 +79,7 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android-gradle" }
 android-lib = { id = "com.android.library", version.ref = "android-gradle" }
+android-fused-lib = { id = "com.android.fused-library", version.ref = "android-gradle" }
 android-kmp-lib = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
 android-lint = { id = "com.android.lint", version.ref = "android-gradle" }
 android-dfm = { id = "com.android.dynamic-feature", version.ref = "android-gradle" }
