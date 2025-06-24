@@ -6,10 +6,13 @@ plugins {
 @Suppress("UnstableApiUsage")
 androidFusedLibrary {
      namespace = "com.example.fused.dist"
-     // lower than project(":lib:hostconfig")
+     // Need to sync with minSdk of :lib:fused-overrides
      minSdk = 26
 }
 
 dependencies {
+    // need to sync namespaces of dependencies with "tools:overrideLibrary" in :lib:fused-overrides
+    include(project(":lib:fused-overrides"))
+
     include(project(":lib:hostconfig"))
 }
