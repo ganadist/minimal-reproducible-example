@@ -85,6 +85,8 @@ dependencies {
     implementation androidxLibs.lifecycle.viewmodel.ktx
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+
+    implementation googleLibs.play.services.osslicenses
 }
 
 if (enableBaselineProfileGenerator) {
