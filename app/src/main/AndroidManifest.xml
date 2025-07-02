@@ -23,6 +23,7 @@
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:exported="false"
             android:label="About Opensource Licenses"
+            tools:replace="android:label"
             tools:node="replace" />
     </application>
 
