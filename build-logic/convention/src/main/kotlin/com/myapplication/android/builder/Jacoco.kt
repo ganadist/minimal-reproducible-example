@@ -15,7 +15,7 @@ internal fun Project.configureJacoco() {
             }
         }
         testCoverage {
-            jacocoVersion = "0.8.8"
+            jacocoVersion = libs.findVersion("jacoco").get().requiredVersion
         }
     }
 }
