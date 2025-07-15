@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.lib)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -12,4 +14,13 @@ android {
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
+}
+
+dependencies {
+    // dependencies are automatically added by
+    // build-logic/convention/src/main/kotlin/com/myapplication/android/builder/JetpackCompose.kt
+    // But added manually here for clarity
+
+    //implementation(platform(androidxLibs.compose.bom))
+    //implementation(androidxLibs.compose.material3)
 }
