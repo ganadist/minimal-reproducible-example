@@ -12,13 +12,21 @@ class AndroidVersionCatalogsCheckerPlugin : Plugin<Project> {
                 as Map<String, String>
 
             configurations.all {
+                val isHostConfigurations =
+                    name.endsWith("UnitTestCompileClasspath") ||
+                        name.endsWith("UnitTestRuntimeClasspath") ||
+                        name.endsWith("ScreenshotTestCompileClasspath") ||
+                        name.endsWith("ScreenshotTestRuntimeClasspath")
                 val isIntermediatesConfiguration =
-                    name.endsWith("RuntimeClasspath") ||
-                        name.endsWith("CompileClasspath")
+                    !isHostConfigurations &&
+                        (
+                            name.endsWith("RuntimeClasspath") ||
+                                name.endsWith("CompileClasspath")
+                            )
+
                 resolutionStrategy.eachDependency {
                     val module = "${requested.group}:${requested.name}"
-                    val needToCheck = isIntermediatesConfiguration ||
-                        module !in CHECK_INTERMEDIATES_DEPENDENCIES_ONLY
+                    val needToCheck = isIntermediatesConfiguration
                     if (needToCheck &&
                         module in modules &&
                         checkVersion(requested.version, modules[module])
@@ -47,17 +55,5 @@ class AndroidVersionCatalogsCheckerPlugin : Plugin<Project> {
         val versionNumber = VersionNumber.parse(version)
         val maxVersionNumber = VersionNumber.parse(maxVersion)
         return versionNumber > maxVersionNumber
-    }
-
-    companion object {
-        // These modules are using different versions between Host and Intermediates
-        // And we are describe versions for intermediates dependencies
-        private val CHECK_INTERMEDIATES_DEPENDENCIES_ONLY = arrayOf(
-            "org.slf4j:slf4j-api",
-            // guava used on app runtime and build system,
-            // and version scheme are different
-            "com.google.guava:guava",
-            "commons-io:commons-io",
-        )
     }
 }
