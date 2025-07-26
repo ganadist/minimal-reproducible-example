@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.android.gradle)
+    compileOnly(libs.compose.screenshot.gradle)
     implementation(libs.kotlin.gradle)
     compileOnly(libs.ksp.gradle)
     compileOnly(libs.gradle.develocity)

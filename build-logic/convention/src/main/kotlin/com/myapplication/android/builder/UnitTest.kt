@@ -143,6 +143,19 @@ internal fun Project.configureTest() {
             )
         )
     }
+
+    plugins.withId(Const.COMPOSE_SCREENSHOT_PLUGIN_ID) {
+        // https://developer.android.com/studio/preview/compose-screenshot-testing?hl=en#setup
+        android {
+            @Suppress("UnstableApiUsage")
+            experimentalProperties["android.experimental.enableScreenshotTest"] = true
+        }
+
+        dependencies {
+            screenshotTestImplementation(libs, "screenshot-validation-api")
+            screenshotTestImplementation(androidxLibs, "compose-ui-tooling-preview")
+        }
+    }
 }
 
 @Suppress("UnstableApiUsage")
