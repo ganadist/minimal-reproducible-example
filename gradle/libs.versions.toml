@@ -3,7 +3,7 @@
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradle = "unspecified"
 
-screenshot-testing = "0.0.1-alpha09"
+screenshot-testing = "0.0.1-alpha10"
 
 # FIXME                                                                                              
 # Need to merge with `compose-screenshot`                                                            
