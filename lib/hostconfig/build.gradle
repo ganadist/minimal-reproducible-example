@@ -16,3 +16,12 @@ android {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
 }
+
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "com.android.tools.layoutlib") {
+            println("requested $requested and use version 15.0.7")
+            useVersion("15.0.7")
+        }
+    }
+}
