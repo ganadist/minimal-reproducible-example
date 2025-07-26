@@ -5,6 +5,10 @@ android-gradle = "unspecified"
 
 screenshot-testing = "0.0.1-alpha09"
 
+# FIXME                                                                                              
+# Need to merge with `compose-screenshot`                                                            
+screenshot-validation = "0.0.1-alpha10"
+
 # https://r8.googlesource.com/r8/+refs
 r8 = "unspecified"
 
@@ -49,6 +53,8 @@ robolectric = "4.14.1"
 [libraries]
 r8 = { module = "com.android.tools:r8", version.ref = "r8" }
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
+compose-screenshot-gradle = { module = "com.android.compose.screenshot:com.android.compose.screenshot.gradle.plugin", version.ref = "screenshot-testing" }
+screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot-validation"}
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
 gradle-develocity = { module = "com.gradle:develocity-gradle-plugin", version.ref = "gradle-develocity" }
