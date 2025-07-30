@@ -26,6 +26,9 @@ pluginManagement {
     }
 
     repositories {
+        maven {
+            url = uri("file://${settingsDir}/.m2")
+        }
         (repos["google"] as groovy.lang.Closure<*>).call(this)
         (repos["gradlePluginPortal"] as groovy.lang.Closure<*>).call(this)
     }
