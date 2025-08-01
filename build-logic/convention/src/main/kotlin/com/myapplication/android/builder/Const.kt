@@ -10,6 +10,8 @@ object Const {
         "play-services-base" to VersionNumber.parse("17.3.0"),
     )
 
+    val NATIVE_PAGE_SIZE_NOT_16KB_OR_HIGHER: List<String> = listOf()
+
     const val KAPT_PLUGIN_ID = "org.jetbrains.kotlin.kapt"
     const val KSP_PLUGIN_ID = "com.google.devtools.ksp"
     const val KOTLIN_ANDROID_PLUGIN_ID = "org.jetbrains.kotlin.android"

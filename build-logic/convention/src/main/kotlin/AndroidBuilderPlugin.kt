@@ -13,6 +13,7 @@ import com.myapplication.android.builder.configureJava
 import com.myapplication.android.builder.configureJetpackCompose
 import com.myapplication.android.builder.configureKotlin
 import com.myapplication.android.builder.configureLint
+import com.myapplication.android.builder.configurePageSizeCheck
 import com.myapplication.android.builder.configureReportOutput
 import com.myapplication.android.builder.configureTest
 import com.myapplication.android.builder.configureTestDependencies
@@ -30,12 +31,17 @@ class AndroidBuilderPlugin : Plugin<Project> {
     ) {
         with(target) {
             plugins.withType<BasePlugin>().configureEach {
+                val hasAppPlugin = pluginManager.hasPlugin("com.android.application")
                 val bytecodeVersion = JavaVersion.toVersion(
                     getProperty("build.jvmtarget.intermediates")
                 )
 
                 val hasCommonExtensions = PLUGINS_HAS_COMMON_EXTENSIONS.any {
                     plugins.hasPlugin(it)
+                }
+
+                if (hasAppPlugin) {
+                    configurePageSizeCheck()
                 }
 
                 if (hasCommonExtensions) {
