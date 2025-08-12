@@ -123,6 +123,7 @@ internal fun Project.configurePageSizeCheck() {
             files.from(
                 variant.artifacts.get(SingleArtifact.MERGED_NATIVE_LIBS).map { dir ->
                     dir.asFileTree.files
+                        .filter { it.exists() }
                         .filter { it.extension == "so" }
                         .filter { it.path.contains("arm64-v8a") }
                 }
