@@ -35,17 +35,8 @@ android {
                 "android.experimental.r8.dex-startup-optimization"
             ] = enableDexlayoutOptimizer
 
-            postprocessing {
-                removeUnusedCode = true
-                optimizeCode = true
-                obfuscate = true
-                removeUnusedResources = true
-                proguardFiles file('proguards-rules.pro')
-            }
-
-            // baselineprofile plugin does not support postprocessing dsl block, yet.
-            // So, we need assign proguard rule again
-            // https://issuetracker.google.com/issues/307784512
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), file('proguards/proguard.cfg')
         }
     }
