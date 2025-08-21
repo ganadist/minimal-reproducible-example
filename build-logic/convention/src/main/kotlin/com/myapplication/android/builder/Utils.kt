@@ -1,6 +1,12 @@
 package com.myapplication.android.builder
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.DefaultConfig
+import com.android.build.api.dsl.DynamicFeatureExtension
+import com.android.build.api.dsl.LibraryDefaultConfig
+import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.TestExtension
 import com.android.build.api.variant.AndroidComponentsExtension
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
@@ -12,7 +18,25 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.kotlin.dsl.getByType
 
-typealias AndroidExtension = CommonExtension<*, *, *, *, *, *>
+private typealias AndroidExtension = CommonExtension
+
+internal fun AndroidExtension.defaultConfig(action: DefaultConfig.() -> Unit) {
+    when (this) {
+        is LibraryExtension -> {
+            defaultConfig(action)
+        }
+        is ApplicationExtension -> {
+            defaultConfig(action)
+        }
+        is DynamicFeatureExtension -> {
+            defaultConfig(action)
+        }
+        is TestExtension -> {
+            defaultConfig(action)
+        }
+        else -> { }
+    }
+}
 
 internal fun Project.getProperty(
     propertyName: String,
