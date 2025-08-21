@@ -40,25 +40,28 @@ abstract class ValidatePageSizeTask : DefaultTask() {
     abstract val objDumpPath: RegularFileProperty
 
     @get:[InputFiles Classpath]
-    abstract val files: ConfigurableFileCollection
+    abstract val outDirs: ConfigurableFileCollection
 
     @TaskAction
     fun verifyELFRegionAlignment() {
-        files.forEach {
-            val alignment = getELFAlignment(objDumpPath.asFile.get().path, it.path)
-            if (alignment in ALLOWED_PAGE_SIZES) {
-                logger.info("ELF alignment of ${it.name} is $alignment, which is allowed.")
-            } else {
-                val message = "Expected ELF alignment of 2**14 or higher for file `${it.name}`, " +
-                        "but got $alignment.\n Please see " +
-                        "https://d.android.com/guide/practices/page-sizes?hl=en"
-                if (Const.NATIVE_PAGE_SIZE_NOT_16KB_OR_HIGHER.contains(it.name)) {
-                    logger.warn(message)
+        outDirs.asFileTree.files
+            .filter { it.extension == "so" }
+            .filter { it.path.contains("arm64-v8a") }
+            .forEach {
+                val alignment = getELFAlignment(objDumpPath.asFile.get().path, it.path)
+                if (alignment in ALLOWED_PAGE_SIZES) {
+                    logger.info("ELF alignment of ${it.name} is $alignment, which is allowed.")
                 } else {
-                    throw GradleException(message)
+                    val message = "Expected ELF alignment of 2**14 or higher for file `${it.name}`, " +
+                            "but got $alignment.\n Please see " +
+                            "https://d.android.com/guide/practices/page-sizes?hl=en"
+                    if (Const.NATIVE_PAGE_SIZE_NOT_16KB_OR_HIGHER.contains(it.name)) {
+                        logger.warn(message)
+                    } else {
+                        throw GradleException(message)
+                    }
                 }
             }
-        }
     }
 }
 
@@ -120,12 +123,9 @@ internal fun Project.configurePageSizeCheck() {
             ValidatePageSizeTask::class.java
         ) {
             objDumpPath.set(objDumpFile)
-            files.from(
+            outDirs.from(
                 variant.artifacts.get(SingleArtifact.MERGED_NATIVE_LIBS).map { dir ->
-                    dir.asFileTree.files
-                        .filter { it.exists() }
-                        .filter { it.extension == "so" }
-                        .filter { it.path.contains("arm64-v8a") }
+                    dir.asFile
                 }
             )
             cacheEvenIfNoOutputs()
