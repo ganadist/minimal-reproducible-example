@@ -12,12 +12,12 @@ internal fun Project.configureReportOutput() {
 
     if (changeReport) {
         android {
-            lint {
+            lint.apply {
                 xmlOutput = file("$reportsDir/lint-results.xml")
                 htmlOutput = file("$reportsDir/lint-results.html")
                 checkDependencies = false
             }
-            testOptions {
+            testOptions.apply {
                 unitTests.all {
                     it.reports {
                         html.outputLocation.set(reportsDir)
