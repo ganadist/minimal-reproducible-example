@@ -5,7 +5,7 @@ import org.gradle.api.Project
 @Suppress("UnstableApiUsage")
 internal fun Project.configureLint() {
     android {
-        lint {
+        lint.apply {
             lintConfig = file("$rootDir/app/lint.xml")
             abortOnError = false
             checkReleaseBuilds = true

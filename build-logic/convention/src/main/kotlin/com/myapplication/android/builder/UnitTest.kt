@@ -47,7 +47,7 @@ internal fun Project.configureTest() {
             testInstrumentationRunnerArguments["clearPackageData"] = "true"
         }
 
-        testOptions {
+        testOptions.apply {
             // https://issuetracker.google.com/issues/314821647
             if (!hasTestModulePlugin && !hasBaselineProfilePlugin) {
                 execution = "ANDROIDX_TEST_ORCHESTRATOR"

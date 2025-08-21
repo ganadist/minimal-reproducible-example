@@ -16,29 +16,27 @@ internal fun Project.configureAndroid(
 ) {
     android {
         defaultConfig {
-            compileOptions {
-                sourceCompatibility = javaVersion
-                targetCompatibility = javaVersion
-            }
+            compileOptions.sourceCompatibility = javaVersion
+            compileOptions.targetCompatibility = javaVersion
             vectorDrawables.useSupportLibrary = true
         }
 
-        packaging {
-            jniLibs {
-                pickFirsts.addAll(
-                    arrayOf(
-                        "**/libc++_shared.so",
-                    )
-                )
-            }
-            resources {
-                excludes.addAll(
-                    arrayOf(
-                        "META-INF/LICENSE.md"
-                    )
-                )
-            }
-        }
+        //packaging {
+        //    jniLibs {
+        //        pickFirsts.addAll(
+        //            arrayOf(
+        //                "**/libc++_shared.so",
+        //            )
+        //        )
+        //    }
+        //    resources {
+        //        excludes.addAll(
+        //            arrayOf(
+        //                "META-INF/LICENSE.md"
+        //            )
+        //        )
+        //    }
+        //}
     }
 
     val jacocoVersion = libs.findVersion("jacoco").get().requiredVersion
