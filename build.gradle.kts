@@ -1,4 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    dependencies {
+        constraints {
+            /*
+            classpath(platform(libs.kotlin.gradle.bom)) {
+                because("Prevent to update compiler version from AGP")
+            }
+            */
+        }
+    }
+}
+
 plugins {
     alias(libs.plugins.android.app).apply(false)
     alias(libs.plugins.android.lib).apply(false)
@@ -31,3 +43,8 @@ subprojects {
     project.apply(plugin = "com.myapplication.android.versions.checker")
 }
 
+tasks.register("printKotlinVersion") {
+    doLast {
+        println("Kotlin version: ${org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion(logger)}")
+    }
+}
