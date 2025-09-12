@@ -1,0 +1,34 @@
+[versions]
+
+# https://developer.android.com/studio/releases/gradle-plugin
+android-gradle = "unspecified"
+
+# https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "unspecified"
+
+# https://github.com/google/ksp/releases
+ksp = "unspecified"
+
+[libraries]
+android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-gradle-bom = { module = "org.jetbrains.kotlin:kotlin-gradle-plugins-bom", version.ref = "kotlin" }
+ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
+
+
+[plugins]
+android-app = { id = "com.android.application", version.ref = "android-gradle" }
+android-lib = { id = "com.android.library", version.ref = "android-gradle" }
+android-kmp-lib = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
+android-lint = { id = "com.android.lint", version.ref = "android-gradle" }
+android-dfm = { id = "com.android.dynamic-feature", version.ref = "android-gradle" }
+android-test = { id = "com.android.test", version.ref = "android-gradle" }
+
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
