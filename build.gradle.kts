@@ -1,4 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    dependencies {
+        constraints {
+            /*
+            classpath(platform(libs.kotlin.gradle.bom)) {
+                because("Prevent to update compiler version from AGP")
+            }
+            */
+        }
+    }
+}
+
 plugins {
     alias(libs.plugins.android.app).apply(false)
     alias(libs.plugins.android.lib).apply(false)
@@ -17,20 +29,22 @@ plugins {
     alias(libs.plugins.kmp).apply(false)
     alias(libs.plugins.ksp).apply(false)
 
-    id "com.myapplication.android.builder" apply false
-    id "com.myapplication.android.versions.loader"
-    id "com.myapplication.android.versions.checker" apply false
+    id("com.myapplication.android.builder").apply(false)
+    id("com.myapplication.android.versions.loader")
+    id("com.myapplication.android.versions.checker").apply(false)
     alias(libs.plugins.gradle.develocity).apply(false)
 }
 
-apply from: "$rootDir/gradle/build_constant.gradle"
-apply from: "$rootDir/gradle/wrapper.gradle"
+apply(from = "$rootDir/gradle/build_constant.gradle")
+apply(from = "$rootDir/gradle/wrapper.gradle")
 
 subprojects {
-    project.apply plugin: "com.myapplication.android.builder"
-    project.apply plugin: "com.myapplication.android.versions.checker"
+    project.apply(plugin = "com.myapplication.android.builder")
+    project.apply(plugin = "com.myapplication.android.versions.checker")
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("printKotlinVersion") {
+    doLast {
+        println("Kotlin version: ${org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion(logger)}")
+    }
 }
