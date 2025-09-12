@@ -9,6 +9,10 @@ android {
         buildConfig = true
     }
 
+    testFixtures {
+        enable = true
+    }
+
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }

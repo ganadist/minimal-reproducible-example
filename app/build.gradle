@@ -76,6 +76,8 @@ dependencies {
     implementation androidxLibs.lifecycle.viewmodel.ktx
     implementation androidxLibs.room.ktx
     implementation androidxLibs.room.runtime
+
+    testImplementation(testFixtures(project(":lib:hostconfig")))
 }
 
 if (enableBaselineProfileGenerator) {
