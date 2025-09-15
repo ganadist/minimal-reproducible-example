@@ -1,12 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     dependencies {
-        constraints {
-            /*
-            classpath(platform(libs.kotlin.gradle.bom)) {
-                because("Prevent to update compiler version from AGP")
+        // https://issuetracker.google.com/issues/431147146
+        // Set Kotlin and KSP version strictly to avoid version conflict with
+        // Android Gradle Plugin 9.0+
+        classpath(libs.kotlin.gradle) {
+            version {
+                strictly(libs.versions.kotlin.get())
             }
-            */
+        }
+        classpath(libs.ksp.gradle) {
+            version {
+                strictly(libs.versions.ksp.get())
+            }
         }
     }
 }
