@@ -56,23 +56,36 @@ develocity {
 }
 
 android {
-    val minSdk: String by settings
-    val compileSdk : String by settings
-    val compileSdkPreview: String by settings
-    val compileSdkExtension: String by settings
+    minSdk {
+        val minSdk: String by settings
+        version = release(minSdk.toInt())
+    }
+    compileSdk {
+        val compileSdk : String by settings
+        val compileSdkMinor : String by settings
+        val compileSdkPreview: String by settings
+        val compileSdkExtension: String by settings
+
+        if (compileSdkPreview.isEmpty()) {
+            version = release(compileSdk.toInt()) {
+                if (compileSdkMinor.isNotEmpty()) {
+                    minorApiLevel = compileSdkMinor.toInt()
+                }
+                if (compileSdkExtension.isNotEmpty()) {
+                    sdkExtension = compileSdkExtension.toInt()
+                }
+            }
+        } else {
+            version = preview(compileSdkPreview)
+        }
+    }
+    targetSdk {
+        val targetSdk : String by settings
+        version = release(targetSdk.toInt())
+    }
+
     val buildToolsVersion: String by settings
-
-    this.minSdk = minSdk.toInt()
-    this.compileSdk = compileSdk.toInt()
     this.buildToolsVersion = buildToolsVersion
-
-    if (compileSdkExtension.isNotEmpty()) {
-        this.compileSdkExtension = compileSdkExtension.toInt()
-    }
-
-    if (compileSdkPreview.isNotEmpty()) {
-        this.compileSdkPreview = compileSdkPreview
-    }
 
     """
     execution {
