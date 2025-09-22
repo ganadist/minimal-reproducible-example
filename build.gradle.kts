@@ -1,4 +1,24 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+//
+
+buildscript {
+    dependencies {
+        // https://issuetracker.google.com/issues/431147146
+        // Set Kotlin and KSP version strictly to avoid version conflict with
+        // Android Gradle Plugin 9.0+
+        classpath(libs.kotlin.gradle) {
+            version {
+                strictly(libs.versions.kotlin.get())
+            }
+        }
+        classpath(libs.ksp.gradle) {
+            version {
+                strictly(libs.versions.ksp.get())
+            }
+        }
+    }
+}
+
 plugins {
     alias(libs.plugins.android.app).apply(false)
     alias(libs.plugins.android.lib).apply(false)

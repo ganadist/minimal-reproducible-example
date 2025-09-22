@@ -78,6 +78,7 @@ android {
         } else {
             version = preview(compileSdkPreview)
         }
+        println(version)
     }
     targetSdk {
         val targetSdk : String by settings
@@ -114,7 +115,7 @@ dependencyResolutionManagement {
 apply(from = File(settingsDir, "gradle/version_catalogs.gradle"))
 
 include(":app")
-include(":shared")
+//include(":shared")
 include(":lib:hostconfig")
 include(":tests:baselineprofile")
 rootProject.name = "My Application"
