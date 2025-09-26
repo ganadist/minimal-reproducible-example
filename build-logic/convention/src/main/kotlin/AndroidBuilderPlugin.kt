@@ -29,6 +29,9 @@ class AndroidBuilderPlugin : Plugin<Project> {
     override fun apply(
         target: Project
     ) {
+        // load jacoco plugin to allow JacocoTaskExtension configuration in configureJacoco
+        target.plugins.apply("jacoco")
+
         with(target) {
             plugins.withType<BasePlugin>().configureEach {
                 val hasAppPlugin = pluginManager.hasPlugin("com.android.application")
