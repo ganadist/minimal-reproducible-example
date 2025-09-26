@@ -12,6 +12,7 @@ object Const {
 
     val NATIVE_PAGE_SIZE_NOT_16KB_OR_HIGHER: List<String> = listOf()
 
+    const val COMPOSE_SCREENSHOT_PLUGIN_ID = "com.android.compose.screenshot"
     const val KAPT_PLUGIN_ID = "org.jetbrains.kotlin.kapt"
     const val KSP_PLUGIN_ID = "com.google.devtools.ksp"
     const val KOTLIN_ANDROID_PLUGIN_ID = "org.jetbrains.kotlin.android"
@@ -28,4 +29,11 @@ object Const {
         "dogfood",
         "dogfoodrc"
     )
+
+    val ALLOWED_DEBUG_ONLY_VARIANTS = arrayOf(
+        "debug",
+        "developDebug"
+    )
+
+    val SRC_DIRS = arrayOf("java", "kotlin")
 }

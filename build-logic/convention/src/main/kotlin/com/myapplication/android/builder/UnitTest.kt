@@ -1,6 +1,10 @@
 package com.myapplication.android.builder
 
 import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.api.variant.DeviceTestBuilder
+import com.android.build.api.variant.HasDeviceTestsBuilder
+import com.android.build.api.variant.HasHostTestsBuilder
+import com.android.build.api.variant.HostTestBuilder
 import java.time.Duration
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
@@ -20,6 +24,18 @@ internal fun Project.configureTest() {
     val hasTestModulePlugin = pluginManager.hasPlugin("com.android.test")
     val hasBaselineProfilePlugin = pluginManager.hasPlugin("androidx.baselineprofile")
     val androidTestApiLevel = getProperty("build.androidtest.sdk").toIntOrZero()
+
+    val variantFilterHostTest = getProperty(
+        "build.variants.filter.hosttest"
+    ).toBoolean()
+    val variantFilterDeviceTest = getProperty(
+        "build.variants.filter.devicetest"
+    ).toBoolean()
+
+    val hasUnitTest = hasUnitTestSourceSet()
+    val hasScreenshotTest = hasScreenshotTestSourceSet()
+    val hasAndroidTest = hasAndroidTestSourceSet()
+
     android {
         // https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/runner?hl=en#enable-android
         defaultConfig {
@@ -43,13 +59,15 @@ internal fun Project.configureTest() {
                 isIncludeAndroidResources = !hasDynamicFeatureModulePlugin
             }
 
-            // https://developer.android.com/studio/test/gradle-managed-devices
-            managedDevices {
-                allDevices.register("gmd", ManagedVirtualDevice::class.java) {
-                    device = "Pixel 2"
+            if (hasAndroidTest || hasTestModulePlugin) {
+                // https://developer.android.com/studio/test/gradle-managed-devices
+                managedDevices {
+                    allDevices.register("gmd", ManagedVirtualDevice::class.java) {
+                        device = "Pixel 2"
 
-                    apiLevel = androidTestApiLevel
-                    systemImageSource = "google-atd"
+                        apiLevel = androidTestApiLevel
+                        systemImageSource = "google-atd"
+                    }
                 }
             }
 
@@ -120,6 +138,54 @@ internal fun Project.configureTest() {
                     roboDependencyUrlProp,
                     "https://maven-central-asia.storage-download.googleapis.com/maven2"
                 )
+            }
+        }
+    }
+
+    componentsExtension.apply {
+        beforeVariants(selector().all()) { variant ->
+            val allowHostTest = variant.name in Const.ALLOWED_DEBUG_ONLY_VARIANTS ||
+                !variantFilterHostTest
+            val allowDeviceTest = variant.name in Const.ALLOWED_DEBUG_ONLY_VARIANTS ||
+                !variantFilterDeviceTest
+
+            (variant as? HasHostTestsBuilder)?.hostTests?.apply {
+                get(HostTestBuilder.UNIT_TEST_TYPE)?.apply {
+                    if (hasUnitTest && allowHostTest) {
+                        enable = true
+                        enableCodeCoverage = true
+                    } else {
+                        enable = false
+                    }
+                }
+                get(HostTestBuilder.SCREENSHOT_TEST_TYPE)?.apply {
+                    enable = false
+                    if (hasScreenshotTest && allowHostTest) {
+                        pluginManager.withPlugin(Const.COMPOSE_SCREENSHOT_PLUGIN_ID) {
+                            enable = true
+                            enableCodeCoverage = true
+                        }
+                    }
+                }
+            }
+
+            (variant as? HasDeviceTestsBuilder)?.deviceTests?.get(
+                DeviceTestBuilder.ANDROID_TEST_TYPE
+            )?.apply {
+                if (hasTestModulePlugin || (hasAndroidTest && allowDeviceTest)) {
+                    enable = true
+                    /**
+                     * Some of 3rd party library causes the following error with JaCoCo.
+                     *
+                     * Caused by: java.io.IOException:
+                     *   Error while instrumenting Xxx.class with JaCoCo 0.8.13.202504020838/78d5eff.
+                     *   at org.jacoco.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
+                     *   at com.android.build.gradle.internal.dependency.JacocoInstrumentationService$Instrumenter.instrument(JacocoInstrumentationService.kt:108)
+                     */
+                    enableCodeCoverage = false
+                } else {
+                    enable = false
+                }
             }
         }
     }

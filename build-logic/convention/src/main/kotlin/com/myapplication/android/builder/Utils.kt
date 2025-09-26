@@ -171,3 +171,11 @@ fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = whe
     "production", in Const.DOGFOOD_FLAVORS -> buildType == "release"
     else -> true
 }
+
+internal fun Project.hasUnitTestSourceSet(): Boolean = hasSourceSet("test")
+internal fun Project.hasAndroidTestSourceSet(): Boolean = hasSourceSet("androidTest")
+internal fun Project.hasScreenshotTestSourceSet(): Boolean = hasSourceSet("screenshotTest")
+
+private fun Project.hasSourceSet(sourceSet: String): Boolean = !Const.SRC_DIRS.all {
+    project.layout.projectDirectory.dir("src/$sourceSet/$it").asFileTree.isEmpty
+}
