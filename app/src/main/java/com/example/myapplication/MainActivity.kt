@@ -9,4 +9,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
+    companion object {
+        @JvmStatic
+        fun example(arg1: Int, arg2: Int): Int = arg1 + arg2
+    }
 }
