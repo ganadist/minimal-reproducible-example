@@ -28,7 +28,7 @@ internal fun Project.configureKotlin(javaVersion: JavaVersion) {
 
         timeout.set(
             Duration.ofMinutes(
-                rootProject.getProperty("build.timeout.kotlinCompile").toLong()
+                project.getProperty("build.timeout.kotlinCompile").toLong()
             )
         )
     }

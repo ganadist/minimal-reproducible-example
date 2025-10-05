@@ -6,7 +6,7 @@ import org.gradle.api.Project
 internal fun Project.configureReportOutput() {
     val changeReport: Boolean = getProperty("build.changereportdir").toBoolean()
     val basename = path.substring(1).replace(":", "_")
-    val buildDir = rootProject.layout.buildDirectory.asFile.get()
+    val buildDir = project.isolated.rootProject.projectDirectory.file("build").asFile
     val reportsDir = file("${buildDir}/reports/$basename")
     val testResultsDir = file("${buildDir}/test-results/$basename")
 
