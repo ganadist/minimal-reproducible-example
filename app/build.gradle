@@ -15,13 +15,14 @@ if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
 if (enableBaselineProfileGenerator) {
     apply plugin: "androidx.baselineprofile"
 }
+apply(from: "$rootDir/gradle/build_constant.gradle")
 
 android {
     namespace = "com.example.myapplication"
     defaultConfig {
         applicationId = "com.example.myapplication"
-        versionCode = rootProject.ext.versionCode
-        versionName = rootProject.ext.versionName
+        versionCode = project.ext.versionCode
+        versionName = project.ext.versionName
         compileOptions {
             coreLibraryDesugaringEnabled = enableL8
         }

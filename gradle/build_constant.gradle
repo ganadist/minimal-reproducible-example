@@ -13,7 +13,8 @@ def VERSION_CODE_BASE_MICRO = 10000
 def VERSION_CODE_BASE_BUILD_NUMBER = 1
 
 def versionProperties = new Properties()
-try (br = Files.newBufferedReader(rootProject.file("version.properties").toPath())) {
+def versionPropertiesFile = project.isolated.rootProject.projectDirectory.file("version.properties").asFile
+try (br = Files.newBufferedReader(versionPropertiesFile.toPath())) {
     versionProperties.load(br)
 }
 
