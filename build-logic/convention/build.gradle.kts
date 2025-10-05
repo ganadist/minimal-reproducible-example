@@ -27,8 +27,8 @@ subprojects {
 dependencies {
     implementation(libs.android.gradle)
     implementation(libs.kotlin.gradle)
-    compileOnly(libs.ksp.gradle)
-    compileOnly(libs.gradle.develocity)
+    implementation(libs.ksp.gradle)
+    implementation(libs.gradle.develocity)
 }
 
 gradlePlugin {
