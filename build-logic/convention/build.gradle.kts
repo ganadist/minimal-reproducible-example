@@ -29,6 +29,8 @@ dependencies {
     implementation(libs.kotlin.gradle)
     implementation(libs.ksp.gradle)
     implementation(libs.gradle.develocity)
+    implementation(libs.screenshot.testing.gradle)
+    implementation(androidxLibs.room.gradle)
 }
 
 gradlePlugin {

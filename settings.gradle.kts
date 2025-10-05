@@ -9,9 +9,9 @@ pluginManagement {
     val androidGradlePluginVersion: String by settings
     val gradleDevelocityPluginVersion: String by settings
     val gradleUserDataPluginVersion: String by settings
-    val kotlinVersion: String by settings
-    val kspVersion: String by settings
-    val kspFullVersion = "${kotlinVersion}-${kspVersion}"
+    val dokkaPluginVersion: String by settings
+    val koverPluginVersion: String by settings
+    val androidCacheFixPluginVersion: String by settings
 
     buildscript {
         if (!r8Version.isEmpty()) {
@@ -38,17 +38,9 @@ pluginManagement {
         id("com.gradle.develocity") version gradleDevelocityPluginVersion
         id("com.gradle.common-custom-user-data-gradle-plugin") version gradleUserDataPluginVersion
 
-        id("com.android.application") version androidGradlePluginVersion
-        id("com.android.library") version androidGradlePluginVersion
-        id("com.android.kotlin.multiplatform.library") version androidGradlePluginVersion
-        id("com.android.lint") version androidGradlePluginVersion
-        id("com.android.dynamic-feature") version androidGradlePluginVersion
-        id("com.android.test") version androidGradlePluginVersion
-        id("org.jetbrains.kotlin.android") version kotlinVersion
-        id("org.jetbrains.kotlin.kapt") version kotlinVersion
-        id("org.jetbrains.kotlin.plugin.parcelize") version kotlinVersion
-        id("org.jetbrains.kotlin.multiplatform") version kotlinVersion
-        id("com.google.devtools.ksp") version kspFullVersion
+        id("org.jetbrains.dokka") version dokkaPluginVersion
+        id("org.gradle.android.cache-fix") version androidCacheFixPluginVersion
+        id("org.jetbrains.kotlinx.kover.aggregation") version koverPluginVersion
     }
     includeBuild("build-logic")
 }
@@ -57,22 +49,9 @@ plugins {
     id("com.gradle.develocity")
     id("com.gradle.common-custom-user-data-gradle-plugin")
     id("com.android.settings")
+    id("org.jetbrains.kotlinx.kover.aggregation")
 
     id("com.myapplication.android.builder").apply(false)
-    // to Prevent
-    // The request for this plugin could not be satisfied because the plugin is already on the classpath with an unknown version, so compatibility cannot be checked.
-    id("com.android.application").apply(false)
-    id("com.android.library").apply(false)
-    id("com.android.kotlin.multiplatform.library").apply(false)
-    id("com.android.lint").apply(false)
-    id("com.android.dynamic-feature").apply(false)
-    id("com.android.test").apply(false)
-    id("org.jetbrains.kotlin.android").apply(false)
-    id("org.jetbrains.kotlin.kapt").apply(false)
-    id("org.jetbrains.kotlin.plugin.parcelize").apply(false)
-    id("org.jetbrains.kotlin.multiplatform").apply(false)
-    id("com.google.devtools.ksp").apply(false)
-
 }
 
 develocity {

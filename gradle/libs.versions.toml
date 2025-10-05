@@ -53,6 +53,7 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 kotlin-gradle-bom = { module = "org.jetbrains.kotlin:kotlin-gradle-plugins-bom", version.ref = "kotlin" }
 ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp"}
 gradle-develocity = { module = "com.gradle:develocity-gradle-plugin", version.ref = "gradle-develocity" }
+screenshot-testing-gradle = { module = "com.android.compose.screenshot:screenshot-test-gradle-plugin", version.ref = "screenshot-testing" }
 
 bundletool = { module = "com.android.toos.build:bundletool", version.ref = "bundletool" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
@@ -78,19 +79,19 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 [plugins]
-android-app = { id = "com.android.application", version.ref = "android-gradle" }
-android-lib = { id = "com.android.library", version.ref = "android-gradle" }
-android-kmp-lib = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
-android-lint = { id = "com.android.lint", version.ref = "android-gradle" }
-android-dfm = { id = "com.android.dynamic-feature", version.ref = "android-gradle" }
-android-test = { id = "com.android.test", version.ref = "android-gradle" }
-screenshot-testing = { id = "com.android.compose.screenshot", version.ref = "screenshot-testing" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-app = { id = "com.android.application", version = "" }
+android-lib = { id = "com.android.library", version = "" }
+android-kmp-lib = { id = "com.android.kotlin.multiplatform.library", version = "" }
+android-lint = { id = "com.android.lint", version = "" }
+android-dfm = { id = "com.android.dynamic-feature", version = "" }
+android-test = { id = "com.android.test", version = "" }
+screenshot-testing = { id = "com.android.compose.screenshot", version = "" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version = "" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version = "" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version = "" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kmp = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kmp = { id = "org.jetbrains.kotlin.multiplatform", version = "" }
 
-gradle-develocity = { id = "com.gradle.develocity", version.ref = "gradle-develocity" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+gradle-develocity = { id = "com.gradle.develocity", version = "" }
+ksp = { id = "com.google.devtools.ksp", version = "" }

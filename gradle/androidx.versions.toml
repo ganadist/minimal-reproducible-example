@@ -210,6 +210,7 @@ room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "room" }
 room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "room" }
 room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
+room-gradle = { module = "androidx.room:room-gradle-plugin", version.ref = "room" }
 
 savedstate-ktx = { module = "androidx.savedstate:savedstate-ktx", version.ref = "savedstate" }
 
@@ -269,6 +270,7 @@ window-testing = { module = "androidx.window:window-testing", version.ref = "win
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+room = { id = "androidx.room", version = "" }
 
 [bundles]
 compose = [
