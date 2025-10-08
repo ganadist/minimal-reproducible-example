@@ -11,7 +11,8 @@ internal fun Project.configureKotlin(javaVersion: JavaVersion) {
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(JvmTarget.fromTarget(javaVersion.toString()))
-            allWarningsAsErrors.set(true)
+            val allowWarnings = !name.startsWith("ksp")
+            allWarningsAsErrors.set(allowWarnings)
             val compilerOptions = mutableListOf<String>()
 
             // https://youtrack.jetbrains.com/issue/KT-52199

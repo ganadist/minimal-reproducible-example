@@ -1,6 +1,5 @@
 package com.myapplication.android.builder
 
-import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -11,12 +10,5 @@ internal fun Project.configureAnnotationProcessors() {
         throw GradleException(
             "Use ksp compiler instead of kapt on $project"
         )
-    }
-
-    pluginManager.withPlugin(Const.KSP_PLUGIN_ID) {
-        extensions.configure<KspExtension> {
-            arg("room.incremental", "true")
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
     }
 }

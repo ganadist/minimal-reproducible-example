@@ -25,7 +25,7 @@ bundletool = "1.10.0"
 desugar = "2.0.4"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinx-coroutines = "1.7.3"
+kotlinx-coroutines = "1.10.2"
 
 # https://github.com/pinterest/ktlint/releases
 ktlint = "1.0.1"
