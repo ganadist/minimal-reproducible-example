@@ -41,6 +41,8 @@ internal fun Project.configureAndroid(
         }
     }
 
+    val kotlinxSerializationVersion =
+        libs.findVersion("kotlinx-serialization").get().requiredVersion
     val jacocoVersion = libs.findVersion("jacoco").get().requiredVersion
     val guavaAndroidVersion = googleLibs.findVersion("guava").get().requiredVersion
 
@@ -96,6 +98,20 @@ internal fun Project.configureAndroid(
                 VersionNumber.parse(requested.version) < VersionNumber.parse(jacocoVersion)
             ) {
                 useVersion(jacocoVersion)
+            }
+
+            if (requested.group == "org.jetbrains.kotlinx" &&
+                requested.name.startsWith("kotlinx-serialization-") &&
+                requested.version != kotlinxSerializationVersion
+            ) {
+                // Workaround for Room 2.8 with KSP1
+                // https://issuetracker.google.com/issues/447154195#comment9
+                // Required version of kotlinx-serialization is different between
+                // KSP and Room
+                //
+                // * KSP: https://scans.gradle.com/s/ycftgdeyulyme/dependencies?focusedDependency=WzIsMTMsMzI4LFsyLDEzLFszNzUsMzI4XV1d&focusedDependencyIncomingPathsToggled=W1swLDAsM11d&focusedDependencyView=versions&toggled=W1syXSxbMiwxM10sWzIsMTMsWzM3NV1dXQ
+                // * Room: https://scans.gradle.com/s/ycftgdeyulyme/dependencies?focusedDependency=WzIsMTQsMjkzLFsyLDE0LFszNzMsMjU0LDI4OSwyOTNdXV0&focusedDependencyIncomingPathsToggled=W1swLDAsMSwyXSxbMCwwLDMwXV0&focusedDependencyView=versions&toggled=W1syXSxbMiwxNF0sWzIsMTQsWzM3M11dLFsyLDE0LFszNzMsMjU0XV0sWzIsMTQsWzM3MywyNTQsMjg5XV1d
+                useVersion(kotlinxSerializationVersion)
             }
         }
 

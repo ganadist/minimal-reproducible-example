@@ -27,6 +27,9 @@ desugar = "2.0.4"
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlinx-coroutines = "1.10.2"
 
+# https://github.com/Kotlin/kotlinx.serialization/releases
+kotlinx-serialization = "1.8.1"
+
 # https://github.com/pinterest/ktlint/releases
 ktlint = "1.0.1"
 
