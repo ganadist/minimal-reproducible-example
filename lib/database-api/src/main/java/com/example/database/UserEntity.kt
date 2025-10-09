@@ -23,10 +23,12 @@ data class UserEntity(
         DRAFT,
         AUTO_SAVE,
     }
-
-    data class UserExtra(
-        @ColumnInfo(name = "thumbnail") val thumbnail: String?,
-        @ColumnInfo(name = "age") val age: Long,
-        @ColumnInfo(name = "save_time_ms") val saveTimeMs: Long,
-    )
 }
+
+// This must be not nested class to keep compatibility with Room KSP2
+// https://issuetracker.google.com/issues/447154195#comment10
+data class UserExtra(
+    @ColumnInfo(name = "thumbnail") val thumbnail: String?,
+    @ColumnInfo(name = "age") val age: Long,
+    @ColumnInfo(name = "save_time_ms") val saveTimeMs: Long,
+)
