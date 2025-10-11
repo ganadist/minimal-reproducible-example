@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.lib)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -12,4 +14,9 @@ android {
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
+}
+
+dependencies {
+    ksp(googleLibs.auto.service.ksp)
+    compileOnly(googleLibs.auto.service.annotations)
 }
