@@ -26,10 +26,12 @@ plugins {
 apply from: "$rootDir/gradle/build_constant.gradle"
 apply from: "$rootDir/gradle/wrapper.gradle"
 
+/*
 subprojects {
     project.apply plugin: "com.myapplication.android.builder"
     project.apply plugin: "com.myapplication.android.versions.checker"
 }
+*/
 
 task clean(type: Delete) {
     delete rootProject.buildDir

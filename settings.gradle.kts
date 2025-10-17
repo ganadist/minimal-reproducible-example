@@ -42,6 +42,7 @@ plugins {
     id("com.gradle.develocity")
     id("com.gradle.common-custom-user-data-gradle-plugin")
     id("com.android.settings")
+    id("com.myapplication.android.builder")
 }
 
 develocity {
