@@ -2,27 +2,22 @@ package com.myapplication.android.builder
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import java.text.ParsePosition
-import java.text.SimpleDateFormat
-import java.util.Date
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.kotlin.dsl.getByType
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
+import java.util.Date
 
 typealias AndroidExtension = CommonExtension<*, *, *, *, *, *>
 
 internal fun Project.getProperty(
     propertyName: String,
-    defValue: String = ""
-): String =
-    if (rootProject.hasProperty(propertyName)) {
-        rootProject.property(propertyName).toString()
-    } else {
-        defValue
-    }
+    defValue: String = "",
+): String = providers.gradleProperty(propertyName).getOrElse(defValue)
 
 internal val Project.androidExtension: AndroidExtension
     get() = extensions.getByType(CommonExtension::class.java)
@@ -34,22 +29,23 @@ internal fun Project.android(block: AndroidExtension.() -> Unit) {
     androidExtension.block()
 }
 
-internal val Project.libs : VersionCatalog
+internal val Project.libs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-internal val Project.androidxLibs : VersionCatalog
+internal val Project.androidxLibs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
 
-internal val Project.googleLibs : VersionCatalog
+internal val Project.googleLibs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
 
 internal fun String?.toIntOrZero(): Int = (this ?: "").toIntOrNull() ?: 0
 
-internal fun String.toCamelCase(): String = if (isEmpty()) {
-    ""
-} else {
-    substring(0..0).uppercase() + substring(1)
-}
+internal fun String.toCamelCase(): String =
+    if (isEmpty()) {
+        ""
+    } else {
+        substring(0..0).uppercase() + substring(1)
+    }
 
 internal fun getBuildDateTime(): Date {
     val timestamp = System.getenv("BUILD_TIMESTAMP") ?: return Date(0)
@@ -79,7 +75,7 @@ private fun DependencyHandlerScope.addLibrary(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ): Dependency? {
     var tmpConfiguration = ""
     for (c: String in listOf(buildFlavor, buildType, configuration)) {
@@ -97,7 +93,7 @@ internal fun DependencyHandlerScope.addBundle(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ): Dependency? {
     var tmpConfiguration = ""
     for (c in listOf(buildFlavor, buildType, configuration)) {
@@ -114,52 +110,56 @@ internal fun DependencyHandlerScope.compileOnly(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("compileOnly", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.runtimeOnly(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("runtimeOnly", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.api(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("api", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.implementation(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("implementation", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.testImplementation(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("testImplementation", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.androidTestImplementation(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("androidTestImplementation", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.androidTestUtil(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("androidTestUtil", catalog, name, buildFlavor, buildType)
 
-fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = when (flavorName) {
+fun isAllowed(
+    flavorName: String?,
+    buildType: String?,
+    isLibrary: Boolean,
+) = when (flavorName) {
     "develop" -> buildType == "debug"
     "beta", "staging" -> {
         if (isLibrary) {
@@ -173,9 +173,14 @@ fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = whe
 }
 
 internal fun Project.hasUnitTestSourceSet(): Boolean = hasSourceSet("test")
+
 internal fun Project.hasAndroidTestSourceSet(): Boolean = hasSourceSet("androidTest")
+
 internal fun Project.hasScreenshotTestSourceSet(): Boolean = hasSourceSet("screenshotTest")
 
-private fun Project.hasSourceSet(sourceSet: String): Boolean = !Const.SRC_DIRS.all {
-    project.layout.projectDirectory.dir("src/$sourceSet/$it").asFileTree.isEmpty
-}
+private fun Project.hasSourceSet(sourceSet: String): Boolean =
+    !Const.SRC_DIRS.all {
+        project.layout.projectDirectory
+            .dir("src/$sourceSet/$it")
+            .asFileTree.isEmpty
+    }

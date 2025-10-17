@@ -18,7 +18,7 @@ android {
         devices {
             genBaselineProfile (com.android.build.api.dsl.ManagedVirtualDevice) {
                 device = "Pixel 2"
-                apiLevel = rootProject.getProperty("compileSdk").toInteger()
+                apiLevel = project.providers.gradleProperty("compileSdk").getOrElse("33").toInteger()
                 systemImageSource = "google"
             }
         }

@@ -6,15 +6,17 @@ import org.gradle.api.Project
 internal fun Project.configureReportOutput() {
     val changeReport: Boolean = getProperty("build.changereportdir").toBoolean()
     val basename = path.substring(1).replace(":", "_")
-    val buildDir = rootProject.layout.buildDirectory.asFile.get()
-    val reportsDir = file("${buildDir}/reports/$basename")
-    val testResultsDir = file("${buildDir}/test-results/$basename")
+    val buildDir =
+        project.isolated.rootProject.projectDirectory
+            .dir("build")
+    val reportsDir = buildDir.dir("reports/$basename")
+    val testResultsDir = buildDir.dir("test-results/$basename")
 
     if (changeReport) {
         android {
             lint {
-                xmlOutput = file("$reportsDir/lint-results.xml")
-                htmlOutput = file("$reportsDir/lint-results.html")
+                xmlOutput = reportsDir.file("lint-results.xml").asFile
+                htmlOutput = reportsDir.file("lint-results.html").asFile
                 checkDependencies = false
             }
             testOptions {

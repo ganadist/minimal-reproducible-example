@@ -1,11 +1,11 @@
 package com.myapplication.android.builder
 
-import java.time.Duration
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.time.Duration
 
 internal fun Project.configureKotlin(javaVersion: JavaVersion) {
     tasks.withType<KotlinCompile>().configureEach {
@@ -28,8 +28,8 @@ internal fun Project.configureKotlin(javaVersion: JavaVersion) {
 
         timeout.set(
             Duration.ofMinutes(
-                rootProject.getProperty("build.timeout.kotlinCompile").toLong()
-            )
+                project.getProperty("build.timeout.kotlinCompile").toLong(),
+            ),
         )
     }
 }
