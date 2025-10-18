@@ -13,3 +13,12 @@ android {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
 }
+
+apply(from: "load1.gradle.kts")
+apply(from: "load2.gradle")
+
+tasks.register("dummyTask") {
+    doLast {
+	println("This is a dummy task.")
+    }
+}

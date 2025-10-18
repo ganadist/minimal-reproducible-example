@@ -1,0 +1,4 @@
+// These values are loaded by gradle/build_constant.gradle.kts from settings.gradle.kts
+
+println("groovy: versionCode = $gradle.ext.versionCode")
+println("groovy: versionName = $gradle.ext.versionName")
