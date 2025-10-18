@@ -20,8 +20,8 @@ android {
     namespace = "com.example.myapplication"
     defaultConfig {
         applicationId = "com.example.myapplication"
-        versionCode = rootProject.ext.versionCode
-        versionName = rootProject.ext.versionName
+        versionCode = 1
+        versionName = "1"
         compileOptions {
             coreLibraryDesugaringEnabled = enableL8
         }

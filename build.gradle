@@ -23,7 +23,6 @@ plugins {
     alias(libs.plugins.gradle.develocity).apply(false)
 }
 
-apply from: "$rootDir/gradle/build_constant.gradle"
 apply from: "$rootDir/gradle/wrapper.gradle"
 
 /*

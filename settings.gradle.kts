@@ -113,6 +113,7 @@ dependencyResolutionManagement {
 }
 
 apply(from = File(settingsDir, "gradle/version_catalogs.gradle"))
+apply(from = File(settingsDir, "gradle/build_constant.gradle.kts"))
 
 include(":app")
 include(":shared")
