@@ -13,3 +13,9 @@ android {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
     }
 }
+
+dependencies {
+    testImplementation(libs.kotlin.test.junit) {
+        exclude(group = "junit")
+    }
+}
