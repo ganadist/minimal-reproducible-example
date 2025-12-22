@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.lib)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -11,5 +12,20 @@ android {
 
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
+    }
+
+    flavorDimensions.add("default")
+    productFlavors {
+	register("develop") {
+	}
+    }
+
+    sourceSets {
+	getByName("main") {
+	    java.directories.add("src/main/java")
+	}
+	getByName("develop") {
+	    java.directories.add("src/logtag/java")
+	}
     }
 }
