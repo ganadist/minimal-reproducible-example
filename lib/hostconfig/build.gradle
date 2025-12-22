@@ -3,6 +3,10 @@ plugins {
     //alias(libs.plugins.kotlin.android)
 }
 
+if (!providers.gradleProperty("android.builtInKotlin").getOrElse("false").toBoolean()) {
+    apply(plugin: "org.jetbrains.kotlin.android")
+}
+
 android {
     namespace = "com.example.hostconfig"
 
