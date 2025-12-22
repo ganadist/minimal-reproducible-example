@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    //id("org.jetbrains.kotlin.android")
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -13,7 +13,7 @@ if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
 }
 
 if (enableBaselineProfileGenerator) {
-    apply plugin: "androidx.baselineprofile"
+    //apply plugin: "androidx.baselineprofile"
 }
 
 android {
@@ -60,7 +60,7 @@ dependencies {
     }
 
     if (enableBaselineProfileGenerator) {
-       baselineProfile(project(":tests:baselineprofile"))
+       //baselineProfile(project(":tests:baselineprofile"))
     }
 
     runtimeOnly(androidxLibs.profileinstaller)
@@ -78,7 +78,7 @@ dependencies {
     implementation androidxLibs.room.runtime
 }
 
-if (enableBaselineProfileGenerator) {
+if (false && enableBaselineProfileGenerator) {
     baselineProfile {
         variants {
             release {

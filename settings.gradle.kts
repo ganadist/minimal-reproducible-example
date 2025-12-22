@@ -114,7 +114,7 @@ dependencyResolutionManagement {
 apply(from = File(settingsDir, "gradle/version_catalogs.gradle"))
 
 include(":app")
-include(":shared")
+//include(":shared")
 include(":lib:hostconfig")
-include(":tests:baselineprofile")
+//include(":tests:baselineprofile")
 rootProject.name = "My Application"
