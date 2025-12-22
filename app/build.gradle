@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -37,7 +36,7 @@ android {
 
             minifyEnabled = true
             shrinkResources = true
-            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), file('proguards/proguard.cfg')
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), file('proguard-rules.pro')
         }
     }
 
@@ -87,6 +86,7 @@ if (enableBaselineProfileGenerator) {
         }
         warnings {
             disabledVariants = false
+            maxAgpVersion = false
         }
     }
 }

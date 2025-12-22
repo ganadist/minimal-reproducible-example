@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.test)
-    alias(libs.plugins.kotlin.android)
     alias(androidxLibs.plugins.baselineprofile)
 }
 
@@ -15,7 +14,7 @@ android {
     targetProjectPath = ":app"
 
     testOptions.managedDevices {
-        devices {
+        allDevices {
             genBaselineProfile (com.android.build.api.dsl.ManagedVirtualDevice) {
                 device = "Pixel 2"
                 apiLevel = rootProject.getProperty("compileSdk").toInteger()
@@ -27,7 +26,8 @@ android {
     flavorDimensions = ["default"]
     productFlavors {
         // DO NOT allow develop flavor for benchmarking.
-        rc { }
+        beta { }
+        staging { }
         production { }
     }
     buildTypes {
