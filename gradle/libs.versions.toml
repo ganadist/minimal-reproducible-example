@@ -3,7 +3,7 @@
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradle = "unspecified"
 
-screenshot-testing = "0.0.1-alpha09"
+screenshot-testing = "0.0.1-alpha12"
 
 # https://r8.googlesource.com/r8/+refs
 r8 = "unspecified"
@@ -75,6 +75,7 @@ mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot-testing"}
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "android-gradle" }

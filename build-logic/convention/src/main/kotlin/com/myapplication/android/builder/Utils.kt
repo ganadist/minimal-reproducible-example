@@ -159,6 +159,13 @@ internal fun DependencyHandlerScope.androidTestUtil(
     buildType: String = ""
 ) = addLibrary("androidTestUtil", catalog, name, buildFlavor, buildType)
 
+internal fun DependencyHandlerScope.screenshotTestImplementation(
+    catalog: VersionCatalog,
+    name: String,
+    buildFlavor: String = "",
+    buildType: String = ""
+) = addLibrary("screenshotTestImplementation", catalog, name, buildFlavor, buildType)
+
 fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = when (flavorName) {
     "develop" -> buildType == "debug"
     "beta", "staging" -> {

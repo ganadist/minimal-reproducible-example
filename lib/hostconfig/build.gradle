@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.lib)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.screenshot.testing)
 }
 
@@ -22,4 +23,5 @@ android {
 dependencies {
     ksp(googleLibs.auto.service.ksp)
     compileOnly(googleLibs.auto.service.annotations)
+    screenshotTestImplementation(libs.screenshot.validation.api)
 }
