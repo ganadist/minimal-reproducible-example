@@ -3,7 +3,7 @@
 # https://developer.android.com/studio/releases/gradle-plugin
 android-gradle = "unspecified"
 
-screenshot-testing = "0.0.1-alpha12"
+screenshot-testing = "0.0.1-alpha13"
 
 # https://r8.googlesource.com/r8/+refs
 r8 = "unspecified"
