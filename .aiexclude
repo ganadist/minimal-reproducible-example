@@ -1,0 +1,4 @@
+# https://developer.android.com/studio/gemini/data-and-privacy?hl=en#aiexclude
+#
+# This file can contain Personal Credentials such as Access Token
+/.env
