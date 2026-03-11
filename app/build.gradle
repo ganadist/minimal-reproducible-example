@@ -17,6 +17,13 @@ if (enableBaselineProfileGenerator) {
 
 android {
     namespace = "com.example.myapplication"
+
+    signingConfigs {
+	debug {
+            storeFile project.file("$rootDir/debug.keystore")
+	}
+    }
+
     defaultConfig {
         applicationId = "com.example.myapplication"
         versionCode = rootProject.ext.versionCode
@@ -24,7 +31,9 @@ android {
         compileOptions {
             coreLibraryDesugaringEnabled = enableL8
         }
+	signingConfig = signingConfigs.debug
     }
+
     buildTypes {
         release {
             if (enableDexlayoutOptimizer) {
@@ -54,6 +63,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":lib:hostconfig"))
     if (enableL8) {
         coreLibraryDesugaring libs.desugar.jdk.libs
     }
