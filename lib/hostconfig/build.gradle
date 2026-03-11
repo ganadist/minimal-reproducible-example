@@ -11,5 +11,12 @@ android {
 
     defaultConfig {
         buildConfigField("String", "HOST", "String.valueOf(\"https://api.example.com\")")
+
+        consumerProguardFile("consumer-rules.pro")
     }
+}
+
+dependencies {
+    implementation(libs.kotlin.reflect)
+    implementation(androidxLibs.annotation)
 }
