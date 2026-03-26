@@ -17,20 +17,16 @@ plugins {
     alias(libs.plugins.kmp).apply(false)
     alias(libs.plugins.ksp).apply(false)
 
-    id "com.myapplication.android.builder" apply false
-    id "com.myapplication.android.versions.loader"
-    id "com.myapplication.android.versions.checker" apply false
+    id("com.myapplication.android.builder").apply(false)
+    id("com.myapplication.android.versions.loader")
+    id("com.myapplication.android.versions.checker").apply(false)
     alias(libs.plugins.gradle.develocity).apply(false)
 }
 
-apply from: "$rootDir/gradle/build_constant.gradle"
-apply from: "$rootDir/gradle/wrapper.gradle"
+apply(from = File("$rootDir/gradle/build_constant.gradle"))
+apply(from = File("$rootDir/gradle/wrapper.gradle"))
 
 subprojects {
-    project.apply plugin: "com.myapplication.android.builder"
-    project.apply plugin: "com.myapplication.android.versions.checker"
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    project.apply(plugin = "com.myapplication.android.builder")
+    project.apply(plugin = "com.myapplication.android.versions.checker")
 }
