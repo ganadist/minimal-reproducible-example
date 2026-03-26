@@ -18,8 +18,6 @@ plugins {
     alias(libs.plugins.ksp).apply(false)
 
     id("com.myapplication.android.builder").apply(false)
-    id("com.myapplication.android.versions.loader")
-    id("com.myapplication.android.versions.checker").apply(false)
     alias(libs.plugins.gradle.develocity).apply(false)
 }
 
@@ -28,5 +26,4 @@ apply(from = File("$rootDir/gradle/wrapper.gradle"))
 
 subprojects {
     project.apply(plugin = "com.myapplication.android.builder")
-    project.apply(plugin = "com.myapplication.android.versions.checker")
 }

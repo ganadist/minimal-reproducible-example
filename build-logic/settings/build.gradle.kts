@@ -28,17 +28,17 @@ tasks
     }
 
 dependencies {
-    implementation(libs.android.gradle)
-    implementation(libs.kotlin.gradle)
-    compileOnly(libs.ksp.gradle)
-    compileOnly(libs.gradle.develocity)
 }
 
 gradlePlugin {
     plugins {
-        register("androidBuilder") {
-            id = "com.myapplication.android.builder"
-            implementationClass = "AndroidBuilderPlugin"
+        register("androidSettingsVersionCatalogsLoader") {
+            id = "com.myapplication.android.settings.versions.loader"
+            implementationClass = "AndroidSettingsVersionCatalogsLoaderPlugin"
+        }
+        register("androidSettingsVersionCatalogsChecker") {
+            id = "com.myapplication.android.settings.versions.checker"
+            implementationClass = "AndroidSettingsVersionCatalogsCheckerPlugin"
         }
     }
 }

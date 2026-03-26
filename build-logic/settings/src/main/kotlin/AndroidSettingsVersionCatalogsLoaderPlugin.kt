@@ -1,18 +1,22 @@
-import com.myapplication.android.builder.getProperty
 import java.io.File
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.extra
 
-class AndroidVersionCatalogsLoaderPlugin : Plugin<Project> {
+class AndroidSettingsVersionCatalogsLoaderPlugin : Plugin<Settings> {
     private val modules: MutableMap<String, String> = mutableMapOf()
-    override fun apply(target: Project) {
+    override fun apply(target: Settings) {
         with(target) {
             for (filename in VERSION_CATALOGS_FILES) {
-                val loader = TomlLoader(file(filename), modules)
+                val loader = TomlLoader(
+                    providers.fileContents(
+                        layout.rootDirectory.file(filename)
+                    ).asText.orNull ?: "",
+                     modules)
                 loader.load(this)
             }
-            extra[MODULE_EXTRA] = modules
+            gradle.extra[MODULE_EXTRA] = modules
         }
     }
 
@@ -28,7 +32,7 @@ class AndroidVersionCatalogsLoaderPlugin : Plugin<Project> {
 }
 
 internal class TomlLoader(
-    private val file: File,
+    private val content: String,
     private val modules: MutableMap<String, String>
 ) {
     private val versions: MutableMap<String, String> = mutableMapOf()
@@ -43,37 +47,35 @@ internal class TomlLoader(
 
     private var state: State = State.NONE
 
-    fun load(project: Project) {
-        file.inputStream().use {
-            it.reader().forEachLine { line ->
-                val trimmed = line.trim()
-                if (line.isNotBlank() and !line.startsWith('#')) {
-                    if (trimmed in SECTIONS) {
-                        state = when (trimmed) {
-                            VERSIONS -> State.VERSIONS
-                            LIBRARIES -> State.LIBRARIES
-                            PLUGINS -> State.PLUGINS
-                            BUNDLES -> State.BUNDLES
-                            else -> State.NONE
-                        }
-                    } else if (state == State.VERSIONS) {
-                        project.loadVersionsLine(trimmed)
-                    } else if (state == State.LIBRARIES) {
-                        loadLibrariesLine(trimmed)
+    fun load(settings: Settings) {
+        content.lines().forEach { line ->
+            val trimmed = line.trim()
+            if (line.isNotBlank() and !line.startsWith('#')) {
+                if (trimmed in SECTIONS) {
+                    state = when (trimmed) {
+                        VERSIONS -> State.VERSIONS
+                        LIBRARIES -> State.LIBRARIES
+                        PLUGINS -> State.PLUGINS
+                        BUNDLES -> State.BUNDLES
+                        else -> State.NONE
                     }
+                } else if (state == State.VERSIONS) {
+                    settings.loadVersionsLine(trimmed)
+                } else if (state == State.LIBRARIES) {
+                    loadLibrariesLine(trimmed)
                 }
             }
         }
     }
 
-    private fun Project.loadVersionsLine(line: String) {
+    private fun Settings.loadVersionsLine(line: String) {
         val result = VERSION_PATTERN.matchEntire(line)
         if (result != null) {
             val name = result.groups["NAME"]!!.value
             // some versions are overridden by gradle/versions_catalog.gradle
             val version = when (name) {
-                in "android-gradle" -> getProperty("androidGradlePluginVersion")
-                in "buildconfig" -> getProperty("buildConfigPluginVersion")
+                "android-gradle" -> providers.gradleProperty("androidGradlePluginVersion").orNull!!
+                "buildconfig" -> providers.gradleProperty("buildConfigPluginVersion").orNull!!
                 else -> result.groups["VERSION"]!!.value
             }
             versions[name] = version
