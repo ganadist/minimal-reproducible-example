@@ -2,6 +2,6 @@
 <project version="4">
   <component name="ExternalDependencies">
     <plugin id="com.linecorp.android.featureflag.ij.plugin" />
-    <plugin id="com.nbadal.ktlint" min-version="0.28.0" max-version="0.28.0" />
+    <plugin id="com.nbadal.ktlint" />
   </component>
 </project>
