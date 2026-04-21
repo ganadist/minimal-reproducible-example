@@ -1,0 +1,24 @@
+#!/bin/bash
+# vim: ts=2 sw=2 sts=2 et ai
+
+OS=$(uname -s)
+DIRNAME=$(dirname "${0}")
+
+# from https://dl.google.com/android/cli/latest/linux_x86_64/install.sh
+if [[ "$OS" == "Linux" ]]; then
+    URL_OS="linux_x86_64"
+elif [[ "$OS" == "Darwin" ]]; then
+    URL_OS="darwin_arm64"
+else
+    echo "Error: Unsupported OS $OS"
+    exit 1
+fi
+
+
+REAL_BIN="${DIRNAME}/bin/${URL_OS}/android.bin"
+
+if [ "$1" = "update" ]; then
+ exec "${DIRNAME}/update.sh"
+fi
+
+exec "${REAL_BIN}" --no-metrics "$@"
