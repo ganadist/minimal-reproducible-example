@@ -4,9 +4,8 @@ description: Access official Android developer documentation. This skill provide
 user-invocable: true
 argument-hint: <QUERY>
 allowed-tools:
-  - Bash(git rev-parse --show-toplevel)
-  - Bash(cd *)
-  - Bash(tools/android-cli/android docs *)
+  - "Bash(.agents/tools/android-cli/android docs search: *)"
+  - "Bash(.agents/tools/android-cli/android docs fetch: *)"
 ---
 
 # Android Developer Knowledge Skill
@@ -21,46 +20,34 @@ Always use this to get the most up-to-date information about Android concepts. T
   - Finding up-to-date information about Android APIs.
   - Finding best practices for Android concepts.
 
-> **Invocation constraint:** This skill must be invoked from within the main repository worktree. Invoking it with a current working directory inside a submodule will fail because `git rev-parse --show-toplevel` resolves to the submodule root, where `tools/android-cli/` does not exist.
-
 ## Workflow
-
-### 0. Resolve Repository Root
-
-Run once at the start of the skill:
-
-```
-git rev-parse --show-toplevel
-```
-
-Capture the stdout (an absolute path) as `<REPO_ROOT>`. Substitute this literal value into every subsequent step of this skill invocation. Do not re-resolve per call. Do not use a bare relative path.
 
 ### 1. Search Documentation
 
-Run `tools/android-cli/android docs search` from `<REPO_ROOT>`:
+Run `.agents/tools/android-cli/android docs search`:
 
 Usage:
 ```
-cd "<REPO_ROOT>" && tools/android-cli/android docs search "<QUERY>"
+.agents/tools/android-cli/android docs search '<QUERY>'
 ```
 
 Usage Example:
 ```
-cd "<REPO_ROOT>" && tools/android-cli/android docs search "Android Jetpack Compose quickstart"
+.agents/tools/android-cli/android docs search 'Android Jetpack Compose quickstart'
 ```
 
 ### 2. Fetch Contents from Results
 
-Run `tools/android-cli/android docs fetch` with a specific `<KB_URL>` from the search results above.
+Run `.agents/tools/android-cli/android docs fetch` with a specific `<KB_URL>` from the search results above.
 Use one or more documents from the most relevant results as references for your current work.
 
 Usage:
 ```
-cd "<REPO_ROOT>" && tools/android-cli/android docs fetch "<KB_URL>"
+.agents/tools/android-cli/android docs fetch '<KB_URL>'
 ```
 
 Usage Example:
 ```
-cd "<REPO_ROOT>" && tools/android-cli/android docs fetch "kb://android/develop/ui/compose/documentation"
-cd "<REPO_ROOT>" && tools/android-cli/android docs fetch "kb://android/develop/ui/compose/tutorial"
+.agents/tools/android-cli/android docs fetch 'kb://android/develop/ui/compose/documentation'
+.agents/tools/android-cli/android docs fetch 'kb://android/develop/ui/compose/tutorial'
 ```
