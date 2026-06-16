@@ -1,14 +1,21 @@
+private fun Settings.getProperty(key: String, defvalue: String = ""): String =
+    providers.gradleProperty(key).getOrElse(defvalue)
+
 pluginManagement {
     apply(from = File(settingsDir, "gradle/build_requires_checker.gradle"))
     apply(from = File(settingsDir, "gradle/repositories.gradle"))
 
-    val repos: java.util.Properties by settings.extra
+    // Settings.getProperty of root block is not available on pluginManagement block
+    fun Settings.getProperty(key: String, defvalue: String = ""): String =
+        providers.gradleProperty(key).getOrElse(defvalue)
+
+    val repos = settings.extra["repos"] as java.util.Properties
 
     // r8Version is declared in gradle.properties
-    val r8Version: String by settings
-    val androidGradlePluginVersion: String by settings
-    val gradleDevelocityPluginVersion: String by settings
-    val gradleUserDataPluginVersion: String by settings
+    val r8Version = getProperty("r8Version")
+    val androidGradlePluginVersion = getProperty("androidGradlePluginVersion")
+    val gradleDevelocityPluginVersion = getProperty("gradleDevelocityPluginVersion")
+    val gradleUserDataPluginVersion = getProperty("gradleUserDataPluginVersion")
 
     buildscript {
         if (!r8Version.isEmpty()) {
@@ -58,36 +65,35 @@ develocity {
 }
 
 android {
+    val minSdkVersion = getProperty("minSdk")
+    val compileSdkVersion = getProperty("compileSdk")
+    val compileSdkMinorVersion = getProperty("compileSdkMinor")
+    val compileSdkPreviewVersion = getProperty("compileSdkPreview")
+    val compileSdkExtensionVersion = getProperty("compileSdkExtension")
+    val targetSdkVersion = getProperty("targetSdk")
+
     minSdk {
-        val minSdk: String by settings
-        version = release(minSdk.toInt())
+        version = release(minSdkVersion.toInt())
     }
     compileSdk {
-        val compileSdk : String by settings
-        val compileSdkMinor : String by settings
-        val compileSdkPreview: String by settings
-        val compileSdkExtension: String by settings
-
-        if (compileSdkPreview.isEmpty()) {
-            version = release(compileSdk.toInt()) {
-                if (compileSdkMinor.isNotEmpty()) {
-                    minorApiLevel = compileSdkMinor.toInt()
+        if (compileSdkPreviewVersion.isEmpty()) {
+            version = release(compileSdkVersion.toInt()) {
+                if (compileSdkMinorVersion.isNotEmpty()) {
+                    minorApiLevel = compileSdkMinorVersion.toInt()
                 }
-                if (compileSdkExtension.isNotEmpty()) {
-                    sdkExtension = compileSdkExtension.toInt()
+                if (compileSdkExtensionVersion.isNotEmpty()) {
+                    sdkExtension = compileSdkExtensionVersion.toInt()
                 }
             }
         } else {
-            version = preview(compileSdkPreview)
+            version = preview(compileSdkPreviewVersion)
         }
     }
     targetSdk {
-        val targetSdk : String by settings
-        version = release(targetSdk.toInt())
+        version = release(targetSdkVersion.toInt())
     }
 
-    val buildToolsVersion: String by settings
-    this.buildToolsVersion = buildToolsVersion
+    buildToolsVersion = getProperty("buildToolsVersion")
 
     """
     execution {
@@ -106,7 +112,7 @@ android {
 }
 
 dependencyResolutionManagement {
-    val repos: java.util.Properties by settings.extra
+    val repos = settings.extra["repos"] as java.util.Properties
     repositories {
         (repos["google"] as groovy.lang.Closure<*>).call(this)
         (repos["mavenCentral"] as groovy.lang.Closure<*>).call(this)
