@@ -14,31 +14,30 @@ android-gradle = "unspecified"
 compose-compiler = "unspecified"
 
 # https://developer.android.com/jetpack/androidx/versions
-activity = "1.10.1"
-annotation = "1.9.1"
-annotation-experimental = '1.4.1'
-appcompat = "1.7.0"
+activity = "1.13.0"
+annotation = "1.10.0"
+appcompat = "1.7.1"
 arch-core = "2.2.0"
 benchmark = "1.5.0-alpha06"
 biometric = "1.1.0"
-browser = "1.8.0"
-camera = "1.4.1"
+browser = "1.10.0"
+camera = "1.5.3"
 cardview = "1.0.0"
 constraintlayout = "2.2.1"
 constraintlayout-compose = "1.1.1"
-compose-bom = '2025.02.00'
+compose-bom = '2026.05.01'
 concurrent = "1.1.0"
-core = "1.15.0"
-datastore = "1.1.3"
+core = "1.19.0"
+datastore = "1.2.1"
 dynamicanimation = "1.0.0"
-exifinterface = "1.3.7"
-fragment = "1.8.6"
+exifinterface = "1.4.2"
+fragment = "1.8.9"
 google-shortcuts = "1.1.0"
 gridlayout = "1.0.0"
 interpolator = "1.0.0"
 legacy-support-v4 = "1.0.0"
 legacy-support-v13 = "1.0.0"
-lifecycle = "2.8.7"
+lifecycle = "2.10.0"
 loader = "1.1.0"
 localbroadcastmanager = "1.1.0"
 media2 = "1.2.1"
@@ -49,14 +48,13 @@ percentlayout = "1.0.0"
 preference = "1.2.1"
 profileinstaller= "1.4.1"
 recyclerview = "1.4.0"
-recyclerview-selection = "1.1.0"
-room = "2.6.1"
-savedstate = "1.2.1"
+recyclerview-selection = "1.2.0"
+room = "2.8.4"
 slidingpanelayout = "1.2.0"
 splashscreen = "1.0.1"
-startup = "1.1.1"
+startup = "1.2.0"
 swiperefreshlayout = "1.1.0"
-work = "2.10.1"
+work = "2.11.2"
 test-annotation = "1.0.1"
 test-core = "1.6.1"
 test-espresso = "3.6.1"
@@ -74,14 +72,13 @@ versionedparcelable = "1.1.1"
 viewpager2 = "1.0.0"
 webkit = "1.13.0"
 wear-remote-interaction = "1.0.0"
-window = "1.4.0"
+window = "1.5.1"
 
 [libraries]
 
 activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
-annotation-experimental = { module = "androidx.annotation:annotation-experimental", version.ref = "annotation-experimental" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 
 arch-core-common = { module = "androidx.arch.core:core-common", version.ref = "arch-core" }
@@ -210,8 +207,6 @@ room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "room" }
 room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "room" }
 room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
-
-savedstate-ktx = { module = "androidx.savedstate:savedstate-ktx", version.ref = "savedstate" }
 
 slidingpanelayout = { module = "androidx.slidingpanelayout:slidingpanelayout", version.ref = "slidingpanelayout" }
 
