@@ -5,14 +5,21 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-val enableL8 = providers.gradleProperty("build.l8.enable")
-    .getOrElse("false").toBoolean()
+val enableL8 =
+    providers
+        .gradleProperty("build.l8.enable")
+        .getOrElse("false")
+        .toBoolean()
 val enableBaselineProfileGenerator =
-    providers.gradleProperty("build.baselineprofile.generate.enable")
-        .getOrElse("false").toBoolean()
+    providers
+        .gradleProperty("build.baselineprofile.generate.enable")
+        .getOrElse("false")
+        .toBoolean()
 var enableDexlayoutOptimizer =
-    providers.gradleProperty("build.dexlayout.optimize.enable")
-        .getOrElse("false").toBoolean()
+    providers
+        .gradleProperty("build.dexlayout.optimize.enable")
+        .getOrElse("false")
+        .toBoolean()
 if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
     logger.warn("Baseline Profile generator was disabled, and cannot enable Dex Layout Optimizer")
     enableDexlayoutOptimizer = false
@@ -36,14 +43,14 @@ android {
                 logger.warn("Dex Layout Optimizer was enabled")
             }
             experimentalProperties[
-                "android.experimental.r8.dex-startup-optimization"
+                "android.experimental.r8.dex-startup-optimization",
             ] = enableDexlayoutOptimizer
 
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                file("proguard-rules.pro")
+                file("proguard-rules.pro"),
             )
         }
     }
@@ -67,7 +74,7 @@ dependencies {
     }
 
     if (enableBaselineProfileGenerator) {
-       add("baselineProfile", project(":tests:baselineprofile"))
+        add("baselineProfile", project(":tests:baselineprofile"))
     }
 
     runtimeOnly(androidxLibs.profileinstaller)
