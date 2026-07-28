@@ -10,6 +10,7 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.develocity
+import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.withType
 
 private val testFilterMap = mapOf(
@@ -134,9 +135,10 @@ internal fun Project.configureTest() {
                 }
 
                 val roboDependencyUrlProp = "robolectric.dependency.repo.url"
+                val mavenCentralUrl = project.extra["MAVEN_CENTRAL_URL"] as String
                 it.systemProperty(
                     roboDependencyUrlProp,
-                    "https://maven-central-asia.storage-download.googleapis.com/maven2"
+                    mavenCentralUrl
                 )
             }
         }

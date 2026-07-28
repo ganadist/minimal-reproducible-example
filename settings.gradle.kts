@@ -3,13 +3,11 @@ private fun Settings.getProperty(key: String, defvalue: String = ""): String =
 
 pluginManagement {
     apply(from = File(settingsDir, "gradle/build_requires_checker.gradle"))
-    apply(from = File(settingsDir, "gradle/repositories.gradle"))
+    apply(from = File(settingsDir, "gradle/repositories.gradle.kts"))
 
     // Settings.getProperty of root block is not available on pluginManagement block
     fun Settings.getProperty(key: String, defvalue: String = ""): String =
         providers.gradleProperty(key).getOrElse(defvalue)
-
-    val repos = settings.extra["repos"] as java.util.Properties
 
     // r8Version is declared in gradle.properties
     val r8Version = getProperty("r8Version")
@@ -19,10 +17,6 @@ pluginManagement {
 
     buildscript {
         if (!r8Version.isEmpty()) {
-            repositories {
-                (repos["r8"] as groovy.lang.Closure<*>).call(this, r8Version)
-            }
-
             dependencies {
                 logger.warn("R8 $r8Version will be applied")
                 classpath("com.android.tools:r8:$r8Version") {
@@ -30,11 +24,6 @@ pluginManagement {
                 }
             }
         }
-    }
-
-    repositories {
-        (repos["google"] as groovy.lang.Closure<*>).call(this)
-        (repos["gradlePluginPortal"] as groovy.lang.Closure<*>).call(this)
     }
 
     plugins {
@@ -109,14 +98,6 @@ android {
         }
     }
     """
-}
-
-dependencyResolutionManagement {
-    val repos = settings.extra["repos"] as java.util.Properties
-    repositories {
-        (repos["google"] as groovy.lang.Closure<*>).call(this)
-        (repos["mavenCentral"] as groovy.lang.Closure<*>).call(this)
-    }
 }
 
 apply(from = File(settingsDir, "gradle/version_catalogs.gradle"))
