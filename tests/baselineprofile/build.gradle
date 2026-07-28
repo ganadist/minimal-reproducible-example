@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.test)
+    id("com.myapplication.android.builder")
     alias(androidxLibs.plugins.baselineprofile)
 }
 
@@ -17,7 +18,7 @@ android {
         allDevices {
             genBaselineProfile (com.android.build.api.dsl.ManagedVirtualDevice) {
                 device = "Pixel 2"
-                apiLevel = rootProject.getProperty("compileSdk").toInteger()
+                apiLevel = project.providers.gradleProperty("compileSdk").getOrElse("37").toInteger()
                 systemImageSource = "google"
             }
         }

@@ -2,6 +2,7 @@ import androidx.baselineprofile.gradle.consumer.BaselineProfileConsumerExtension
 
 plugins {
     id("com.android.application")
+    id("com.myapplication.android.builder")
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -28,13 +29,14 @@ if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
 if (enableBaselineProfileGenerator) {
     apply(plugin = "androidx.baselineprofile")
 }
+apply(from = File("$rootDir/gradle/build_constant.gradle"))
 
 android {
     namespace = "com.example.myapplication"
     defaultConfig {
         applicationId = "com.example.myapplication"
-        versionCode = rootProject.extra["versionCode"] as Int
-        versionName = rootProject.extra["versionName"] as String
+        versionCode = project.extra["versionCode"] as Int
+        versionName = project.extra["versionName"] as String
         compileOptions.isCoreLibraryDesugaringEnabled = enableL8
     }
     buildTypes {

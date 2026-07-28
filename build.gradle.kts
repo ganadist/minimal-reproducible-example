@@ -21,9 +21,5 @@ plugins {
     alias(libs.plugins.gradle.develocity).apply(false)
 }
 
-apply(from = File("$rootDir/gradle/build_constant.gradle"))
 apply(from = File("$rootDir/gradle/wrapper.gradle"))
 
-subprojects {
-    project.apply(plugin = "com.myapplication.android.builder")
-}

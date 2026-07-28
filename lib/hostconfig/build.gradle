@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.lib)
+    id("com.myapplication.android.builder")
 }
 
 android {

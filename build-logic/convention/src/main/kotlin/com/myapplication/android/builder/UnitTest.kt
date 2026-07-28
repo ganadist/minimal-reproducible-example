@@ -207,7 +207,7 @@ internal fun Project.configureTest() {
 
         timeout.set(
             Duration.ofMinutes(
-                rootProject.getProperty("build.timeout.unittest").toLong()
+                project.getProperty("build.timeout.unittest").toLong()
             )
         )
     }

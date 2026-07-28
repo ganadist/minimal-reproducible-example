@@ -42,11 +42,7 @@ internal fun Project.getProperty(
     propertyName: String,
     defValue: String = ""
 ): String =
-    if (rootProject.hasProperty(propertyName)) {
-        rootProject.property(propertyName).toString()
-    } else {
-        defValue
-    }
+    providers.gradleProperty(propertyName).getOrElse(defValue)
 
 internal val Project.androidExtension: AndroidExtension
     get() = extensions.getByType(CommonExtension::class.java)
