@@ -32,12 +32,10 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                file("proguard-rules.pro"),
-            )
+            // https://developer.android.com/topic/performance/app-optimization/enable-app-optimization?hl=en#optimization-dsl
+            optimization {
+                enable = true // Enables code and resource optimizations.
+            }
         }
     }
 
