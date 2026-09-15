@@ -20,6 +20,15 @@ import org.gradle.kotlin.dsl.getByType
 
 private typealias AndroidExtension = CommonExtension
 
+@Suppress("DEPRECATION")
+internal typealias DeprecatedManagedDeviceInstrumentationTestTask =
+    com.android.build.gradle.internal.tasks.ManagedDeviceInstrumentationTestTask
+
+@Suppress("DEPRECATION")
+typealias DeprecatedDeviceProviderInstrumentTestTask =
+    com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask
+
+
 internal fun AndroidExtension.defaultConfig(action: DefaultConfig.() -> Unit) {
     when (this) {
         is LibraryExtension -> {
@@ -178,6 +187,14 @@ internal fun DependencyHandlerScope.androidTestUtil(
     buildFlavor: String = "",
     buildType: String = ""
 ) = addLibrary("androidTestUtil", catalog, name, buildFlavor, buildType)
+
+internal fun String.slice(prefix: String, suffix: String): String {
+    assert(startsWith(prefix))
+    assert(endsWith(suffix))
+    val start = prefix.length
+    val end = length - suffix.length
+    return substring(start, end)
+}
 
 fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = when (flavorName) {
     "develop" -> buildType == "debug"

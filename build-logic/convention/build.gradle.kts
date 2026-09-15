@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.kotlin.gradle)
     compileOnly(libs.ksp.gradle)
     compileOnly(libs.gradle.develocity)
+    compileOnly(libs.compose.screenshot.gradle)
 }
 
 gradlePlugin {
