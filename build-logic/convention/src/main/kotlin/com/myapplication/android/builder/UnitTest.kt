@@ -5,37 +5,35 @@ import com.android.build.api.variant.DeviceTestBuilder
 import com.android.build.api.variant.HasDeviceTestsBuilder
 import com.android.build.api.variant.HasHostTestsBuilder
 import com.android.build.api.variant.HostTestBuilder
-import java.time.Duration
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.develocity
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.withType
+import java.time.Duration
 
-private val testFilterMap = mapOf(
-    "small" to "androidx.test.filters.SmallTest",
-    "medium" to "androidx.test.filters.MediumTest",
-    "large" to "androidx.test.filters.LargeTest",
-)
+private val testFilterMap =
+    mapOf(
+        "small" to "androidx.test.filters.SmallTest",
+        "medium" to "androidx.test.filters.MediumTest",
+        "large" to "androidx.test.filters.LargeTest",
+    )
 
 @Suppress("UnstableApiUsage")
 internal fun Project.configureTest() {
     val hasDynamicFeatureModulePlugin = pluginManager.hasPlugin("com.android.dynamic-feature")
-    val hasTestModulePlugin = pluginManager.hasPlugin("com.android.test")
     val hasBaselineProfilePlugin = pluginManager.hasPlugin("androidx.baselineprofile")
     val androidTestApiLevel = getProperty("build.androidtest.sdk").toIntOrZero()
 
-    val variantFilterHostTest = getProperty(
-        "build.variants.filter.hosttest"
-    ).toBoolean()
-    val variantFilterDeviceTest = getProperty(
-        "build.variants.filter.devicetest"
-    ).toBoolean()
-
-    val hasUnitTest = hasUnitTestSourceSet()
-    val hasScreenshotTest = hasScreenshotTestSourceSet()
-    val hasAndroidTest = hasAndroidTestSourceSet()
+    val variantFilterHostTest =
+        getProperty(
+            "build.variants.filter.hosttest",
+        ).toBoolean()
+    val variantFilterDeviceTest =
+        getProperty(
+            "build.variants.filter.devicetest",
+        ).toBoolean()
 
     android {
         // https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/runner?hl=en#enable-android
@@ -50,7 +48,7 @@ internal fun Project.configureTest() {
 
         testOptions.apply {
             // https://issuetracker.google.com/issues/314821647
-            if (!hasTestModulePlugin && !hasBaselineProfilePlugin) {
+            if (!hasTestPlugin && !hasBaselineProfilePlugin) {
                 execution = "ANDROIDX_TEST_ORCHESTRATOR"
             }
 
@@ -60,7 +58,7 @@ internal fun Project.configureTest() {
                 isIncludeAndroidResources = !hasDynamicFeatureModulePlugin
             }
 
-            if (hasAndroidTest || hasTestModulePlugin) {
+            if (hasAndroidTestSourceSet || hasTestPlugin) {
                 // https://developer.android.com/studio/test/gradle-managed-devices
                 managedDevices {
                     allDevices.register("gmd", ManagedVirtualDevice::class.java) {
@@ -72,7 +70,6 @@ internal fun Project.configureTest() {
                 }
             }
 
-
             // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html#N281DB
             // These values can be adjusted on Jenkins job configuration
             val testMaxForks = getProperty("build.unittest.maxforks", "0").toIntOrZero()
@@ -80,23 +77,23 @@ internal fun Project.configureTest() {
             val testHeapSizeMin = getProperty("build.unittest.heapsize.min", "1g")
             val testHeapSizeMax = getProperty("build.unittest.heapsize.max", "6g")
             val testEnableLogging = getProperty("build.unittest.logging", "true").toBoolean()
-            val testJvmArgs = mutableListOf(
-                // https://developer.android.com/build/optimize-your-build#experiment-with-the-jvm-parallel-garbage-collector
-                "-XX:+UseParallelGC",
-                // https://github.com/robolectric/robolectric/issues/7456
-                "--add-opens=java.base/java.lang=ALL-UNNAMED",
-                "--add-opens=java.base/java.util=ALL-UNNAMED",
-                // https://github.com/raphw/byte-buddy/issues/612#issuecomment-463618016
-                "-Djdk.attach.allowAttachSelf=true",
-                // https://github.com/mockito/mockito/issues/3037#issuecomment-1588199599
-                "-XX:+EnableDynamicAgentLoading",
-            ).apply {
-                val jvmArgsFromProperty = getProperty("build.unittest.jvmargs")
-                if (jvmArgsFromProperty.isNotBlank()) {
-                    addAll(jvmArgsFromProperty.split(" "))
+            val testJvmArgs =
+                mutableListOf(
+                    // https://developer.android.com/build/optimize-your-build#experiment-with-the-jvm-parallel-garbage-collector
+                    "-XX:+UseParallelGC",
+                    // https://github.com/robolectric/robolectric/issues/7456
+                    "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                    "--add-opens=java.base/java.util=ALL-UNNAMED",
+                    // https://github.com/raphw/byte-buddy/issues/612#issuecomment-463618016
+                    "-Djdk.attach.allowAttachSelf=true",
+                    // https://github.com/mockito/mockito/issues/3037#issuecomment-1588199599
+                    "-XX:+EnableDynamicAgentLoading",
+                ).apply {
+                    val jvmArgsFromProperty = getProperty("build.unittest.jvmargs")
+                    if (jvmArgsFromProperty.isNotBlank()) {
+                        addAll(jvmArgsFromProperty.split(" "))
+                    }
                 }
-            }
-
 
             /**
              * JUnit4 Size filter which is similar with instrumentation test.
@@ -138,7 +135,7 @@ internal fun Project.configureTest() {
                 val mavenCentralUrl = project.extra["MAVEN_CENTRAL_URL"] as String
                 it.systemProperty(
                     roboDependencyUrlProp,
-                    mavenCentralUrl
+                    mavenCentralUrl,
                 )
             }
         }
@@ -146,14 +143,16 @@ internal fun Project.configureTest() {
 
     componentsExtension.apply {
         beforeVariants(selector().all()) { variant ->
-            val allowHostTest = variant.name in Const.ALLOWED_DEBUG_ONLY_VARIANTS ||
-                !variantFilterHostTest
-            val allowDeviceTest = variant.name in Const.ALLOWED_DEBUG_ONLY_VARIANTS ||
-                !variantFilterDeviceTest
+            val allowHostTest =
+                variant.name in Const.ALLOWED_DEBUG_ONLY_VARIANTS ||
+                    !variantFilterHostTest
+            val allowDeviceTest =
+                variant.name in Const.ALLOWED_DEBUG_ONLY_VARIANTS ||
+                    !variantFilterDeviceTest
 
             (variant as? HasHostTestsBuilder)?.hostTests?.apply {
                 get(HostTestBuilder.UNIT_TEST_TYPE)?.apply {
-                    if (hasUnitTest && allowHostTest) {
+                    if (hasUnitTestSourceSet && allowHostTest) {
                         enable = true
                         enableCodeCoverage = true
                     } else {
@@ -162,7 +161,7 @@ internal fun Project.configureTest() {
                 }
                 get(HostTestBuilder.SCREENSHOT_TEST_TYPE)?.apply {
                     enable = false
-                    if (hasScreenshotTest && allowHostTest) {
+                    if (hasScreenshotTestSourceSet && allowHostTest) {
                         pluginManager.withPlugin(Const.COMPOSE_SCREENSHOT_PLUGIN_ID) {
                             enable = true
                             enableCodeCoverage = true
@@ -171,44 +170,46 @@ internal fun Project.configureTest() {
                 }
             }
 
-            (variant as? HasDeviceTestsBuilder)?.deviceTests?.get(
-                DeviceTestBuilder.ANDROID_TEST_TYPE
-            )?.apply {
-                if (hasTestModulePlugin || (hasAndroidTest && allowDeviceTest)) {
-                    enable = true
-                    /**
-                     * Some of 3rd party library causes the following error with JaCoCo.
-                     *
-                     * Caused by: java.io.IOException:
-                     *   Error while instrumenting Xxx.class with JaCoCo 0.8.13.202504020838/78d5eff.
-                     *   at org.jacoco.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
-                     *   at com.android.build.gradle.internal.dependency.JacocoInstrumentationService$Instrumenter.instrument(JacocoInstrumentationService.kt:108)
-                     */
-                    enableCodeCoverage = false
-                } else {
-                    enable = false
+            (variant as? HasDeviceTestsBuilder)
+                ?.deviceTests
+                ?.get(
+                    DeviceTestBuilder.ANDROID_TEST_TYPE,
+                )?.apply {
+                    if (hasTestPlugin || (hasAndroidTestSourceSet && allowDeviceTest)) {
+                        enable = true
+                        /**
+                         * Some of 3rd party library causes the following error with JaCoCo.
+                         *
+                         * Caused by: java.io.IOException:
+                         *   Error while instrumenting Xxx.class with JaCoCo 0.8.13.202504020838/78d5eff.
+                         *   at org.jacoco.core.instr.Instrumenter.instrumentError(Instrumenter.java:161)
+                         *   at com.android.build.gradle.internal.dependency.JacocoInstrumentationService$Instrumenter.instrument(JacocoInstrumentationService.kt:108)
+                         */
+                        enableCodeCoverage = false
+                    } else {
+                        enable = false
+                    }
                 }
-            }
         }
     }
 
     tasks.withType<Test>().configureEach {
         develocity.testRetry {
             maxRetries.set(
-                        getProperty("build.unittest.retry.max", "0").toIntOrZero()
+                getProperty("build.unittest.retry.max", "0").toIntOrZero(),
             )
             maxFailures.set(
-                        getProperty("build.unittest.retry.maxfailures", "0").toIntOrZero()
+                getProperty("build.unittest.retry.maxfailures", "0").toIntOrZero(),
             )
             failOnPassedAfterRetry.set(
-                        getProperty("bulid.unittest.retry.treatasfail", "false").toBoolean()
+                getProperty("bulid.unittest.retry.treatasfail", "false").toBoolean(),
             )
         }
 
         timeout.set(
             Duration.ofMinutes(
-                project.getProperty("build.timeout.unittest").toLong()
-            )
+                project.getProperty("build.timeout.unittest").toLong(),
+            ),
         )
     }
 }

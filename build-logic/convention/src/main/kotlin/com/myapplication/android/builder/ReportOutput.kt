@@ -26,7 +26,9 @@ import org.gradle.kotlin.dsl.withType
 internal fun Project.configureReportOutput() {
     val changeReport: Boolean = getProperty("build.changereportdir").toBoolean()
     val basename = path.substring(1).replace(":", "_")
-    val buildDir = project.isolated.rootProject.projectDirectory.dir("build")
+    val buildDir =
+        project.isolated.rootProject.projectDirectory
+            .dir("build")
     val rootReportDir = buildDir.dir("reports")
     val rootResultDir = buildDir.dir("test-results")
 
@@ -41,7 +43,6 @@ internal fun Project.configureReportOutput() {
 
     val screenshotsBaseDir = buildDir.dir("screenshots/$basename")
 
-
     if (changeReport) {
         componentsExtension.apply {
             onVariants(selector().withBuildType("debug")) { variant ->
@@ -49,20 +50,22 @@ internal fun Project.configureReportOutput() {
                 // And need to use SigleArtifact APIs
                 val lintXmlReportProvider = variant.artifacts.get(SingleArtifact.LINT_XML_REPORT)
                 val lintHtmlReportProvider = variant.artifacts.get(SingleArtifact.LINT_HTML_REPORT)
-                val copyLintXmlReportTask = tasks.register<Copy>(
-                    variant.computeTaskName("copy", "LintXmlReport")
-                ) {
-                    from(lintXmlReportProvider)
-                    into(lintReportDir)
-                    rename { "lint-results.xml" }
-                }
-                val copyLintHtmlReportTask = tasks.register<Copy>(
-                    variant.computeTaskName("copy", "LintHtmlReport")
-                ) {
-                    from(lintHtmlReportProvider)
-                    into(lintReportDir)
-                    rename { "lint-results.html" }
-                }
+                val copyLintXmlReportTask =
+                    tasks.register<Copy>(
+                        variant.computeTaskName("copy", "LintXmlReport"),
+                    ) {
+                        from(lintXmlReportProvider)
+                        into(lintReportDir)
+                        rename { "lint-results.xml" }
+                    }
+                val copyLintHtmlReportTask =
+                    tasks.register<Copy>(
+                        variant.computeTaskName("copy", "LintHtmlReport"),
+                    ) {
+                        from(lintHtmlReportProvider)
+                        into(lintReportDir)
+                        rename { "lint-results.html" }
+                    }
 
                 tasks.withType<AndroidLintTask>().configureEach {
                     if (name == "lintReport${variant.name.toCamelCase()}") {
@@ -88,7 +91,7 @@ internal fun Project.configureReportOutput() {
         }
 
         afterEvaluate {
-            if (hasAndroidTestSourceSet()) {
+            if (hasAndroidTestSourceSet) {
                 // https://issuetracker.google.com/issues/219002669
                 @Suppress("TYPEALIAS_EXPANSION_DEPRECATION")
                 tasks.withType<DeprecatedManagedDeviceInstrumentationTestTask> {
@@ -97,15 +100,16 @@ internal fun Project.configureReportOutput() {
                 }
             }
 
-            if (hasScreenshotTestSourceSet()) {
+            if (hasScreenshotTestSourceSet) {
                 // need to migrate with configurationEach
                 tasks.withType<PreviewScreenshotValidationTask> {
                     // name: validate${variant}ScreenshotTest
                     val variant = name.slice("validate", "ScreenshotTest")
                     // create same directory hierarchy for screenshotTest
-                    val screenshotsDir = screenshotsBaseDir.dir(
-                        "src/screenshotTest$variant/reference"
-                    )
+                    val screenshotsDir =
+                        screenshotsBaseDir.dir(
+                            "src/screenshotTest$variant/reference",
+                        )
                     testEngineInput.previewImageOutputDir.set(screenshotsDir)
                     reports {
                         html.outputLocation.set(screenshotReportDir)

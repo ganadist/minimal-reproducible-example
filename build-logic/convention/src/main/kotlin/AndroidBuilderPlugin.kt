@@ -19,6 +19,7 @@ import com.myapplication.android.builder.configureTest
 import com.myapplication.android.builder.configureTestDependencies
 import com.myapplication.android.builder.configureTestProjectDependencies
 import com.myapplication.android.builder.getProperty
+import com.myapplication.android.builder.hasAppPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -26,19 +27,18 @@ import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 class AndroidBuilderPlugin : Plugin<Project> {
-    override fun apply(
-        target: Project
-    ) {
+    override fun apply(target: Project) {
         with(target) {
             plugins.withType<BasePlugin>().configureEach {
-                val hasAppPlugin = pluginManager.hasPlugin("com.android.application")
-                val bytecodeVersion = JavaVersion.toVersion(
-                    getProperty("build.jvmtarget.intermediates")
-                )
+                val bytecodeVersion =
+                    JavaVersion.toVersion(
+                        getProperty("build.jvmtarget.intermediates"),
+                    )
 
-                val hasCommonExtensions = PLUGINS_HAS_COMMON_EXTENSIONS.any {
-                    plugins.hasPlugin(it)
-                }
+                val hasCommonExtensions =
+                    PLUGINS_HAS_COMMON_EXTENSIONS.any {
+                        plugins.hasPlugin(it)
+                    }
 
                 if (hasAppPlugin) {
                     configurePageSizeCheck()
@@ -86,9 +86,10 @@ class AndroidBuilderPlugin : Plugin<Project> {
             }
 
             plugins.withId("org.jetbrains.kotlin.jvm") {
-                val bytecodeVersion = JavaVersion.toVersion(
-                    getProperty("build.jvmtarget.host")
-                )
+                val bytecodeVersion =
+                    JavaVersion.toVersion(
+                        getProperty("build.jvmtarget.host"),
+                    )
                 configureJava(bytecodeVersion)
                 configureKotlin(bytecodeVersion)
             }
@@ -96,19 +97,21 @@ class AndroidBuilderPlugin : Plugin<Project> {
     }
 
     companion object {
-        private val RELEASE_BUILD_TYPES = arrayOf(
-            "release",
-            // https://issuetracker.google.com/issues/307478189
-            // build types from baselineprofile plugin
-            "benchmarkRelease",
-            "nonMinifiedRelease"
-        )
+        private val RELEASE_BUILD_TYPES =
+            setOf(
+                "release",
+                // https://issuetracker.google.com/issues/307478189
+                // build types from baselineprofile plugin
+                "benchmarkRelease",
+                "nonMinifiedRelease",
+            )
 
-        private val PLUGINS_HAS_COMMON_EXTENSIONS = arrayOf(
-            "com.android.application",
-            "com.android.dynamic-feature",
-            "com.android.library",
-            "com.android.test"
-        )
+        private val PLUGINS_HAS_COMMON_EXTENSIONS =
+            setOf(
+                "com.android.application",
+                "com.android.dynamic-feature",
+                "com.android.library",
+                "com.android.test",
+            )
     }
 }

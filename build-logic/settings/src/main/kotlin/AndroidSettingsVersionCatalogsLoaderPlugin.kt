@@ -1,19 +1,23 @@
-import java.io.File
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.initialization.Settings
 import org.gradle.kotlin.dsl.extra
+import java.io.File
 
 class AndroidSettingsVersionCatalogsLoaderPlugin : Plugin<Settings> {
     private val modules: MutableMap<String, String> = mutableMapOf()
+
     override fun apply(target: Settings) {
         with(target) {
             for (filename in VERSION_CATALOGS_FILES) {
-                val loader = TomlLoader(
-                    providers.fileContents(
-                        layout.rootDirectory.file(filename)
-                    ).asText.orNull ?: "",
-                     modules)
+                val loader =
+                    TomlLoader(
+                        providers
+                            .fileContents(
+                                layout.rootDirectory.file(filename),
+                            ).asText.orNull ?: "",
+                        modules,
+                    )
                 loader.load(this)
             }
             gradle.extra[MODULE_EXTRA] = modules
@@ -21,11 +25,12 @@ class AndroidSettingsVersionCatalogsLoaderPlugin : Plugin<Settings> {
     }
 
     companion object {
-        private val VERSION_CATALOGS_FILES = arrayOf(
-            "gradle/libs.versions.toml",
-            "gradle/androidx.versions.toml",
-            "gradle/google.versions.toml"
-        )
+        private val VERSION_CATALOGS_FILES =
+            setOf(
+                "gradle/libs.versions.toml",
+                "gradle/androidx.versions.toml",
+                "gradle/google.versions.toml",
+            )
 
         const val MODULE_EXTRA = "build.modules.map"
     }
@@ -33,7 +38,7 @@ class AndroidSettingsVersionCatalogsLoaderPlugin : Plugin<Settings> {
 
 internal class TomlLoader(
     private val content: String,
-    private val modules: MutableMap<String, String>
+    private val modules: MutableMap<String, String>,
 ) {
     private val versions: MutableMap<String, String> = mutableMapOf()
 
@@ -42,7 +47,7 @@ internal class TomlLoader(
         VERSIONS,
         LIBRARIES,
         PLUGINS,
-        BUNDLES
+        BUNDLES,
     }
 
     private var state: State = State.NONE
@@ -52,13 +57,14 @@ internal class TomlLoader(
             val trimmed = line.trim()
             if (line.isNotBlank() and !line.startsWith('#')) {
                 if (trimmed in SECTIONS) {
-                    state = when (trimmed) {
-                        VERSIONS -> State.VERSIONS
-                        LIBRARIES -> State.LIBRARIES
-                        PLUGINS -> State.PLUGINS
-                        BUNDLES -> State.BUNDLES
-                        else -> State.NONE
-                    }
+                    state =
+                        when (trimmed) {
+                            VERSIONS -> State.VERSIONS
+                            LIBRARIES -> State.LIBRARIES
+                            PLUGINS -> State.PLUGINS
+                            BUNDLES -> State.BUNDLES
+                            else -> State.NONE
+                        }
                 } else if (state == State.VERSIONS) {
                     settings.loadVersionsLine(trimmed)
                 } else if (state == State.LIBRARIES) {
@@ -73,18 +79,20 @@ internal class TomlLoader(
         if (result != null) {
             val name = result.groups["NAME"]!!.value
             // some versions are overridden by gradle/versions_catalog.gradle
-            val version = when (name) {
-                "android-gradle" -> providers.gradleProperty("androidGradlePluginVersion").orNull!!
-                "buildconfig" -> providers.gradleProperty("buildConfigPluginVersion").orNull!!
-                else -> result.groups["VERSION"]!!.value
-            }
+            val version =
+                when (name) {
+                    "android-gradle" -> providers.gradleProperty("androidGradlePluginVersion").orNull!!
+                    "buildconfig" -> providers.gradleProperty("buildConfigPluginVersion").orNull!!
+                    else -> result.groups["VERSION"]!!.value
+                }
             versions[name] = version
         }
     }
 
     private fun loadLibrariesLine(line: String) {
-        val result = MODULE_PATTERN1.matchEntire(line)
-            ?: MODULE_PATTERN2.matchEntire(line)
+        val result =
+            MODULE_PATTERN1.matchEntire(line)
+                ?: MODULE_PATTERN2.matchEntire(line)
         if (result != null) {
             val group = result.groups["MODULEGROUP"]!!.value
             val name = result.groups["MODULENAME"]!!.value
@@ -98,51 +106,61 @@ internal class TomlLoader(
         private const val PLUGINS = "[plugins]"
         private const val LIBRARIES = "[libraries]"
         private const val BUNDLES = "[bundles]"
-        private val SECTIONS = arrayOf(VERSIONS, PLUGINS, LIBRARIES, BUNDLES)
+        private val SECTIONS = setOf(VERSIONS, PLUGINS, LIBRARIES, BUNDLES)
 
         private const val NAME_REGEX = "[a-z0-9\\-]+"
         private const val BLANK_REGEX = "\\s*"
         private const val VERSION_VALUE_REGEX = "[0-9a-zA-Z\\\\.\\\\-]+"
         private const val MODULE_GROUP_REGEX = "[0-9a-z\\.\\-]+"
         private const val MODULE_NAME_REGEX = "[0-9a-z\\-_]+"
-        private val VERSION_REGEX = arrayOf(
-            "(?<NAME>$NAME_REGEX)",
-            "=",
-            "[\"'](?<VERSION>$VERSION_VALUE_REGEX)[\"']"
-        ).joinToString(BLANK_REGEX)
+        private val VERSION_REGEX =
+            sequenceOf(
+                "(?<NAME>$NAME_REGEX)",
+                "=",
+                "[\"'](?<VERSION>$VERSION_VALUE_REGEX)[\"']",
+            ).joinToString(BLANK_REGEX)
 
         /*
          regex for following format
          $name = { module = "$modulegroup:$modulename", version.ref = "$version" }
          */
-        private val MODULE_REGEX1 = arrayOf(
-            "(?<NAME>$NAME_REGEX)",
-            "=",
-            "\\{",
-            "module", "=",
-            "\"(?<MODULEGROUP>$MODULE_GROUP_REGEX):(?<MODULENAME>$MODULE_NAME_REGEX)\"",
-            ",",
-            "version.ref", "=",
-            "\"(?<VERSION>$NAME_REGEX)\"",
-            "\\}"
-        ).joinToString(BLANK_REGEX)
+        private val MODULE_REGEX1 =
+            sequenceOf(
+                "(?<NAME>$NAME_REGEX)",
+                "=",
+                "\\{",
+                "module",
+                "=",
+                "\"(?<MODULEGROUP>$MODULE_GROUP_REGEX):(?<MODULENAME>$MODULE_NAME_REGEX)\"",
+                ",",
+                "version.ref",
+                "=",
+                "\"(?<VERSION>$NAME_REGEX)\"",
+                "\\}",
+            ).joinToString(BLANK_REGEX)
 
         /*
          regex for following format
          $name = { group = "$modulegroup", name = "$modulename", version.ref = "$version" }
          */
-        private val MODULE_REGEX2 = arrayOf(
-            "(?<NAME>$NAME_REGEX)",
-            "=",
-            "\\{",
-            "group", "=", "\"(?<MODULEGROUP>$MODULE_GROUP_REGEX)\"",
-            ",",
-            "name", "=", "\"(?<MODULENAME>$MODULE_NAME_REGEX)\"",
-            ",",
-            "version.ref", "=",
-            "\"(?<VERSION>$NAME_REGEX)\"",
-            "\\}"
-        ).joinToString(BLANK_REGEX)
+        private val MODULE_REGEX2 =
+            sequenceOf(
+                "(?<NAME>$NAME_REGEX)",
+                "=",
+                "\\{",
+                "group",
+                "=",
+                "\"(?<MODULEGROUP>$MODULE_GROUP_REGEX)\"",
+                ",",
+                "name",
+                "=",
+                "\"(?<MODULENAME>$MODULE_NAME_REGEX)\"",
+                ",",
+                "version.ref",
+                "=",
+                "\"(?<VERSION>$NAME_REGEX)\"",
+                "\\}",
+            ).joinToString(BLANK_REGEX)
 
         private val VERSION_PATTERN = Regex(VERSION_REGEX)
         private val MODULE_PATTERN1 = Regex(MODULE_REGEX1)

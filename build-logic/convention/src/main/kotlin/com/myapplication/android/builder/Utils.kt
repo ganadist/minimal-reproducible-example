@@ -8,15 +8,15 @@ import com.android.build.api.dsl.LibraryDefaultConfig
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.TestExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import java.text.ParsePosition
-import java.text.SimpleDateFormat
-import java.util.Date
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.kotlin.dsl.getByType
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
+import java.util.Date
 
 private typealias AndroidExtension = CommonExtension
 
@@ -28,30 +28,39 @@ internal typealias DeprecatedManagedDeviceInstrumentationTestTask =
 typealias DeprecatedDeviceProviderInstrumentTestTask =
     com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask
 
-
 internal fun AndroidExtension.defaultConfig(action: DefaultConfig.() -> Unit) {
     when (this) {
         is LibraryExtension -> {
             defaultConfig(action)
         }
+
         is ApplicationExtension -> {
             defaultConfig(action)
         }
+
         is DynamicFeatureExtension -> {
             defaultConfig(action)
         }
+
         is TestExtension -> {
             defaultConfig(action)
         }
+
         else -> { }
     }
 }
 
 internal fun Project.getProperty(
     propertyName: String,
-    defValue: String = ""
-): String =
-    providers.gradleProperty(propertyName).getOrElse(defValue)
+    defValue: String = "",
+): String = providers.gradleProperty(propertyName).getOrElse(defValue)
+
+internal val Project.hasLibPlugin: Boolean
+    get() = pluginManager.hasPlugin(Const.ANDROID_LIB_PLUGIN_ID)
+internal val Project.hasAppPlugin: Boolean
+    get() = pluginManager.hasPlugin(Const.ANDROID_APP_PLUGIN_ID)
+internal val Project.hasTestPlugin: Boolean
+    get() = pluginManager.hasPlugin(Const.ANDROID_TEST_PLUGIN_ID)
 
 internal val Project.androidExtension: AndroidExtension
     get() = extensions.getByType(CommonExtension::class.java)
@@ -63,22 +72,23 @@ internal fun Project.android(block: AndroidExtension.() -> Unit) {
     androidExtension.block()
 }
 
-internal val Project.libs : VersionCatalog
+internal val Project.libs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-internal val Project.androidxLibs : VersionCatalog
+internal val Project.androidxLibs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("androidxLibs")
 
-internal val Project.googleLibs : VersionCatalog
+internal val Project.googleLibs: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("googleLibs")
 
 internal fun String?.toIntOrZero(): Int = (this ?: "").toIntOrNull() ?: 0
 
-internal fun String.toCamelCase(): String = if (isEmpty()) {
-    ""
-} else {
-    substring(0..0).uppercase() + substring(1)
-}
+internal fun String.toCamelCase(): String =
+    if (isEmpty()) {
+        ""
+    } else {
+        substring(0..0).uppercase() + substring(1)
+    }
 
 internal fun getBuildDateTime(): Date {
     val timestamp = System.getenv("BUILD_TIMESTAMP") ?: return Date(0)
@@ -108,10 +118,10 @@ private fun DependencyHandlerScope.addLibrary(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ): Dependency? {
     var tmpConfiguration = ""
-    for (c: String in listOf(buildFlavor, buildType, configuration)) {
+    for (c: String in sequenceOf(buildFlavor, buildType, configuration)) {
         if (tmpConfiguration.isEmpty()) {
             tmpConfiguration = c
         } else {
@@ -126,10 +136,10 @@ internal fun DependencyHandlerScope.addBundle(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ): Dependency? {
     var tmpConfiguration = ""
-    for (c in listOf(buildFlavor, buildType, configuration)) {
+    for (c in sequenceOf(buildFlavor, buildType, configuration)) {
         if (tmpConfiguration.isEmpty()) {
             tmpConfiguration = c
         } else {
@@ -143,52 +153,55 @@ internal fun DependencyHandlerScope.compileOnly(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("compileOnly", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.runtimeOnly(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("runtimeOnly", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.api(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("api", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.implementation(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("implementation", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.testImplementation(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("testImplementation", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.androidTestImplementation(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("androidTestImplementation", catalog, name, buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.androidTestUtil(
     catalog: VersionCatalog,
     name: String,
     buildFlavor: String = "",
-    buildType: String = ""
+    buildType: String = "",
 ) = addLibrary("androidTestUtil", catalog, name, buildFlavor, buildType)
 
-internal fun String.slice(prefix: String, suffix: String): String {
+internal fun String.slice(
+    prefix: String,
+    suffix: String,
+): String {
     assert(startsWith(prefix))
     assert(endsWith(suffix))
     val start = prefix.length
@@ -196,8 +209,15 @@ internal fun String.slice(prefix: String, suffix: String): String {
     return substring(start, end)
 }
 
-fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = when (flavorName) {
-    "develop" -> buildType == "debug"
+fun isAllowed(
+    flavorName: String?,
+    buildType: String?,
+    isLibrary: Boolean,
+) = when (flavorName) {
+    "develop" -> {
+        buildType == "debug"
+    }
+
     "beta", "staging" -> {
         if (isLibrary) {
             true
@@ -205,14 +225,26 @@ fun isAllowed(flavorName: String?, buildType: String?, isLibrary: Boolean) = whe
             buildType != "debug"
         }
     }
-    "production", in Const.DOGFOOD_FLAVORS -> buildType == "release"
-    else -> true
+
+    "production", in Const.DOGFOOD_FLAVORS -> {
+        buildType == "release"
+    }
+
+    else -> {
+        true
+    }
 }
 
-internal fun Project.hasUnitTestSourceSet(): Boolean = hasSourceSet("test")
-internal fun Project.hasAndroidTestSourceSet(): Boolean = hasSourceSet("androidTest")
-internal fun Project.hasScreenshotTestSourceSet(): Boolean = hasSourceSet("screenshotTest")
+internal val Project.hasUnitTestSourceSet: Boolean
+    get() = hasSourceSet("test")
+internal val Project.hasAndroidTestSourceSet: Boolean
+    get() = hasSourceSet("androidTest")
+internal val Project.hasScreenshotTestSourceSet: Boolean
+    get() = hasSourceSet("screenshotTest")
 
-private fun Project.hasSourceSet(sourceSet: String): Boolean = !Const.SRC_DIRS.all {
-    project.layout.projectDirectory.dir("src/$sourceSet/$it").asFileTree.isEmpty
-}
+private fun Project.hasSourceSet(sourceSet: String): Boolean =
+    !Const.SRC_DIRS.all {
+        project.layout.projectDirectory
+            .dir("src/$sourceSet/$it")
+            .asFileTree.isEmpty
+    }
