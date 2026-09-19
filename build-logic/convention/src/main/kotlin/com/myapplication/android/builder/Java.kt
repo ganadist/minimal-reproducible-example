@@ -7,12 +7,13 @@ import org.gradle.kotlin.dsl.withType
 
 private val JVM_VERSION = System.getProperty("java.specification.version")
 private val JVM_OPTIONS =
-    if (JVM_VERSION == "21") {
-        // https://issuetracker.google.com/issues/294422895
-        sequenceOf("-Xlint:all,-this-escape", "-Werror")
-    } else {
-        sequenceOf("-Xlint:all", "-Werror")
-    }
+    sequenceOf(
+        "-Xlint:all",
+        // Disable dangling-doc-comments which is enabled since Java 23
+        // This project is mainly using Kotlin, and no one has interest about JavaDoc
+        "-Xlint:-dangling-doc-comments",
+        "-Werror",
+    )
 
 internal fun Project.configureJava(javaVersion: JavaVersion) {
     tasks.withType<JavaCompile>().configureEach {
