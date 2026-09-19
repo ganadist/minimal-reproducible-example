@@ -115,8 +115,7 @@ internal fun Project.execAndStdout(vararg args: String): String {
 
 private fun DependencyHandlerScope.addLibrary(
     configuration: String,
-    catalog: VersionCatalog,
-    name: String,
+    obj: Any,
     buildFlavor: String = "",
     buildType: String = "",
 ): Dependency? {
@@ -128,8 +127,16 @@ private fun DependencyHandlerScope.addLibrary(
             tmpConfiguration += c.toCamelCase()
         }
     }
-    return add(tmpConfiguration, catalog.findLibrary(name).get())
+    return add(tmpConfiguration, obj)
 }
+
+private fun DependencyHandlerScope.addLibrary(
+    configuration: String,
+    catalog: VersionCatalog,
+    name: String,
+    buildFlavor: String = "",
+    buildType: String = "",
+): Dependency? = addLibrary(configuration, catalog.findLibrary(name).get(), buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.addBundle(
     configuration: String,
@@ -137,17 +144,7 @@ internal fun DependencyHandlerScope.addBundle(
     name: String,
     buildFlavor: String = "",
     buildType: String = "",
-): Dependency? {
-    var tmpConfiguration = ""
-    for (c in sequenceOf(buildFlavor, buildType, configuration)) {
-        if (tmpConfiguration.isEmpty()) {
-            tmpConfiguration = c
-        } else {
-            tmpConfiguration += c.toCamelCase()
-        }
-    }
-    return add(tmpConfiguration, catalog.findBundle(name).get())
-}
+): Dependency? = addLibrary(configuration, catalog.findBundle(name).get(), buildFlavor, buildType)
 
 internal fun DependencyHandlerScope.compileOnly(
     catalog: VersionCatalog,
@@ -197,6 +194,19 @@ internal fun DependencyHandlerScope.androidTestUtil(
     buildFlavor: String = "",
     buildType: String = "",
 ) = addLibrary("androidTestUtil", catalog, name, buildFlavor, buildType)
+
+internal fun DependencyHandlerScope.screenshotTestImplementation(
+    obj: Any,
+    buildFlavor: String = "",
+    buildType: String = "",
+) = addLibrary("screenshotTestImplementation", obj, buildFlavor, buildType)
+
+internal fun DependencyHandlerScope.screenshotTestImplementation(
+    catalog: VersionCatalog,
+    name: String,
+    buildFlavor: String = "",
+    buildType: String = "",
+) = screenshotTestImplementation(catalog.findLibrary(name).get(), buildFlavor, buildType)
 
 internal fun String.slice(
     prefix: String,

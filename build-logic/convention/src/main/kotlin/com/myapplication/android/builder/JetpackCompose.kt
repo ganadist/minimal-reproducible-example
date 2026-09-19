@@ -8,41 +8,11 @@ import org.gradle.kotlin.dsl.dependencies
 internal fun Project.configureJetpackCompose() {
     plugins.withId(Const.KOTLIN_COMPOSE_PLUGIN_ID) {
         applyComposeDependencies()
-        afterEvaluate {
-            checkComposeConfiguration()
-        }
-    }
-}
-
-private fun Project.checkComposeConfiguration() {
-    if (false) {
-        throw GradleException(
-            "Do not enable Jetpack Compose on $project, " +
-                "because kotlin compiler will be getting slower with " +
-                "too many source codes: " +
-                "https://issuetracker.google.com/issues/210920415",
-        )
-    }
-
-    if (androidExtension.buildFeatures.compose == true) {
-        throw GradleException(
-            "buildFeatures.compose is deprecated. Please remove it.\n" +
-                "And please add following line at plugins block.\n" +
-                "plugins {\n" +
-                "    alias(libs.plugins.kotlin.compose)\n" +
-                "}",
-        )
-    }
-
-    if (androidExtension.composeOptions.kotlinCompilerExtensionVersion != null) {
-        throw GradleException(
-            "composeOptions.kotlinCompilerExtensionVersion is deprecated. Please remove it.",
-        )
+        configureJetpackComposeScreenshotTesting()
     }
 }
 
 private fun Project.applyComposeDependencies() {
-    val hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
     dependencies {
         val composeBom = platform(androidxLibs.findLibrary("compose-bom").get())
 
@@ -65,7 +35,7 @@ private fun Project.applyComposeDependencies() {
 
         // https://developer.android.com/jetpack/compose/tooling
         // https://issuetracker.google.com/issues/257312399
-        if (hasLibraryPlugin) {
+        if (hasLibPlugin) {
             compileOnly(androidxLibs, "compose-ui-tooling-preview")
         } else {
             implementation(androidxLibs, "compose-ui-tooling-preview")

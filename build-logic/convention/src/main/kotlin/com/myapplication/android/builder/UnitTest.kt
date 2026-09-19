@@ -159,15 +159,6 @@ internal fun Project.configureTest() {
                         enable = false
                     }
                 }
-                get(HostTestBuilder.SCREENSHOT_TEST_TYPE)?.apply {
-                    enable = false
-                    if (hasScreenshotTestSourceSet && allowHostTest) {
-                        pluginManager.withPlugin(Const.COMPOSE_SCREENSHOT_PLUGIN_ID) {
-                            enable = true
-                            enableCodeCoverage = true
-                        }
-                    }
-                }
             }
 
             (variant as? HasDeviceTestsBuilder)
@@ -194,6 +185,11 @@ internal fun Project.configureTest() {
     }
 
     tasks.withType<Test>().configureEach {
+        // Disable retry for screenshot tests because it is not supported.
+        if (name.startsWith("validate") && name.endsWith("ScreenshotTest")) {
+            return@configureEach
+        }
+
         develocity.testRetry {
             maxRetries.set(
                 getProperty("build.unittest.retry.max", "0").toIntOrZero(),
