@@ -1,5 +1,6 @@
 package com.myapplication.android.builder
 
+import com.android.build.api.dsl.AgpTestSuiteDependencies
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.DefaultConfig
@@ -112,6 +113,16 @@ internal fun Project.execAndStdout(vararg args: String): String {
     }
     return stdout.toString().trim()
 }
+
+internal fun AgpTestSuiteDependencies.implementation(
+    catalog: VersionCatalog,
+    name: String,
+) = implementation.add(catalog.findLibrary(name).get())
+
+internal fun AgpTestSuiteDependencies.runtimeOnly(
+    catalog: VersionCatalog,
+    name: String,
+) = runtimeOnly.add(catalog.findLibrary(name).get())
 
 private fun DependencyHandlerScope.addLibrary(
     configuration: String,

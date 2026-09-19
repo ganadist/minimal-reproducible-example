@@ -10,6 +10,7 @@ internal fun Project.configureJetpackComposeScreenshotTesting() {
         return
     }
     configureScreenshotTestingPlugin()
+    configureScreenshotTestsuite()
 }
 
 private fun Project.configureScreenshotTestingPlugin() {
@@ -47,6 +48,23 @@ private fun Project.configureScreenshotTestingPlugin() {
         dependencies {
             screenshotTestImplementation(libs, "screenshot-validation-api")
             screenshotTestImplementation(androidxLibs, "compose-ui-tooling-preview")
+        }
+    }
+}
+
+private fun Project.configureScreenshotTestsuite() {
+    android {
+        testOptions.apply {
+            // https://developer.android.com/studio/preview/compose-screenshot-testing-with-testsuites?hl=en
+            @Suppress("UnstableApiUsage", "DEPRECATION")
+            screenshotTests.create("screenshotTest") {
+                engineVersion = libs.findVersion("screenshot-validation").get().requiredVersion
+                targetVariants.add("debug")
+                dependencies {
+                    implementation(androidxLibs, "compose-ui-tooling")
+                    implementation(libs, "screenshot-validation-api")
+                }
+            }
         }
     }
 }
