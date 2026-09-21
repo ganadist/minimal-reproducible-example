@@ -16,15 +16,6 @@ val enableBaselineProfileGenerator =
         .gradleProperty("build.baselineprofile.generate.enable")
         .getOrElse("false")
         .toBoolean()
-var enableDexlayoutOptimizer =
-    providers
-        .gradleProperty("build.dexlayout.optimize.enable")
-        .getOrElse("false")
-        .toBoolean()
-if (!enableBaselineProfileGenerator && enableDexlayoutOptimizer) {
-    logger.warn("Baseline Profile generator was disabled, and cannot enable Dex Layout Optimizer")
-    enableDexlayoutOptimizer = false
-}
 
 if (enableBaselineProfileGenerator) {
     apply(plugin = "androidx.baselineprofile")
@@ -41,13 +32,6 @@ android {
     }
     buildTypes {
         release {
-            if (enableDexlayoutOptimizer) {
-                logger.warn("Dex Layout Optimizer was enabled")
-            }
-            experimentalProperties[
-                "android.experimental.r8.dex-startup-optimization",
-            ] = enableDexlayoutOptimizer
-
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
