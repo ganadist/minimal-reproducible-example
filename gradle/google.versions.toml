@@ -1,14 +1,14 @@
 [versions]
 # https://developers.google.com/android/guides/google-services-plugin
 # https://github.com/google/play-services-plugins/releases
-gms-services = "4.3.14"
+gms-services = "4.5.0"
 
 # https://developers.google.com/android/guides/opensource
-gms-oss-licenses = "0.10.5"
+gms-oss-licenses = "0.13.0"
 
 # https://firebase.google.com/support/release-notes/android
-firebase = "31.0.1"
-firebase-crashlytics-gradle = "2.9.2"
+firebase = "34.18.0"
+firebase-crashlytics-gradle = "3.0.8"
 
 # https://developer.android.com/reference/com/google/android/play/core/release-notes
 play-core = "1.10.3"
@@ -20,10 +20,10 @@ mlkit-language = "17.0.3"
 play-services-ads = "21.3.0"
 play-services-ads-identifier = "18.0.1"
 play-services-auth = "20.3.0"
-play-services-base = "17.2.1"
+play-services-base = "18.8.0"
 play-services-location = "21.0.0"
 play-services-maps = "18.1.0"
-play-services-osslicenses = "17.0.0"
+play-services-osslicenses = "17.3.0"
 play-services-vision = "20.1.3"
 play-services-wearable = "18.0.0"
 
@@ -56,7 +56,7 @@ auto-serviceksp = "1.0.0"
 flexbox = "1.1.1"
 
 # https://github.com/material-components/material-components-android/releases
-material = "1.5.0"
+material = "1.13.0"
 
 # https://github.com/material-components/material-components-android-compose-theme-adapter/releases
 material-compose-theme-adapter = "1.1.21"
@@ -70,7 +70,6 @@ guava = "33.4.0-android"
 
 # https://github.com/google/truth/releases
 truth = "1.4.5"
-
 
 [libraries]
 gms-services = { module = "com.google.gms:google-services", version.ref = "gms-services" }
@@ -153,3 +152,8 @@ material-compose-theme-adapter3 = { module = "com.google.android.material:compos
 play-core = { module = "com.google.android.play:core", version.ref = "play-core" }
 
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+
+[plugins]
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-gradle" }
+gms-services = { id = "com.google.gms.google-services", version.ref = "gms-services" }
+gms-oss-licenses = { id = "com.google.android.gms.oss-licenses-plugin", version.ref = "gms-oss-licenses" }

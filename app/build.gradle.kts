@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("com.myapplication.android.builder")
     alias(libs.plugins.kotlin.compose)
+    alias(googleLibs.plugins.gms.oss.licenses)
 }
 
 val enableL8 =
@@ -76,6 +77,8 @@ dependencies {
     implementation(androidxLibs.lifecycle.viewmodel.ktx)
     implementation(androidxLibs.room.ktx)
     implementation(androidxLibs.room.runtime)
+
+    implementation(googleLibs.play.services.osslicenses)
 }
 
 if (enableBaselineProfileGenerator) {
