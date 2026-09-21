@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice.PageAlignment
+
 plugins {
     alias(libs.plugins.android.test)
     id("com.myapplication.android.builder")
@@ -19,7 +21,8 @@ android {
             genBaselineProfile (com.android.build.api.dsl.ManagedVirtualDevice) {
                 device = "Pixel 2"
                 apiLevel = project.providers.gradleProperty("compileSdk").getOrElse("37").toInteger()
-                systemImageSource = "google"
+                systemImageSource = "google_apis_playstore"
+		pageAlignment = PageAlignment.FORCE_16KB_PAGES
             }
         }
     }
