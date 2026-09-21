@@ -1,0 +1,8 @@
+<!-- app/src/main/res/raw/<your_package>_keep.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="
+        @layout/license_menu_fragment,
+        @layout/libraries_social_licenses_license,
+        @id/license,
+        @id/license_list" />
